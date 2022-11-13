@@ -6,7 +6,7 @@ Software Engineering Development Project
 ## Directory Structure
 
 ```
-Guard/
+Gcard/
 ├─ backend/ <- Spring Boot
 ├─ frontend/ <- React.js
 ```
