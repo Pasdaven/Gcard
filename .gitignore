@@ -1,1 +1,5 @@
+# Mac File
 .DS_Store
+
+# IntelliJ IDEA File
+.idea
