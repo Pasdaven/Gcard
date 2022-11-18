@@ -1,0 +1,5 @@
+# Maven Target File
+/target
+
+# IntelliJ IDEA File
+.idea
