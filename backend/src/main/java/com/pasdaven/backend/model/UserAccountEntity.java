@@ -8,7 +8,7 @@ public class UserAccountEntity {
     @Id
     private String email;
     private String password;
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
 
