@@ -15,4 +15,12 @@ public class UserAccountService {
     public UserAccountService(UserAccountRepo userAccountRepo) {
         this.userAccountRepo = userAccountRepo;
     }
+
+    public UserAccountEntity saveUserAccount(UserAccountEntity userAccountEntity) {
+        return userAccountRepo.save(userAccountEntity);
+    }
+
+    public UserAccountEntity getUserAccountByEmail(String email) {
+        return userAccountRepo.findByEmail(email);
+    }
 }
