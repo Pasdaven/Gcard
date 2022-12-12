@@ -17,7 +17,7 @@ public class BoardController {
         this.boardService = boardService;
     }
 
-    @PostMapping("/createBoard")
+    @PostMapping("/")
     //create board
     BoardEntity createBoard(@RequestBody BoardEntity boardEntity) {
         return boardService.saveBoard(boardEntity);
