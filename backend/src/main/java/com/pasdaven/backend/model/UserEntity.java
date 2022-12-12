@@ -13,13 +13,17 @@ public class UserEntity {
     private String userName;
     private String role;
 
+    @OneToOne(mappedBy = "user")
+    private UserAccountEntity userAccount;
+
     public UserEntity() {
     }
 
-    public UserEntity(Integer userId, String userName, String role) {
+    public UserEntity(Integer userId, String userName, String role, UserAccountEntity userAccount) {
         this.userId = userId;
         this.userName = userName;
         this.role = role;
+        this.userAccount = userAccount;
     }
 
     public Integer getUserId() {
@@ -44,5 +48,13 @@ public class UserEntity {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public UserAccountEntity getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(UserAccountEntity userAccount) {
+        this.userAccount = userAccount;
     }
 }
