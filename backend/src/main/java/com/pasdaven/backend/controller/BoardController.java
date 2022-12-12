@@ -41,4 +41,26 @@ public class BoardController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @DeleteMapping("/{boardId}")
+    //delete board by id
+    public ResponseEntity<BoardEntity> deleteBoardById(@PathVariable(value = "boardId") Integer boardId) {
+        try{
+            boardService.deleteBoardById(boardId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/")
+    //delete all boards
+    public ResponseEntity<BoardEntity> deleteAllBoards() {
+        try{
+            boardService.deleteAllBoards();
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
