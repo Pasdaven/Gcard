@@ -4,6 +4,8 @@ import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.service.BoardService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+
+import com.pasdaven.backend.service.BoardService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
