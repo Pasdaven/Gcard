@@ -10,14 +10,16 @@ public class BoardEntity {
     private Integer boardId;
     private String boardName;
     private String description;
+    private String iconUrl;
 
     public BoardEntity() {
     }
 
-    public BoardEntity(Integer boardId, String boardName, String description) {
+    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl) {
         this.boardId = boardId;
         this.boardName = boardName;
         this.description = description;
+        this.iconUrl = iconUrl;
     }
 
     public Integer getBoardId() {
@@ -42,5 +44,13 @@ public class BoardEntity {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
+        this.iconUrl = iconUrl;
     }
 }
