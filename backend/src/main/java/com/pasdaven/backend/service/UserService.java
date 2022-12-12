@@ -15,4 +15,8 @@ public class UserService {
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
     }
+
+    public UserEntity saveUser(UserEntity userEntity) {
+        return userRepo.save(userEntity);
+    }
 }
