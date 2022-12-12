@@ -15,4 +15,8 @@ public class PostService {
     public PostService(PostRepo postRepo) {
         this.postRepo = postRepo;
     }
+
+    public PostEntity savePost(PostEntity postEntity) {
+        return postRepo.save(postEntity);
+    }
 }
