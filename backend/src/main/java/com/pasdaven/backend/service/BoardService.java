@@ -15,4 +15,8 @@ public class BoardService {
     public BoardService(BoardRepo boardRepo) {
         this.boardRepo = boardRepo;
     }
+
+    public BoardEntity saveBoard(BoardEntity boardEntity) {
+        return boardRepo.save(boardEntity);
+    }
 }
