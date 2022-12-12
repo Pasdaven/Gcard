@@ -29,4 +29,12 @@ public class BoardService {
     public BoardEntity getBoardById(Integer boardId) {
         return boardRepo.findById(boardId).get();
     }
+
+    public void deleteBoardById(Integer boardId) {
+        boardRepo.deleteById(boardId);
+    }
+
+    public void deleteAllBoards() {
+        boardRepo.deleteAll();
+    }
 }
