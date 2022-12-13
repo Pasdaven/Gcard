@@ -34,11 +34,12 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
-    @PutMapping("/updatePost/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id) {
         PostEntity post = new PostEntity();
         Date date = new Date();
         post.setPostId(id);
+        post.setTitle(postEntity.getTitle());
         post.setContent(postEntity.getContent());
         post.setTime(date);
         post.setScore(postEntity.getScore());
@@ -48,7 +49,7 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
-    @PutMapping("/updatePostScore/{id}")
+    @PutMapping("/{id}/score")
     public ResponseEntity<PostEntity> updatePostScore(@RequestBody PostEntity postEntity, @PathVariable Integer id) {
         Optional<PostEntity> post = postService.getPostById(id);
         if (post.isPresent()) {
