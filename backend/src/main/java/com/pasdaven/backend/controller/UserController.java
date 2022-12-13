@@ -37,6 +37,7 @@ public class UserController {
         UserEntity user = new UserEntity();
         user.setUserName(userEntity.getUserName());
         user.setRole(userEntity.getRole());
+        user.setImgUrl(userEntity.getImgUrl());
         UserEntity newUser = userService.saveUser(user);
 
         // create user account data
