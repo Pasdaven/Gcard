@@ -25,11 +25,10 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(Integer postId, String content, Integer score, Date time, UserEntity user, BoardEntity board) {
+    public PostEntity(Integer postId, String content, Integer score, UserEntity user, BoardEntity board) {
         this.postId = postId;
         this.content = content;
         this.score = score;
-        this.time = time;
         this.user = user;
         this.board = board;
     }

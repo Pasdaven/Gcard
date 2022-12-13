@@ -18,7 +18,7 @@ public class PostController {
         this.postService = postService;
     }
 
-    @PostMapping("/createPost")
+    @PostMapping("/")
     public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity) {
         PostEntity post = new PostEntity();
         Date date = new Date();
