@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserAccountController userAccountController;
 
-    @PostMapping("/createAccount")
+    @PostMapping("/")
     public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity) {
         if (userAccountController.checkEmail(userEntity.getUserAccount().getEmail())) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
