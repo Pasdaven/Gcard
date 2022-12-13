@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 public class PostService {
@@ -18,5 +20,9 @@ public class PostService {
 
     public PostEntity savePost(PostEntity postEntity) {
         return postRepo.save(postEntity);
+    }
+
+    public Optional<PostEntity> getPostById(Integer postId) {
+        return postRepo.findById(postId);
     }
 }
