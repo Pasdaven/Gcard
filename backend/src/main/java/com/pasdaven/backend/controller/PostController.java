@@ -23,6 +23,7 @@ public class PostController {
         PostEntity post = new PostEntity();
         Date date = new Date();
 
+        post.setTitle(postEntity.getTitle());
         post.setContent(postEntity.getContent());
         post.setTime(date);
         post.setScore(postEntity.getScore());
