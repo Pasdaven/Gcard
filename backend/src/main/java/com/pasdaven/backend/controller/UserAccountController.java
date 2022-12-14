@@ -1,7 +1,9 @@
 package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.UserAccountEntity;
+import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.UserAccountService;
+import com.pasdaven.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +13,15 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/usersAccount")
 public class UserAccountController {
 
     final UserAccountService userAccountService;
+    final UserService userService;
 
-    public UserAccountController(UserAccountService userAccountService) {
+    public UserAccountController(UserAccountService userAccountService, UserService userService) {
         this.userAccountService = userAccountService;
+        this.userService = userService;
     }
 
     public boolean checkEmail(String email) {
@@ -26,5 +30,16 @@ public class UserAccountController {
             return false;
         }
         return true;
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @PathVariable Integer id) {
+        UserEntity existUser = userService.getUserById(id);
+        String email = existUser.getUserAccount().getEmail();
+        UserAccountEntity existUserAccount = userAccountService.getUserAccountByEmail(email);
+        existUserAccount.setPassword(userAccountEntity.getPassword());
+        existUserAccount.setUser(existUser);
+        userAccountService.saveUserAccount(existUserAccount);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }

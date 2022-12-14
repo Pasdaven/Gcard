@@ -19,4 +19,8 @@ public class UserService {
     public UserEntity saveUser(UserEntity userEntity) {
         return userRepo.save(userEntity);
     }
+
+    public UserEntity getUserById(Integer id) {
+        return userRepo.findById(id).get();
+    }
 }
