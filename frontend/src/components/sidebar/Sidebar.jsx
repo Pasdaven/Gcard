@@ -4,6 +4,7 @@ import {
   GlobeAsiaAustraliaIcon,
   RectangleStackIcon,
 } from '@heroicons/react/24/solid'
+import PropTypes from 'prop-types'
 
 function Sidebar({ current }) {
   return (
@@ -31,6 +32,10 @@ function Sidebar({ current }) {
       </div>
     </div>
   )
+}
+
+Sidebar.propTypes = {
+  current: PropTypes.string,
 }
 
 export default Sidebar
