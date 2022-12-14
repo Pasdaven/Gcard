@@ -25,4 +25,8 @@ public class PostService {
     public Optional<PostEntity> getPostById(Integer postId) {
         return postRepo.findById(postId);
     }
+
+    public void deletePostById(Integer id) {
+        postRepo.deleteById(id);
+    }
 }
