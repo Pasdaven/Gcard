@@ -18,14 +18,13 @@ public class UserController {
 
     final UserService userService;
     final UserAccountService userAccountService;
+    final UserAccountController userAccountController;
 
-    public UserController(UserService userService, UserAccountService userAccountService) {
+    public UserController(UserService userService, UserAccountService userAccountService, UserAccountController userAccountController) {
         this.userService = userService;
         this.userAccountService = userAccountService;
+        this.userAccountController = userAccountController;
     }
-
-    @Autowired
-    private UserAccountController userAccountController;
 
     @PostMapping("/")
     public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity) {
