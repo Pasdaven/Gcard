@@ -22,8 +22,8 @@ public class PostService {
         return postRepo.save(postEntity);
     }
 
-    public Optional<PostEntity> getPostById(Integer postId) {
-        return postRepo.findById(postId);
+    public PostEntity getPostById(Integer postId) {
+        return postRepo.findById(postId).get();
     }
 
     public void deletePostById(Integer id) {

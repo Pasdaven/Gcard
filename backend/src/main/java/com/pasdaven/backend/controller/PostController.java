@@ -36,30 +36,20 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id) {
-        PostEntity post = new PostEntity();
+        PostEntity post = postService.getPostById(id);
         Date date = new Date();
-        post.setPostId(id);
-        post.setTitle(postEntity.getTitle());
-        post.setContent(postEntity.getContent());
-        post.setTime(date);
-        post.setScore(postEntity.getScore());
-        post.setUser(postEntity.getUser());
-        post.setBoard(postEntity.getBoard());
-        PostEntity newPost = postService.savePost(post);
-        return new ResponseEntity<>(newPost, HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{id}/score")
-    public ResponseEntity<PostEntity> updatePostScore(@RequestBody PostEntity postEntity, @PathVariable Integer id) {
-        Optional<PostEntity> post = postService.getPostById(id);
-        if (post.isPresent()) {
-            PostEntity newPost = post.get();
-            newPost.setScore(postEntity.getScore());
-            PostEntity updatedPost = postService.savePost(newPost);
-            return new ResponseEntity<>(updatedPost, HttpStatus.CREATED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (postEntity.getContent() != null) {
+            post.setContent(postEntity.getContent());
         }
+        if (postEntity.getTitle() != null) {
+            post.setTitle(postEntity.getTitle());
+        }
+        if (postEntity.getScore() != null) {
+            post.setScore(postEntity.getScore());
+        }
+        post.setTime(date);
+        postService.savePost(post);
+        return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
