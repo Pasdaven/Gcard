@@ -50,7 +50,6 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
     public void updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
         UserEntity existUser = userService.getUserById(id);
         if (userEntity.getUserName() != null) {
@@ -63,5 +62,18 @@ public class UserController {
             existUser.setImgUrl(userEntity.getImgUrl());
         }
         userService.saveUser(existUser);
+
+    @GetMapping("/")
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+
+        List<UserEntity> users = userService.getAllUsers();
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

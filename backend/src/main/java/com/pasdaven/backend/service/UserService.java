@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserService {
@@ -18,6 +20,11 @@ public class UserService {
 
     public UserEntity saveUser(UserEntity userEntity) {
         return userRepo.save(userEntity);
+    }
+
+    public List<UserEntity> getAllUsers() {
+        List<UserEntity> users = userRepo.findAll();
+        return users;
     }
 
     public UserEntity getUserById(Integer id) {

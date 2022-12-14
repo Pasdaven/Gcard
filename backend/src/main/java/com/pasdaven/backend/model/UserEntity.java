@@ -1,5 +1,6 @@
 package com.pasdaven.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class UserEntity {
     private Role role;
     private String imgUrl;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private UserAccountEntity userAccount;
     public enum Role {

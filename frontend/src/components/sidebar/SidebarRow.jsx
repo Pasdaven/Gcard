@@ -1,5 +1,6 @@
-import React from "react"
-import { Link } from "react-router-dom"
+import React from 'react'
+import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 function SidebarRow({ Icon, optionName, current, url }) {
   return current === optionName ? (
@@ -16,6 +17,13 @@ function SidebarRow({ Icon, optionName, current, url }) {
       <p className="tracking-[.4rem] text-xl">{optionName}</p>
     </Link>
   )
+}
+
+SidebarRow.propTypes = {
+  Icon: PropTypes.object.isRequired,
+  optionName: PropTypes.string.isRequired,
+  current: PropTypes.string.isRequired,
+  url: PropTypes.string.isRequired,
 }
 
 export default SidebarRow
