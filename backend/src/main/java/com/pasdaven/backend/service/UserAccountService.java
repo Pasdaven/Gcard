@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class UserAccountService {
@@ -22,5 +24,13 @@ public class UserAccountService {
 
     public UserAccountEntity getUserAccountByEmail(String email) {
         return userAccountRepo.findByEmail(email);
+    }
+
+    public List<UserAccountEntity> getAllUserAccount() {
+        return userAccountRepo.findAll();
+    }
+
+    public UserAccountEntity getUserAccountById(Integer id) {
+        return userAccountRepo.findById(id).get();
     }
 }
