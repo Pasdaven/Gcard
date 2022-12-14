@@ -41,7 +41,8 @@ public class UserAccountController {
         existUserAccount.setUser(existUser);
         userAccountService.saveUserAccount(existUserAccount);
         return new ResponseEntity<>(existUserAccount, HttpStatus.OK);
-    
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<UserAccountEntity>> getAllUserAccount() {
         return new ResponseEntity<>(userAccountService.getAllUserAccount(), HttpStatus.OK);
