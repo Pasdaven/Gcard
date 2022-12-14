@@ -1,5 +1,6 @@
 package com.pasdaven.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -8,6 +9,7 @@ public class UserAccountEntity {
     @Id
     private String email;
     private String password;
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "userId")
     private UserEntity user;
