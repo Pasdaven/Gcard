@@ -40,6 +40,6 @@ public class UserAccountController {
         existUserAccount.setPassword(userAccountEntity.getPassword());
         existUserAccount.setUser(existUser);
         userAccountService.saveUserAccount(existUserAccount);
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        return new ResponseEntity<>(existUserAccount, HttpStatus.OK);
     }
 }

@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
         UserEntity existUser = userService.getUserById(id);
         if (userEntity.getUserName() != null) {
             existUser.setUserName(userEntity.getUserName());
@@ -63,6 +63,7 @@ public class UserController {
             existUser.setImgUrl(userEntity.getImgUrl());
         }
         userService.saveUser(existUser);
+        return new ResponseEntity<>(existUser, HttpStatus.OK);
     }
 
     @GetMapping("/")
