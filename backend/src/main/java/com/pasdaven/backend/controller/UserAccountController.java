@@ -32,6 +32,17 @@ public class UserAccountController {
         return true;
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @PathVariable Integer id) {
+        UserEntity existUser = userService.getUserById(id);
+        String email = existUser.getUserAccount().getEmail();
+        UserAccountEntity existUserAccount = userAccountService.getUserAccountByEmail(email);
+        existUserAccount.setPassword(userAccountEntity.getPassword());
+        existUserAccount.setUser(existUser);
+        userAccountService.saveUserAccount(existUserAccount);
+        return new ResponseEntity<>(existUserAccount, HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<UserAccountEntity>> getAllUserAccount() {
         return new ResponseEntity<>(userAccountService.getAllUserAccount(), HttpStatus.OK);

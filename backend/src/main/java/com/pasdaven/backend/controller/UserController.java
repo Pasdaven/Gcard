@@ -50,6 +50,22 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
+        UserEntity existUser = userService.getUserById(id);
+        if (userEntity.getUserName() != null) {
+            existUser.setUserName(userEntity.getUserName());
+        }
+        if (userEntity.getRole() != null) {
+            existUser.setRole(userEntity.getRole());
+        }
+        if (userEntity.getImgUrl() != null) {
+            existUser.setImgUrl(userEntity.getImgUrl());
+        }
+        userService.saveUser(existUser);
+        return new ResponseEntity<>(existUser, HttpStatus.OK);
+    }
+
     @GetMapping("/")
     public ResponseEntity<List<UserEntity>> getAllUsers() {
 
