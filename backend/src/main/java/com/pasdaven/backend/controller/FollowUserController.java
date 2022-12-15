@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/followUsers")
@@ -23,6 +24,10 @@ public class FollowUserController {
 
     @PostMapping("/{userId}/{followId}")
     public ResponseEntity<FollowUserEntity> addFollowUser(@PathVariable Integer userId, @PathVariable Integer followId) {
+        if (Objects.equals(userId, followId)) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        
         UserEntity user = userService.getUserById(userId);
         UserEntity followUser = userService.getUserById(followId);
 
