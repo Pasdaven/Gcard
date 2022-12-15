@@ -1,9 +1,9 @@
-# Gcard
+<img width="400" src="https://raw.githubusercontent.com/Pasdaven/Gcard/main/frontend/public/image/banner.png">
 
-Software Engineering Development Project
+# About
+Gcard - Software Engineering Development Project
 
-
-## Directory Structure
+# Directory Structure
 
 ```
 Gcard/
@@ -11,9 +11,9 @@ Gcard/
 ├─ frontend/ <- React.js
 ```
 
-## Installation
+# Installation
 
-### Spring Boot
+## Spring Boot
 
 1. Change directory to ./backend
 
@@ -33,7 +33,7 @@ mvn install
 mvn spring-boot:run
 ```
 
-### React.js
+## React.js
 
 1. Change directory to ./frontend
 
