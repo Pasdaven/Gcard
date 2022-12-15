@@ -15,4 +15,8 @@ public class LikePostService {
     public LikePostService(LikePostRepo likePostRepo) {
         this.likePostRepo = likePostRepo;
     }
+
+    public void saveLikePost(LikePostEntity likePostEntity) {
+        likePostRepo.save(likePostEntity);
+    }
 }
