@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 const formatPrice = (itemPrice) => {
   const price = parseInt(itemPrice)
@@ -21,6 +22,12 @@ function PriceItem({ itemImg, itemName, itemPrice }) {
       </div>
     </>
   )
+}
+
+PriceItem.propTypes = {
+  itemImg: PropTypes.string.isRequired,
+  itemName: PropTypes.string.isRequired,
+  itemPrice: PropTypes.number.isRequired,
 }
 
 export default PriceItem
