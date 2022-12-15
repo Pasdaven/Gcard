@@ -1,9 +1,9 @@
-import { Routes, Route } from "react-router-dom"
-import AllBoard from "./AllBoard"
-import Sidebar from "./components/sidebar/Sidebar"
-import Explore from "./Explore"
-import Following from "./Following"
-import Price from "./components/price/Price"
+import { Routes, Route } from 'react-router-dom'
+import AllBoard from './AllBoard'
+import Sidebar from './components/sidebar/Sidebar'
+import Explore from './Explore'
+import Following from './Following'
+import Price from './components/price/Price'
 
 function App() {
   return (
@@ -16,16 +16,15 @@ function App() {
         </Routes>
       </div>
       <div className="col-span-3">
-      <Routes>
-        <Route path="/" element={<Explore />} />
-        <Route path="/allBoard" element={<AllBoard />} />
-        <Route path="/following" element={<Following />} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Explore />} />
+          <Route path="/allBoard" element={<AllBoard />} />
+          <Route path="/following" element={<Following />} />
+        </Routes>
       </div>
       <div className="col-span-1">
         <Price />
       </div>
-
     </div>
   )
 }
