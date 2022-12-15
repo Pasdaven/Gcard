@@ -67,6 +67,9 @@ public class PostController {
     public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
         List<PostEntity> posts = postService.getPostsByKeyword(keyword);
         for (PostEntity post : posts) {
+            if (post.getContent().length() > 50) {
+                post.setContent(post.getContent().substring(0, 50) + "...");
+            }
             post.setUser(post.getUser());
             post.setBoard(post.getBoard());
         }
