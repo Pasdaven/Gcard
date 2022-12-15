@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react'
 
 function Following() {
   return <div>Following</div>

@@ -18,14 +18,13 @@ public class UserController {
 
     final UserService userService;
     final UserAccountService userAccountService;
+    final UserAccountController userAccountController;
 
-    public UserController(UserService userService, UserAccountService userAccountService) {
+    public UserController(UserService userService, UserAccountService userAccountService, UserAccountController userAccountController) {
         this.userService = userService;
         this.userAccountService = userAccountService;
+        this.userAccountController = userAccountController;
     }
-
-    @Autowired
-    private UserAccountController userAccountController;
 
     @PostMapping("/")
     public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity) {
@@ -48,5 +47,35 @@ public class UserController {
         UserAccountEntity newUserAccount = userAccountService.saveUserAccount(userAccount);
 
         return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
+        UserEntity existUser = userService.getUserById(id);
+        if (userEntity.getUserName() != null) {
+            existUser.setUserName(userEntity.getUserName());
+        }
+        if (userEntity.getRole() != null) {
+            existUser.setRole(userEntity.getRole());
+        }
+        if (userEntity.getImgUrl() != null) {
+            existUser.setImgUrl(userEntity.getImgUrl());
+        }
+        userService.saveUser(existUser);
+        return new ResponseEntity<>(existUser, HttpStatus.OK);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
+
+        List<UserEntity> users = userService.getAllUsers();
+
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

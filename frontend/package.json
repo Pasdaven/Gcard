@@ -17,7 +17,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --passWithNoTests",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write . --config ./.prettierrc"
   },
   "eslintConfig": {
     "extends": [
@@ -39,7 +42,12 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
+    "eslint": "^8.29.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-react": "^7.31.11",
     "postcss": "^8.4.20",
+    "prettier": "^2.8.1",
     "tailwindcss": "^3.2.4"
   }
 }

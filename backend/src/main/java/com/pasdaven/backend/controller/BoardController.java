@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.service.BoardService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,5 +63,21 @@ public class BoardController {
         } catch (Exception e) {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PutMapping("/{boardId}")
+    public ResponseEntity<BoardEntity> updateBoard(@RequestBody BoardEntity boardEntity, @PathVariable Integer boardId) {
+        BoardEntity board = boardService.getBoardById(boardId);
+        if (boardEntity.getBoardName() != null) {
+            board.setBoardName(boardEntity.getBoardName());
+        }
+        if (boardEntity.getDescription() != null) {
+            board.setDescription(boardEntity.getDescription());
+        }
+        if (boardEntity.getIconUrl() != null) {
+            board.setIconUrl(boardEntity.getIconUrl());
+        }
+        boardService.saveBoard(board);
+        return new ResponseEntity(board, HttpStatus.OK);
     }
 }
