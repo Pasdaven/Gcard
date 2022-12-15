@@ -26,9 +26,9 @@ public class UserController {
         this.userAccountController = userAccountController;
     }
 
-    @PostMapping("/")
-    public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity) {
-        if (userAccountController.checkEmail(userEntity.getUserAccount().getEmail())) {
+    @PostMapping("/{email}/{password}")
+    public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity, @PathVariable String email, @PathVariable String password) {
+        if (userAccountController.checkEmail(email)) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
@@ -41,8 +41,8 @@ public class UserController {
 
         // create user account data
         UserAccountEntity userAccount = new UserAccountEntity();
-        userAccount.setEmail(userEntity.getUserAccount().getEmail());
-        userAccount.setPassword(userEntity.getUserAccount().getPassword());
+        userAccount.setEmail(email);
+        userAccount.setPassword(password);
         userAccount.setUser(newUser);
         UserAccountEntity newUserAccount = userAccountService.saveUserAccount(userAccount);
 
