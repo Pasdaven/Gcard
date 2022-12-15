@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -61,4 +62,15 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/")
+    public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
+        List<PostEntity> posts = postService.getPostsByKeyword(keyword);
+        for (PostEntity post : posts) {
+            post.setUser(post.getUser());
+            post.setBoard(post.getBoard());
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
 }
