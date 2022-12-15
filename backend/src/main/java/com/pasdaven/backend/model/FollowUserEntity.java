@@ -18,8 +18,32 @@ public class FollowUserEntity {
     @MapsId("followedId")
     private UserEntity followed;
 
+    public FollowUserId getId() {
+        return id;
+    }
+
+    public void setId(FollowUserId id) {
+        this.id = id;
+    }
+
+    public UserEntity getFollower() {
+        return follower;
+    }
+
+    public void setFollower(UserEntity follower) {
+        this.follower = follower;
+    }
+
+    public UserEntity getFollowed() {
+        return followed;
+    }
+
+    public void setFollowed(UserEntity followed) {
+        this.followed = followed;
+    }
+
     @Embeddable
-    public class FollowUserId implements Serializable {
+    public static class FollowUserId implements Serializable {
         private Integer followerId;
         private Integer followedId;
 

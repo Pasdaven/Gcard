@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class FollowUserService {
@@ -14,5 +16,9 @@ public class FollowUserService {
 
     public FollowUserService(FollowUserRepo followUserRepo) {
         this.followUserRepo = followUserRepo;
+    }
+
+    public void saveFollowUser(FollowUserEntity followUserEntity) {
+        followUserRepo.save(followUserEntity);
     }
 }
