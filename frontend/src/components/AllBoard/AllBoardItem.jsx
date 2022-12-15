@@ -1,8 +1,7 @@
 import React from 'react'
-import { Link, resolvePath } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import axios from 'axios'
-import { useState, useEffect } from 'react'
-import { data } from 'autoprefixer'
+import PropTypes from 'prop-types'
 
 async function getBoard() {
   axios
@@ -15,7 +14,7 @@ async function getBoard() {
     })
 }
 
-function AllBoardItem({ boardId, boardName, description, iconUrl }) {
+function AllBoardItem({ boardId, boardName, iconUrl }) {
   return (
     <>
       <Link
@@ -30,6 +29,12 @@ function AllBoardItem({ boardId, boardName, description, iconUrl }) {
       </Link>
     </>
   )
+}
+
+AllBoardItem.propTypes = {
+  boardId: PropTypes.nubmer.isRequired,
+  boardName: PropTypes.string.isRequired,
+  iconUrl: PropTypes.string.isRequired,
 }
 
 export default AllBoardItem

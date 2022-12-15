@@ -1,4 +1,7 @@
 import React from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import AllBoardItem from './components/AllBoard/AllBoardItem'
 
 function AllBoard() {
   const [data, setData] = useState([])
@@ -19,6 +22,7 @@ function AllBoard() {
       >
         {data.map((d) => (
           <AllBoardItem
+            key={d.boardId}
             boardId={d.boardId}
             boardName={d.boardName}
             description={d.description}
