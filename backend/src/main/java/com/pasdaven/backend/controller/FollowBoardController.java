@@ -7,10 +7,12 @@ import com.pasdaven.backend.service.BoardService;
 import com.pasdaven.backend.service.FollowBoardService;
 import com.pasdaven.backend.service.UserService;
 import jakarta.persistence.Entity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/followBoard")
@@ -41,5 +43,26 @@ public class FollowBoardController {
         followBoardEntity.setUser(user);
         followBoardEntity.setBoard(board);
         followBoardService.saveFollowBoard(followBoardEntity);
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<List<FollowBoardEntity>> getAllFollowBoard() {
+        List<FollowBoardEntity> followBoardEntities = followBoardService.getAllFollowBoard();
+        return new ResponseEntity<>(followBoardEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FollowBoardEntity>> getFollowBoardById(@PathVariable Integer userId) {
+        List<FollowBoardEntity> followBoardEntities = followBoardService.getAllFollowBoard();
+//        List<FollowBoardEntity> followBoardEntitiesById = followBoardEntities.stream()
+//                .filter(followBoardEntity -> followBoardEntity.getId().getUserId().equals(userId))
+//                .toList();
+        List<FollowBoardEntity> followBoardEntitiesById = new ArrayList<FollowBoardEntity>();
+        for (FollowBoardEntity followBoardEntity : followBoardEntities) {
+            if (followBoardEntity.getId().getUserId().equals(userId)) {
+                followBoardEntitiesById.add(followBoardEntity);
+            }
+        }
+        return new ResponseEntity<>(followBoardEntitiesById, HttpStatus.OK);
     }
 }

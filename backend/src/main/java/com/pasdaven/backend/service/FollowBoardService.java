@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class FollowBoardService {
@@ -19,5 +21,9 @@ public class FollowBoardService {
 
     public void saveFollowBoard(FollowBoardEntity followBoardEntity) {
         followBoardRepo.save(followBoardEntity);
+    }
+
+    public List<FollowBoardEntity> getAllFollowBoard() {
+        return followBoardRepo.findAll();
     }
 }
