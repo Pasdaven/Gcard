@@ -36,14 +36,14 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt-get install -y mysql-server mysql-client
-    - name: Set up root user password
-      run: |
-        mysql -u root
-        mysqladmin -u root password ""
     - name: Start MySQL server
       run: |
         sudo service mysql start
         mysql -u root -e "CREATE DATABASE gcard;"
+    - name: Set up root user password
+      run: |
+        mysql -u root
+        mysqladmin -u root password ""
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
