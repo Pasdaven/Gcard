@@ -21,4 +21,8 @@ public class FollowUserService {
     public void saveFollowUser(FollowUserEntity followUserEntity) {
         followUserRepo.save(followUserEntity);
     }
+
+    public void deleteByFollowUserId(FollowUserEntity followUserEntity) {
+        followUserRepo.delete(followUserEntity);
+    }
 }

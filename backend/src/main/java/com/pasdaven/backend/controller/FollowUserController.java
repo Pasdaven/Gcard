@@ -42,4 +42,18 @@ public class FollowUserController {
         followUserService.saveFollowUser(followUserEntity);
         return new ResponseEntity<>(followUserEntity, HttpStatus.CREATED);
     }
+
+    @DeleteMapping("/{userId}/{followId}")
+    public void deleteFollowUser(@PathVariable Integer userId, @PathVariable Integer followId) {
+        FollowUserEntity followUserEntity = new FollowUserEntity();
+        FollowUserEntity.FollowUserId followUserId = new FollowUserEntity.FollowUserId();
+        UserEntity user = userService.getUserById(userId);
+        UserEntity followUser = userService.getUserById(followId);
+        followUserId.setFollowerId(userId);
+        followUserId.setFollowedId(followId);
+        followUserEntity.setId(followUserId);
+        followUserEntity.setFollower(user);
+        followUserEntity.setFollowed(followUser);
+        followUserService.deleteByFollowUserId(followUserEntity);
+    }
 }
