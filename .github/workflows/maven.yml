@@ -23,6 +23,14 @@ jobs:
       run:
         working-directory: 'backend'
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: ''
+          MYSQL_DATABASE: gcard
+        ports:
+            - '8888:3306'
 
     steps:
     - uses: actions/checkout@v3
@@ -32,18 +40,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Install MySQL
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mysql-server mysql-client
-    - name: Start MySQL server
-      run: |
-        sudo service mysql start
-        mysql -u root -e "CREATE DATABASE gcard;"
-    - name: Set up root user password
-      run: |
-        mysql -u root
-        mysqladmin -u root password ""
+      run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS gcard;'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
