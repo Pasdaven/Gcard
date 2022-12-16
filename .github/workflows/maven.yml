@@ -40,6 +40,7 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+    - name: Create Database
       run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS gcard;'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
