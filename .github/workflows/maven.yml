@@ -23,15 +23,6 @@ jobs:
       run:
         working-directory: 'backend'
 
-    services:
-      mysql:
-        image: mysql:8.0
-        env:
-          MYSQL_ROOT_PASSWORD: ''
-          MYSQL_DATABASE: gcard
-        ports:
-            - '8888:3306'
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -40,8 +31,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - name: Create Database
-      run: mysql -h 127.0.0.1 --port 8888 -u root -ppassword -e 'CREATE DATABASE IF NOT EXISTS gcard;'
+    - name: Setup MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'gcard'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
