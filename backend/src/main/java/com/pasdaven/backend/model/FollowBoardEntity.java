@@ -18,8 +18,32 @@ public class FollowBoardEntity {
     @MapsId("boardId")
     private BoardEntity board;
 
+    public FollowBoardId getId() {
+        return id;
+    }
+
+    public void setId(FollowBoardId id) {
+        this.id = id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public BoardEntity getBoard() {
+        return board;
+    }
+
+    public void setBoard(BoardEntity board) {
+        this.board = board;
+    }
+
     @Embeddable
-    public class FollowBoardId implements Serializable {
+    public static class FollowBoardId implements Serializable {
         private Integer userId;
         private Integer boardId;
 

@@ -1,11 +1,13 @@
 package com.pasdaven.backend.service;
 
 import com.pasdaven.backend.model.PostEntity;
+import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.repo.PostRepo;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,4 +31,16 @@ public class PostService {
     public void deletePostById(Integer id) {
         postRepo.deleteById(id);
     }
+
+
+    public List<PostEntity> getPostsByUser(UserEntity user) {
+        return postRepo.findAllByUser(user);
+    }
+
+    public List<PostEntity> getPostsByKeyword(String keyword) {
+        return postRepo.findByContentContainingOrTitleContaining(keyword, keyword);
+    }
+
+
+
 }

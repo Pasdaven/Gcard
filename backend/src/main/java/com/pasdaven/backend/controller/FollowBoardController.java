@@ -1,7 +1,14 @@
 package com.pasdaven.backend.controller;
 
+import com.pasdaven.backend.model.BoardEntity;
+import com.pasdaven.backend.model.FollowBoardEntity;
+import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.BoardService;
 import com.pasdaven.backend.service.FollowBoardService;
+import com.pasdaven.backend.service.UserService;
 import jakarta.persistence.Entity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,8 +17,29 @@ import org.springframework.web.bind.annotation.RestController;
 public class FollowBoardController {
 
     final FollowBoardService followBoardService;
+    final UserService userService;
+    final BoardService boardService;
 
-    public FollowBoardController(FollowBoardService followBoardService) {
+    public FollowBoardController(FollowBoardService followBoardService, UserService userService, BoardService boardService) {
         this.followBoardService = followBoardService;
+        this.userService = userService;
+        this.boardService = boardService;
+    }
+
+    @PostMapping("/{userId}/{boardId}")
+    public void followBoard(@PathVariable Integer userId, @PathVariable Integer boardId) {
+        FollowBoardEntity followBoardEntity = new FollowBoardEntity();
+        FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
+
+        UserEntity user = userService.getUserById(userId);
+        BoardEntity board = boardService.getBoardById(boardId);
+
+        followBoardId.setUserId(userId);
+        followBoardId.setBoardId(boardId);
+
+        followBoardEntity.setId(followBoardId);
+        followBoardEntity.setUser(user);
+        followBoardEntity.setBoard(board);
+        followBoardService.saveFollowBoard(followBoardEntity);
     }
 }

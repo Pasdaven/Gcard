@@ -1,22 +1,29 @@
 package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.PostEntity;
+import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.PostService;
+import com.pasdaven.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+
 import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/post")
 public class PostController {
     final PostService postService;
+    final UserService userService;
 
-    public PostController(PostService postService) {
+    public PostController(PostService postService, UserService userService) {
         this.postService = postService;
+        this.userService = userService;
     }
 
     @PostMapping("/")
@@ -61,4 +68,43 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/user/{id}")
+    public ResponseEntity<List<PostEntity>> listPostByUser(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
+        List<PostEntity> posts = postService.getPostsByUser(user);
+        for (PostEntity post : posts) {
+
+            if (post.getContent().length() > 50) {
+
+                post.setContent(post.getContent().substring(0, 50) + "...");
+
+            }
+
+            post.setUser(post.getUser());
+
+            post.setBoard(post.getBoard());
+
+        }
+
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+
+    }
+
+
+
+    @GetMapping("/")
+    public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
+        List<PostEntity> posts = postService.getPostsByKeyword(keyword);
+
+        for (PostEntity post : posts) {
+            if (post.getContent().length() > 50) {
+                post.setContent(post.getContent().substring(0, 50) + "...");
+            }
+            post.setUser(post.getUser());
+            post.setBoard(post.getBoard());
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
 }
