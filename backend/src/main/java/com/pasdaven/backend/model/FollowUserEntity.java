@@ -1,5 +1,6 @@
 package com.pasdaven.backend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
@@ -12,10 +13,12 @@ public class FollowUserEntity {
 
     @ManyToOne
     @MapsId("followerId")
+    @JsonIgnore
     private UserEntity follower;
 
     @ManyToOne
     @MapsId("followedId")
+    @JsonIgnore
     private UserEntity followed;
 
     public FollowUserId getId() {
