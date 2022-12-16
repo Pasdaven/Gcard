@@ -32,7 +32,7 @@ function AllBoardItem({ boardId, boardName, iconUrl }) {
 }
 
 AllBoardItem.propTypes = {
-  boardId: PropTypes.nubmer.isRequired,
+  boardId: PropTypes.number.isRequired,
   boardName: PropTypes.string.isRequired,
   iconUrl: PropTypes.string.isRequired,
 }
