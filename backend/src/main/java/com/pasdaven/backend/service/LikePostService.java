@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class LikePostService {
@@ -18,5 +20,9 @@ public class LikePostService {
 
     public void saveLikePost(LikePostEntity likePostEntity) {
         likePostRepo.save(likePostEntity);
+    }
+
+    public List<LikePostEntity> getAllLikePosts() {
+        return likePostRepo.findAll();
     }
 }
