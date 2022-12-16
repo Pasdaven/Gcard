@@ -6,10 +6,8 @@ import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.LikePostService;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.apache.catalina.User;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/likePosts")
@@ -38,5 +36,19 @@ public class LikePostController {
         likePostEntity.setPost(post);
         likePostEntity.setId(likePostId);
         likePostService.saveLikePost(likePostEntity);
+    }
+
+    @DeleteMapping("/{userId}/{postId}")
+    public void deleteLikePost(@PathVariable Integer userId, @PathVariable Integer postId) {
+        LikePostEntity.LikePostId likePostId = new LikePostEntity.LikePostId();
+        LikePostEntity likePostEntity = new LikePostEntity();
+        UserEntity user = userService.getUserById(userId);
+        PostEntity post = postService.getPostById(postId);
+        likePostId.setUserId(userId);
+        likePostId.setPostId(postId);
+        likePostEntity.setUser(user);
+        likePostEntity.setPost(post);
+        likePostEntity.setId(likePostId);
+        likePostService.deleteLikePost(likePostEntity);
     }
 }

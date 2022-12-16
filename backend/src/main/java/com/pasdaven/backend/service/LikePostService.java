@@ -19,4 +19,8 @@ public class LikePostService {
     public void saveLikePost(LikePostEntity likePostEntity) {
         likePostRepo.save(likePostEntity);
     }
+
+    public void deleteLikePost(LikePostEntity likePostEntity) {
+        likePostRepo.delete(likePostEntity);
+    }
 }
