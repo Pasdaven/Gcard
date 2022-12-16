@@ -9,5 +9,9 @@ import java.util.List;
 
 @Repository
 public interface PostRepo extends JpaRepository<PostEntity, Integer> {
+
     List<PostEntity> findAllByUser(UserEntity user);
+
+    List<PostEntity> findByContentContainingOrTitleContaining(String content, String title);
+
 }

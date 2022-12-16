@@ -18,8 +18,32 @@ public class LikePostEntity {
     @MapsId("postId")
     private PostEntity post;
 
+    public LikePostId getId() {
+        return id;
+    }
+
+    public void setId(LikePostId id) {
+        this.id = id;
+    }
+
+    public UserEntity getUser() {
+        return user;
+    }
+
+    public void setUser(UserEntity user) {
+        this.user = user;
+    }
+
+    public PostEntity getPost() {
+        return post;
+    }
+
+    public void setPost(PostEntity post) {
+        this.post = post;
+    }
+
     @Embeddable
-    public class LikePostId implements Serializable {
+    public static class LikePostId implements Serializable {
         private Integer userId;
         private Integer postId;
 
