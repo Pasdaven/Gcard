@@ -26,4 +26,8 @@ public class FollowBoardService {
     public List<FollowBoardEntity> getAllFollowBoard() {
         return followBoardRepo.findAll();
     }
+    
+    public void deleteFollowBoard(FollowBoardEntity followBoardEntity) {
+        followBoardRepo.delete(followBoardEntity);
+    }
 }

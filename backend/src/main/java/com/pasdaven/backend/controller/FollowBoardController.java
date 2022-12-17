@@ -7,12 +7,15 @@ import com.pasdaven.backend.service.BoardService;
 import com.pasdaven.backend.service.FollowBoardService;
 import com.pasdaven.backend.service.UserService;
 import jakarta.persistence.Entity;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.catalina.User;
 
 @RestController
 @RequestMapping("/followBoard")
@@ -64,5 +67,19 @@ public class FollowBoardController {
             }
         }
         return new ResponseEntity<>(followBoardEntitiesById, HttpStatus.OK);
+    }
+    
+    @DeleteMapping("/{userId}/{boardId}")
+    public void deleteFollowBoard(@PathVariable Integer userId, @PathVariable Integer boardId) {
+        FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
+        FollowBoardEntity followBoardEntity = new FollowBoardEntity();
+        UserEntity user = userService.getUserById(userId);
+        BoardEntity board = boardService.getBoardById(boardId);
+        followBoardId.setUserId(userId);
+        followBoardId.setBoardId(boardId);
+        followBoardEntity.setId(followBoardId);
+        followBoardEntity.setUser(user);
+        followBoardEntity.setBoard(board);
+        followBoardService.deleteFollowBoard(followBoardEntity);
     }
 }
