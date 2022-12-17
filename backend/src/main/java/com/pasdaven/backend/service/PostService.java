@@ -32,7 +32,6 @@ public class PostService {
         postRepo.deleteById(id);
     }
 
-
     public List<PostEntity> getPostsByUser(UserEntity user) {
         return postRepo.findAllByUser(user);
     }
@@ -41,6 +40,7 @@ public class PostService {
         return postRepo.findByContentContainingOrTitleContaining(keyword, keyword);
     }
 
-
-
+    public List<PostEntity> getAllPost(Integer id) {
+        return postRepo.findAll();
+    }
 }

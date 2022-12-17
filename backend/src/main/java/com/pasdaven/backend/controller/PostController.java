@@ -4,15 +4,12 @@ import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
+import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-
-
-import java.util.Optional;
+import java.util.*;
 
 
 @RestController
@@ -107,4 +104,15 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    @GetMapping("/board/{id}")
+    public ResponseEntity<List<PostEntity>> getPostByBoardId(@PathVariable Integer id) {
+        List<PostEntity> posts = postService.getAllPost(id);
+        List<PostEntity> postsByBoard = new ArrayList<PostEntity>();
+        for (PostEntity post : posts) {
+            if (Objects.equals(post.getBoard().getBoardId(), id)) {
+                postsByBoard.add(post);
+            }
+        }
+        return new ResponseEntity<>(postsByBoard, HttpStatus.OK);
+    }
 }
