@@ -110,6 +110,9 @@ public class PostController {
         List<PostEntity> postsByBoard = new ArrayList<PostEntity>();
         for (PostEntity post : posts) {
             if (Objects.equals(post.getBoard().getBoardId(), id)) {
+                if (post.getContent().length() > 50) {
+                    post.setContent(post.getContent().substring(0, 50) + "...");
+                }
                 postsByBoard.add(post);
             }
         }
