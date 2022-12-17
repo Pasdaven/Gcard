@@ -20,4 +20,8 @@ public class FollowBoardService {
     public void saveFollowBoard(FollowBoardEntity followBoardEntity) {
         followBoardRepo.save(followBoardEntity);
     }
+
+    public void deleteFollowBoard(FollowBoardEntity followBoardEntity) {
+        followBoardRepo.delete(followBoardEntity);
+    }
 }

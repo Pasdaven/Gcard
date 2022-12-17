@@ -27,7 +27,7 @@ function PriceItem({ itemImg, itemName, itemPrice }) {
 PriceItem.propTypes = {
   itemImg: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired,
-  itemPrice: PropTypes.number.isRequired,
+  itemPrice: PropTypes.string.isRequired,
 }
 
 export default PriceItem

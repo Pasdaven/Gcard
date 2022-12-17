@@ -8,7 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListResourceBundle;
 import java.util.Objects;
 
 @RestController
@@ -55,5 +57,28 @@ public class FollowUserController {
         followUserEntity.setFollower(user);
         followUserEntity.setFollowed(followUser);
         followUserService.deleteByFollowUserId(followUserEntity);
+    }
+    
+    @GetMapping("/")
+    public ResponseEntity<List<FollowUserEntity>> getAllFollowUsers() {
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+        return new ResponseEntity<>(followUserEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FollowUserEntity>> getFollowUsersByUserId(@PathVariable Integer userId) {
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+
+//        List<FollowUserEntity> followUserEntitiesByUserId = followUserEntities.stream()
+//                .filter(followUserEntity -> followUserEntity.getId().getFollowerId().equals(userId))
+//                .toList();
+
+        List<FollowUserEntity> followUserEntitiesByUserId = new ArrayList<FollowUserEntity>();
+        for (FollowUserEntity followUserEntity : followUserEntities) {
+            if (followUserEntity.getId().getFollowerId().equals(userId)) {
+                followUserEntitiesByUserId.add(followUserEntity);
+            }
+        }
+        return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
     }
 }
