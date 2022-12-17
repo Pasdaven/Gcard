@@ -22,6 +22,10 @@ public class FollowUserService {
         followUserRepo.save(followUserEntity);
     }
 
+    public void deleteByFollowUserId(FollowUserEntity followUserEntity) {
+        followUserRepo.delete(followUserEntity);
+    }
+    
     public List<FollowUserEntity> getAllFollowUsers() {
         return followUserRepo.findAll();
     }
