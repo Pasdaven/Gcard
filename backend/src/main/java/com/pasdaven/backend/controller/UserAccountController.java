@@ -24,14 +24,6 @@ public class UserAccountController {
         this.userService = userService;
     }
 
-    public boolean checkEmail(String email) {
-        UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(email);
-        if (userAccount == null) {
-            return false;
-        }
-        return true;
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @PathVariable Integer id) {
         UserEntity existUser = userService.getUserById(id);

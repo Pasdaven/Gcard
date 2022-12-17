@@ -15,7 +15,7 @@ public class UserEntity {
     private Role role;
     private String imgUrl;
 
-    @JsonIgnore
+
     @OneToOne(mappedBy = "user")
     private UserAccountEntity userAccount;
     public enum Role {

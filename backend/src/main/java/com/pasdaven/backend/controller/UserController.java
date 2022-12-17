@@ -4,7 +4,6 @@ import com.pasdaven.backend.model.UserAccountEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.UserAccountService;
 import com.pasdaven.backend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,17 +17,24 @@ public class UserController {
 
     final UserService userService;
     final UserAccountService userAccountService;
-    final UserAccountController userAccountController;
 
-    public UserController(UserService userService, UserAccountService userAccountService, UserAccountController userAccountController) {
+
+    public UserController(UserService userService, UserAccountService userAccountService) {
         this.userService = userService;
         this.userAccountService = userAccountService;
-        this.userAccountController = userAccountController;
+    }
+
+    public boolean checkEmail(String email) {
+        UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(email);
+        if (userAccount == null) {
+            return false;
+        }
+        return true;
     }
 
     @PostMapping("/")
     public ResponseEntity<UserEntity> createAccount(@RequestBody UserEntity userEntity) {
-        if (userAccountController.checkEmail(userEntity.getUserAccount().getEmail())) {
+        if (checkEmail(userEntity.getUserAccount().getEmail())) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
