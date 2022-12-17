@@ -7,8 +7,15 @@ import com.pasdaven.backend.service.BoardService;
 import com.pasdaven.backend.service.FollowBoardService;
 import com.pasdaven.backend.service.UserService;
 import jakarta.persistence.Entity;
-import org.apache.catalina.User;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.catalina.User;
 
 @RestController
 @RequestMapping("/followBoard")
@@ -41,6 +48,27 @@ public class FollowBoardController {
         followBoardService.saveFollowBoard(followBoardEntity);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<FollowBoardEntity>> getAllFollowBoard() {
+        List<FollowBoardEntity> followBoardEntities = followBoardService.getAllFollowBoard();
+        return new ResponseEntity<>(followBoardEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<FollowBoardEntity>> getFollowBoardById(@PathVariable Integer userId) {
+        List<FollowBoardEntity> followBoardEntities = followBoardService.getAllFollowBoard();
+//        List<FollowBoardEntity> followBoardEntitiesById = followBoardEntities.stream()
+//                .filter(followBoardEntity -> followBoardEntity.getId().getUserId().equals(userId))
+//                .toList();
+        List<FollowBoardEntity> followBoardEntitiesById = new ArrayList<FollowBoardEntity>();
+        for (FollowBoardEntity followBoardEntity : followBoardEntities) {
+            if (followBoardEntity.getId().getUserId().equals(userId)) {
+                followBoardEntitiesById.add(followBoardEntity);
+            }
+        }
+        return new ResponseEntity<>(followBoardEntitiesById, HttpStatus.OK);
+    }
+    
     @DeleteMapping("/{userId}/{boardId}")
     public void deleteFollowBoard(@PathVariable Integer userId, @PathVariable Integer boardId) {
         FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
