@@ -33,9 +33,9 @@ jobs:
         cache: maven
     - name: Set up mysql
     - run: |
-      mysql -u root
-      UPDATE mysql.user SET authentication_string = PASSWORD('') WHERE User = 'root';
-      FLUSH PRIVILEGES;
+        mysql -u root
+        UPDATE mysql.user SET authentication_string = PASSWORD('') WHERE User = 'root';
+        FLUSH PRIVILEGES;
     - name: Build with Maven
       run: mvn -B package --file pom.xml
 
