@@ -1,0 +1,8 @@
+backend:
+- backend/**/*
+
+frontend:
+- frontend/**/*
+
+ci:
+- .github/**/*
