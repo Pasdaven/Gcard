@@ -27,6 +27,11 @@ jobs:
       with:
         mysql database: 'gcard'
         mysql root password: 'root'
+    - name: 'Create .env file'
+        run: |
+          touch .env
+          echo JWT_SECRET=dev_test_key >> .env
+          cat .env
     - name: Run maven test
       run: |
         mvn test
