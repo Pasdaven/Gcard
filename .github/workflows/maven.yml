@@ -30,6 +30,11 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+    - name: Set up MySQL
+      uses: mirromutth/mysql-action@v1.1
+      with:
+        mysql database: 'gcard'
+        mysql root password: 'root'
     - name: Run maven test
       run: |
         mvn test
