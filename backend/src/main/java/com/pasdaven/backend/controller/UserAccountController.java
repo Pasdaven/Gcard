@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.UserAccountEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserAccountService;
 import com.pasdaven.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +19,21 @@ public class UserAccountController {
 
     final UserAccountService userAccountService;
     final UserService userService;
+    final JWTService jwtService;
 
-    public UserAccountController(UserAccountService userAccountService, UserService userService) {
+    public UserAccountController(UserAccountService userAccountService, UserService userService, JWTService jwtService) {
         this.userAccountService = userAccountService;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @PathVariable Integer id) {
+    @PutMapping("/")
+    public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token)) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int id = jwtService.getUserIdFromToken(token);
         UserEntity existUser = userService.getUserById(id);
         String email = existUser.getUserAccount().getEmail();
         UserAccountEntity existUserAccount = userAccountService.getUserAccountByEmail(email);
@@ -36,12 +44,24 @@ public class UserAccountController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserAccountEntity>> getAllUserAccount() {
+    public ResponseEntity<List<UserAccountEntity>> getAllUserAccount(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
         return new ResponseEntity<>(userAccountService.getAllUserAccount(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserAccountEntity> getUserAccountById(@PathVariable Integer id) {
+    public ResponseEntity<UserAccountEntity> getUserAccountById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
         UserEntity user = userService.getUserById(id);
         UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(user.getUserAccount().getEmail());
         return new ResponseEntity<>(userAccount, HttpStatus.OK);

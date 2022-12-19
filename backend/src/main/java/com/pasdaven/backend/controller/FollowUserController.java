@@ -3,6 +3,7 @@ package com.pasdaven.backend.controller;
 import com.pasdaven.backend.model.FollowUserEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.FollowUserService;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,14 +19,21 @@ import java.util.Objects;
 public class FollowUserController {
     final FollowUserService followUserService;
     final UserService userService;
+    final JWTService jwtService;
 
-    public FollowUserController(FollowUserService followUserService, UserService userService) {
+    public FollowUserController(FollowUserService followUserService, UserService userService, JWTService jwtService) {
         this.followUserService = followUserService;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
-    @PostMapping("/{userId}/{followId}")
-    public ResponseEntity<FollowUserEntity> addFollowUser(@PathVariable Integer userId, @PathVariable Integer followId) {
+    @PostMapping("/{followId}")
+    public ResponseEntity<FollowUserEntity> addFollowUser(@PathVariable Integer followId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
         if (Objects.equals(userId, followId)) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -45,8 +53,13 @@ public class FollowUserController {
         return new ResponseEntity<>(followUserEntity, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/{userId}/{followId}")
-    public void deleteFollowUser(@PathVariable Integer userId, @PathVariable Integer followId) {
+    @DeleteMapping("/{followId}")
+    public ResponseEntity<FollowUserEntity> deleteFollowUser(@PathVariable Integer followId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
         FollowUserEntity followUserEntity = new FollowUserEntity();
         FollowUserEntity.FollowUserId followUserId = new FollowUserEntity.FollowUserId();
         UserEntity user = userService.getUserById(userId);
@@ -57,6 +70,8 @@ public class FollowUserController {
         followUserEntity.setFollower(user);
         followUserEntity.setFollowed(followUser);
         followUserService.deleteByFollowUserId(followUserEntity);
+
+        return new ResponseEntity<>(followUserEntity, HttpStatus.OK);
     }
     
     @GetMapping("/")

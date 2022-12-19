@@ -3,6 +3,7 @@ package com.pasdaven.backend.controller;
 import com.pasdaven.backend.model.LikePostEntity;
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.LikePostService;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
@@ -22,27 +23,34 @@ public class LikePostController {
     final LikePostService likePostService;
     final PostService postService;
     final UserService userService;
+    final JWTService jwtService;
 
-    public LikePostController(LikePostService likePostService, PostService postService, UserService userService) {
+    public LikePostController(LikePostService likePostService, PostService postService, UserService userService, JWTService jwtService) {
         this.likePostService = likePostService;
         this.postService = postService;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
-    @PostMapping("/{userId}/{postId}")
-    public void addLikePost(@PathVariable Integer userId, @PathVariable Integer postId) {
+    @PostMapping("/{postId}")
+    public ResponseEntity<LikePostEntity> addLikePost(@PathVariable Integer postId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
         LikePostEntity likePostEntity = new LikePostEntity();
         LikePostEntity.LikePostId likePostId = new LikePostEntity.LikePostId();
 
         UserEntity user = userService.getUserById(userId);
         PostEntity post = postService.getPostById(postId);
-
         likePostId.setUserId(userId);
         likePostId.setPostId(postId);
         likePostEntity.setUser(user);
         likePostEntity.setPost(post);
         likePostEntity.setId(likePostId);
         likePostService.saveLikePost(likePostEntity);
+
+        return new ResponseEntity<>(likePostEntity, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -66,8 +74,13 @@ public class LikePostController {
         return new ResponseEntity<>(likePostEntitiesByUserId, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{userId}/{postId}")
-    public void deleteLikePost(@PathVariable Integer userId, @PathVariable Integer postId) {
+    @DeleteMapping("/{postId}")
+    public ResponseEntity<LikePostEntity> deleteLikePost(@PathVariable Integer postId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
         LikePostEntity.LikePostId likePostId = new LikePostEntity.LikePostId();
         LikePostEntity likePostEntity = new LikePostEntity();
         UserEntity user = userService.getUserById(userId);
@@ -78,5 +91,7 @@ public class LikePostController {
         likePostEntity.setPost(post);
         likePostEntity.setId(likePostId);
         likePostService.deleteLikePost(likePostEntity);
+
+        return new ResponseEntity<>(likePostEntity, HttpStatus.OK);
     }
 }
