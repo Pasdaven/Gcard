@@ -32,7 +32,7 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Set up mysql
-    - run: |
+      run: |
         mysql -u root
         UPDATE mysql.user SET authentication_string = PASSWORD('') WHERE User = 'root';
         FLUSH PRIVILEGES;
