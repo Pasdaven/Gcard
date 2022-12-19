@@ -1,5 +1,6 @@
 package com.pasdaven.backend.service;
 
+import com.pasdaven.backend.model.ApplicationBoardEntity;
 import com.pasdaven.backend.repo.ApplicationBoardRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -11,5 +12,9 @@ public class ApplicationBoardService {
 
     public ApplicationBoardService(ApplicationBoardRepo applicationBoardRepo) {
         this.applicationBoardRepo = applicationBoardRepo;
+    }
+
+    public void saveApplicationBoard(ApplicationBoardEntity applicationBoardEntity) {
+        applicationBoardRepo.save(applicationBoardEntity);
     }
 }
