@@ -15,4 +15,8 @@ public class CommentService {
     public CommentService(CommentRepo commentRepo) {
         this.commentRepo = commentRepo;
     }
+
+    public CommentEntity saveComment(CommentEntity comment) {
+        return commentRepo.save(comment);
+    }
 }
