@@ -21,7 +21,7 @@ function SidebarRow({ Icon, optionName, current, url }) {
 SidebarRow.propTypes = {
   Icon: PropTypes.object.isRequired,
   optionName: PropTypes.string.isRequired,
-  current: PropTypes.string.isRequired,
+  current: PropTypes.string,
   url: PropTypes.string.isRequired,
 }
 
