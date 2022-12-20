@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import Sidebar from './components/sidebar/Sidebar'
+import Sidebar from '../components/sidebar/Sidebar'
 
 function SidebarRoutes() {
   return (
