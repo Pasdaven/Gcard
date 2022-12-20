@@ -1,6 +1,6 @@
 import React from 'react'
-import SearchInput from './components/search/SearchInput'
-import PostPreview from './components/post/PostPreview'
+import SearchInput from '../components/search/SearchInput'
+import PostPreview from '../components/post/PostPreview'
 
 function Explore() {
   return (

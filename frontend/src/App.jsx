@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom'
-import AllBoard from './AllBoard'
-import Explore from './Explore'
-import Following from './Following'
+import AllBoard from './pages/AllBoard'
+import Explore from './pages/Explore'
+import Following from './pages/Following'
 import Price from './components/price/Price'
-import UserRoutes from './UserRoutes'
-import BoardRoutes from './BoardRoutes'
-import PostRoutes from './PostRoutes'
-import SidebarRoutes from './SidebarRoutes'
+import UserRoutes from './routes/UserRoutes'
+import BoardRoutes from './routes/BoardRoutes'
+import PostRoutes from './routes/PostRoutes'
+import SidebarRoutes from './routes/SidebarRoutes'
 
 function App() {
   return (
