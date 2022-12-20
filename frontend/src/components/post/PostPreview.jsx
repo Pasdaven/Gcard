@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import BoardTag from '../board/BoardTag'
 
 function PostPreview({
   postId,
@@ -16,9 +17,9 @@ function PostPreview({
     <a href={`/post/${postId}`} className="block">
       <div className="flex flex-col space-y-6 hover:ml-2 duration-500 delay-100 cursor-pointer mb-8">
         {/* User Info */}
-        <a
+        <button
           className="flex items-center space-x-5 group"
-          href={`/user/${userId}`}
+          onClick={() => (location.href = `/user/${userId}`)}
         >
           <span
             className="h-12 w-12 rounded-full bg-cover group-hover:scale-105 duration-200 delay-100"
@@ -27,7 +28,7 @@ function PostPreview({
           <p className="text-white tracking-[.7rem] text-2xl font-bold">
             {userName}
           </p>
-        </a>
+        </button>
         {/* Content */}
         <div className="space-y-2">
           <h1 className="text-white tracking-[.4rem] text-xl">{title}</h1>
@@ -36,18 +37,11 @@ function PostPreview({
           </p>
         </div>
         {/* Board Tag */}
-        <a
-          className="flex items-center space-x-2 bg-box rounded-2xl w-fit py-2 px-4 hover:bg-card duration-200"
-          href={`/board/${boardId}`}
-        >
-          <span
-            className="h-8 w-8 rounded-full bg-cover"
-            style={{ backgroundImage: `url(${boardIcon})` }}
-          ></span>
-          <span className="text-white tracking-[.5rem] text-base font-bold">
-            {boardName}
-          </span>
-        </a>
+        <BoardTag
+          boardIcon={boardIcon}
+          boardId={boardId}
+          boardName={boardName}
+        />
       </div>
       <hr className="border-gray-700" />
     </a>
