@@ -45,6 +45,27 @@ public class CommentController {
         comment.setUser(user);
         comment.setPost(post);
         CommentEntity newComment = commentService.saveComment(comment);
+        newComment.getUser().setUserAccount(null);
         return new ResponseEntity<>(newComment, HttpStatus.OK);
+    }
+
+    @PutMapping("/")
+    public ResponseEntity<CommentEntity> updateComment(@RequestBody CommentEntity commentEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
+        CommentEntity comment = commentService.getCommentById(commentEntity.getCommentId());
+        if (comment.getUser().getUserId() != userId) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        comment.setContent(commentEntity.getContent());
+        Date date = new Date();
+        comment.setTime(date);
+        CommentEntity updateComment = commentService.saveComment(comment);
+        updateComment.getUser().setUserAccount(null);
+        return new ResponseEntity<>(updateComment, HttpStatus.OK);
     }
 }

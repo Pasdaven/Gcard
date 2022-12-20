@@ -19,4 +19,8 @@ public class CommentService {
     public CommentEntity saveComment(CommentEntity comment) {
         return commentRepo.save(comment);
     }
+
+    public CommentEntity getCommentById(Integer commentId) {
+        return commentRepo.findById(commentId).get();
+    }
 }
