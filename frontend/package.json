@@ -13,6 +13,7 @@
     "react-router-dom": "^6.4.5",
     "react-scripts": "5.0.1",
     "tailwind-scrollbar-hide": "^1.1.7",
+    "tailwindcss-animation-delay": "^1.0.7",
     "web-vitals": "^3.1.0"
   },
   "scripts": {
