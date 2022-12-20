@@ -19,4 +19,12 @@ public class CommentService {
     public CommentEntity saveComment(CommentEntity comment) {
         return commentRepo.save(comment);
     }
+
+    public CommentEntity getCommentById(int commentId) {
+        return commentRepo.findById(commentId).get();
+    }
+
+    public void deleteComment(int commentId) {
+        commentRepo.deleteById(commentId);
+    }
 }

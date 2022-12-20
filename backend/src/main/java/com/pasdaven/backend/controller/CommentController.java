@@ -47,4 +47,18 @@ public class CommentController {
         CommentEntity newComment = commentService.saveComment(comment);
         return new ResponseEntity<>(newComment, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<CommentEntity> deleteComment(@PathVariable int commentId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        CommentEntity comment = commentService.getCommentById(commentId);
+        if (comment.getUser().getUserId() != userId) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        commentService.deleteComment(commentId);
+        return new ResponseEntity<>(null, HttpStatus.OK);
+    }
 }
