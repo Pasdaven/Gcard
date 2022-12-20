@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.UserAccountEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserAccountService;
 import com.pasdaven.backend.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/users")
@@ -17,11 +17,25 @@ public class UserController {
 
     final UserService userService;
     final UserAccountService userAccountService;
+    final JWTService jwtService;
 
 
-    public UserController(UserService userService, UserAccountService userAccountService) {
+    public UserController(UserService userService, UserAccountService userAccountService, JWTService jwtService) {
         this.userService = userService;
         this.userAccountService = userAccountService;
+        this.jwtService = jwtService;
+    }
+
+    @PostMapping("/login")
+    public String login(@RequestBody UserAccountEntity userAccountEntity) {
+        UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(userAccountEntity.getEmail());
+        if (userAccount == null) {
+            return "User not found";
+        } else if (userAccount.getPassword().equals(userAccountEntity.getPassword())) {
+            return jwtService.createToken(userAccount.getUser().getUserId(), userAccount.getEmail());
+        } else {
+            return "Wrong password";
+        }
     }
 
     public boolean checkEmail(String email) {
@@ -55,8 +69,13 @@ public class UserController {
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity, @PathVariable Integer id) {
+    @PutMapping("/")
+    public ResponseEntity<UserEntity> updateUser(@RequestBody UserEntity userEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
         UserEntity existUser = userService.getUserById(id);
         if (userEntity.getUserName() != null) {
             existUser.setUserName(userEntity.getUserName());
@@ -72,7 +91,12 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<UserEntity>> getAllUsers() {
+    public ResponseEntity<List<UserEntity>> getAllUsers(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
 
         List<UserEntity> users = userService.getAllUsers();
 
@@ -80,7 +104,13 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
         UserEntity user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }

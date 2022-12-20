@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.service.BoardService;
+import com.pasdaven.backend.service.JWTService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,15 +16,22 @@ import java.util.List;
 public class BoardController {
 
     final BoardService boardService;
+    final JWTService jwtService;
 
-    public BoardController(BoardService boardService) {
+    public BoardController(BoardService boardService, JWTService jwtService) {
         this.boardService = boardService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/")
     //create board
-    BoardEntity createBoard(@RequestBody BoardEntity boardEntity) {
-        return boardService.saveBoard(boardEntity);
+    public ResponseEntity<BoardEntity> createBoard(@RequestBody BoardEntity boardEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            // token is not valid or not admin
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        BoardEntity board = boardService.saveBoard(boardEntity);
+        return new ResponseEntity<>(board, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -45,7 +53,11 @@ public class BoardController {
 
     @DeleteMapping("/{boardId}")
     //delete board by id
-    public ResponseEntity<BoardEntity> deleteBoardById(@PathVariable(value = "boardId") Integer boardId) {
+    public ResponseEntity<BoardEntity> deleteBoardById(@PathVariable(value = "boardId") Integer boardId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            // token is not valid or not admin
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
         try{
             boardService.deleteBoardById(boardId);
             return ResponseEntity.ok().build();
@@ -56,7 +68,11 @@ public class BoardController {
 
     @DeleteMapping("/")
     //delete all boards
-    public ResponseEntity<BoardEntity> deleteAllBoards() {
+    public ResponseEntity<BoardEntity> deleteAllBoards(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            // token is not valid or not admin
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
         try{
             boardService.deleteAllBoards();
             return ResponseEntity.ok().build();
@@ -66,7 +82,12 @@ public class BoardController {
     }
 
     @PutMapping("/{boardId}")
-    public ResponseEntity<BoardEntity> updateBoard(@RequestBody BoardEntity boardEntity, @PathVariable Integer boardId) {
+    public ResponseEntity<BoardEntity> updateBoard(@RequestBody BoardEntity boardEntity, @PathVariable Integer boardId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            // token is not valid or not admin
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
         BoardEntity board = boardService.getBoardById(boardId);
         if (boardEntity.getBoardName() != null) {
             board.setBoardName(boardEntity.getBoardName());

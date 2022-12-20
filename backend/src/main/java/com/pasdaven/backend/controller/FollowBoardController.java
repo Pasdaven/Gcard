@@ -5,6 +5,7 @@ import com.pasdaven.backend.model.FollowBoardEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.BoardService;
 import com.pasdaven.backend.service.FollowBoardService;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserService;
 import jakarta.persistence.Entity;
 
@@ -24,15 +25,22 @@ public class FollowBoardController {
     final FollowBoardService followBoardService;
     final UserService userService;
     final BoardService boardService;
+    final JWTService jwtService;
 
-    public FollowBoardController(FollowBoardService followBoardService, UserService userService, BoardService boardService) {
+    public FollowBoardController(FollowBoardService followBoardService, UserService userService, BoardService boardService, JWTService jwtService) {
         this.followBoardService = followBoardService;
         this.userService = userService;
         this.boardService = boardService;
+        this.jwtService = jwtService;
     }
 
-    @PostMapping("/{userId}/{boardId}")
-    public void followBoard(@PathVariable Integer userId, @PathVariable Integer boardId) {
+    @PostMapping("/{boardId}")
+    public ResponseEntity<FollowBoardEntity> followBoard(@PathVariable Integer boardId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
         FollowBoardEntity followBoardEntity = new FollowBoardEntity();
         FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
 
@@ -46,6 +54,8 @@ public class FollowBoardController {
         followBoardEntity.setUser(user);
         followBoardEntity.setBoard(board);
         followBoardService.saveFollowBoard(followBoardEntity);
+
+        return new ResponseEntity<>(followBoardEntity, HttpStatus.CREATED);
     }
 
     @GetMapping("/")
@@ -69,8 +79,13 @@ public class FollowBoardController {
         return new ResponseEntity<>(followBoardEntitiesById, HttpStatus.OK);
     }
     
-    @DeleteMapping("/{userId}/{boardId}")
-    public void deleteFollowBoard(@PathVariable Integer userId, @PathVariable Integer boardId) {
+    @DeleteMapping("/{boardId}")
+    public ResponseEntity<FollowBoardEntity> deleteFollowBoard(@PathVariable Integer boardId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
         FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
         FollowBoardEntity followBoardEntity = new FollowBoardEntity();
         UserEntity user = userService.getUserById(userId);
@@ -81,5 +96,7 @@ public class FollowBoardController {
         followBoardEntity.setUser(user);
         followBoardEntity.setBoard(board);
         followBoardService.deleteFollowBoard(followBoardEntity);
+
+        return new ResponseEntity<>(followBoardEntity, HttpStatus.OK);
     }
 }

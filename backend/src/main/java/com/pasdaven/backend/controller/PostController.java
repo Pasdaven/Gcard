@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
 import org.apache.catalina.User;
@@ -17,14 +18,20 @@ import java.util.*;
 public class PostController {
     final PostService postService;
     final UserService userService;
+    final JWTService jwtService;
 
-    public PostController(PostService postService, UserService userService) {
+    public PostController(PostService postService, UserService userService, JWTService jwtService) {
         this.postService = postService;
         this.userService = userService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping("/")
-    public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity) {
+    public ResponseEntity<PostEntity> createPost(@RequestBody PostEntity postEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
         PostEntity post = new PostEntity();
         Date date = new Date();
 
@@ -39,8 +46,17 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id) {
+    public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
         PostEntity post = postService.getPostById(id);
+        if (post.getUser().getUserId() != userId) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
         Date date = new Date();
         if (postEntity.getContent() != null) {
             post.setContent(postEntity.getContent());
@@ -57,13 +73,18 @@ public class PostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deletePost(@PathVariable Integer id) {
-        try {
-            postService.deletePostById(id);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    public ResponseEntity<HttpStatus> deletePost(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
+
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        PostEntity post = postService.getPostById(id);
+        if (post.getUser().getUserId() != userId) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+        postService.deletePostById(id);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("/user/{id}")
@@ -71,21 +92,15 @@ public class PostController {
         UserEntity user = userService.getUserById(id);
         List<PostEntity> posts = postService.getPostsByUser(user);
         for (PostEntity post : posts) {
-
             if (post.getContent().length() > 50) {
-
                 post.setContent(post.getContent().substring(0, 50) + "...");
-
             }
-
-            post.setUser(post.getUser());
-
+            UserEntity userData = post.getUser();
+            userData.setUserAccount(null);
+            post.setUser(user);
             post.setBoard(post.getBoard());
-
         }
-
         return new ResponseEntity<>(posts, HttpStatus.OK);
-
     }
 
 
@@ -113,6 +128,7 @@ public class PostController {
                 if (post.getContent().length() > 50) {
                     post.setContent(post.getContent().substring(0, 50) + "...");
                 }
+                post.getUser().setUserAccount(null);
                 postsByBoard.add(post);
             }
         }
