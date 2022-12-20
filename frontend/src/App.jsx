@@ -1,8 +1,8 @@
 import { Routes, Route } from 'react-router-dom'
-import AllBoard from './AllBoard'
+import AllBoard from './pages/AllBoard'
 import Sidebar from './components/sidebar/Sidebar'
-import Explore from './Explore'
-import Following from './Following'
+import Explore from './pages/Explore'
+import Following from './pages/Following'
 import Price from './components/price/Price'
 
 function App() {

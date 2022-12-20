@@ -1,5 +1,5 @@
 import React from 'react'
-import FollowingItem from './components/Following/FollowingItem'
+import FollowingItem from '../components/following/FollowingItem'
 
 function Following() {
   return (
