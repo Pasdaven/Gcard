@@ -98,6 +98,23 @@ public class FollowUserController {
         return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
     }
 
+    @GetMapping("/token")
+    public ResponseEntity<List<FollowUserEntity>> getFollowUserByToken(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+
+        List<FollowUserEntity> followUserEntitiesByUserId = new ArrayList<FollowUserEntity>();
+        for (FollowUserEntity followUserEntity : followUserEntities) {
+            if (followUserEntity.getId().getFollowerId().equals(userId)) {
+                followUserEntitiesByUserId.add(followUserEntity);
+            }
+        }
+        return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
+    }
+
     @GetMapping("/fans/{userId}")
     public ResponseEntity<List<FollowUserEntity>> getFansByUserId(@PathVariable Integer userId) {
         List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
