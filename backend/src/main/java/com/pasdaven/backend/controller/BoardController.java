@@ -101,4 +101,10 @@ public class BoardController {
         boardService.saveBoard(board);
         return new ResponseEntity(board, HttpStatus.OK);
     }
+
+    @GetMapping("/search/{boardName}")
+    public ResponseEntity<List<BoardEntity>> searchBoardByName(@PathVariable String boardName) {
+        List<BoardEntity> boardEntities = boardService.searchBoardByName(boardName);
+        return new ResponseEntity<>(boardEntities, HttpStatus.OK);
+    }
 }
