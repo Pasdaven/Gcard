@@ -1,8 +1,9 @@
 import React from 'react'
 import { HeartIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-function BoardInfo() {
+function BoardInfo({ priceIcon, priceName, priceDescription }) {
   const [showHeart, setShowHeart] = useState(false)
   return (
     <>
@@ -11,16 +12,16 @@ function BoardInfo() {
           <div
             className="h-16 w-16 bg-cover bg-center rounded-full"
             style={{
-              backgroundImage: `url("https://storage.googleapis.com/image.blocktempo.com/2022/11/ethereum-logo-portrait-black-gray-1.png")`,
+              backgroundImage: `url(${priceIcon})`,
             }}
           ></div>
           <div className="text-white tracking-[.4rem] ml-2 mt-2 text-2xl">
-            ETH
+            {priceName}
           </div>
         </div>
         <div className="flex flex-col w-full justify-between space-y-4 pt-8 pb-4">
           <p className="text-white tracking-[.4rem] pr-12">
-            以太坊(Ethereum)是一個去中心化的於比特幣．以太坊使用最多的區塊鏈．台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E密貨幣．截至2021年12月，以太幣台．以太幣(ETH)密貨幣．截至2021年12月，以太幣台．以太幣(ETH)
+            {priceDescription}
           </p>
           <div className="flex justify-end mr-6">
             {showHeart ? (
@@ -39,6 +40,12 @@ function BoardInfo() {
       </div>
     </>
   )
+}
+
+BoardInfo.propTypes = {
+  priceIcon: PropTypes.string.isRequired,
+  priceDescription: PropTypes.string.isRequired,
+  priceName: PropTypes.string.isRequired,
 }
 
 export default BoardInfo

@@ -1,6 +1,5 @@
 import React from 'react'
 import BoardInfo from '../components/board/BoardInfo'
-// import BoardInfo2 from '../components/board/BoardInfo2'
 import SearchInput from '../components/search/SearchInput'
 import PostPreview from '../components/post/PostPreview'
 // import { useParams } from 'react-router-dom'
@@ -13,7 +12,15 @@ function Board() {
         <SearchInput />
       </div>
       <div className="m-12">
-        <BoardInfo />
+        <BoardInfo
+          priceIcon={
+            'https://storage.googleapis.com/image.blocktempo.com/2022/11/ethereum-logo-portrait-black-gray-1.png'
+          }
+          priceDescription={
+            '以太坊(Ethereum)是一個去中心化的於比特幣．以太坊使用最多的區塊鏈．台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E密貨幣．截至2021年12月，以太幣台．以太幣(ETH)密貨幣．截至2021年12月，以太幣台．以太幣(ETH)'
+          }
+          priceName={'ETH'}
+        />
       </div>
       <div className="m-12">
         <PostPreview
