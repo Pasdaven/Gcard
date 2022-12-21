@@ -13,7 +13,12 @@ function User() {
         <SearchInput />
       </div>
       <div className="mx-12">
-        <UserInfoCard />
+        <UserInfoCard
+          userName="David"
+          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
+          fansCount={10}
+          followingCount={10}
+        />
       </div>
       <div className="mx-12 space-y-12 mt-12">
         <PostPreview
