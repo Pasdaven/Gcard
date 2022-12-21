@@ -66,4 +66,16 @@ public class UserAccountController {
         UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(user.getUserAccount().getEmail());
         return new ResponseEntity<>(userAccount, HttpStatus.OK);
     }
+
+    @GetMapping("/tokenId/")
+    public ResponseEntity<UserAccountEntity> getUserAccountByToken(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        UserEntity user = userService.getUserById(id);
+        UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(user.getUserAccount().getEmail());
+        return new ResponseEntity<>(userAccount, HttpStatus.OK);
+    }
 }
