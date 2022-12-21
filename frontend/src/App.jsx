@@ -3,6 +3,7 @@ import AllBoard from './pages/AllBoard'
 import Explore from './pages/Explore'
 import Following from './pages/Following'
 import Price from './components/price/Price'
+import Login from './pages/Login'
 import UserRoutes from './routes/UserRoutes'
 import BoardRoutes from './routes/BoardRoutes'
 import PostRoutes from './routes/PostRoutes'
@@ -11,7 +12,7 @@ import SidebarRoutes from './routes/SidebarRoutes'
 function App() {
   return (
     <Routes>
-      <Route path="/login" element={<h1>Login Page</h1>} />
+      <Route path="/login" element={<Login />} />
       <Route
         path="/*"
         element={
