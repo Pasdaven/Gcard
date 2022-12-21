@@ -127,7 +127,7 @@ public class UserController {
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<List<UserEntity>> searchUser(@PathVariable String keyword) {
+    public ResponseEntity<List<UserEntity>> searchUserByName(@PathVariable String keyword) {
         List<UserEntity> users = userService.searchUserByName(keyword);
         for (UserEntity user : users) {
             user.setUserAccount(null);
