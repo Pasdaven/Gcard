@@ -96,4 +96,16 @@ public class FollowUserController {
         }
         return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
     }
+
+    @GetMapping("/fans/{userId}")
+    public ResponseEntity<List<FollowUserEntity>> getFansByUserId(@PathVariable Integer userId) {
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+        List<FollowUserEntity> followUserEntitiesByUserId = new ArrayList<FollowUserEntity>();
+        for (FollowUserEntity followUserEntity : followUserEntities) {
+            if (followUserEntity.getFollowed().getUserId().equals(userId)) {
+                followUserEntitiesByUserId.add(followUserEntity);
+            }
+        }
+        return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
+    }
 }
