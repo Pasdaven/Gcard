@@ -30,7 +30,7 @@ public class ApplicationBoardController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
         applicationBoardService.saveApplicationBoard(applicationBoardEntity);
-        return new ResponseEntity<>(applicationBoardEntity, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @GetMapping("/")
