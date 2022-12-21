@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/comments")
@@ -60,5 +61,15 @@ public class CommentController {
         }
         commentService.deleteComment(commentId);
         return new ResponseEntity<>(null, HttpStatus.OK);
+    }
+    
+    @GetMapping("/post/{postId}")
+    public ResponseEntity<List<CommentEntity>> getCommentsByPostId(@PathVariable int postId) {
+        PostEntity post = postService.getPostById(postId);
+        List<CommentEntity> comments = commentService.getCommentsByPost(post);
+        for (CommentEntity comment : comments) {
+            comment.getUser().setUserAccount(null);
+        }
+        return new ResponseEntity<>(comments, HttpStatus.OK);
     }
 }
