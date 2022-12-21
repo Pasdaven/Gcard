@@ -28,14 +28,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserAccountEntity userAccountEntity) {
+    public ResponseEntity<String> login(@RequestBody UserAccountEntity userAccountEntity) {
         UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(userAccountEntity.getEmail());
         if (userAccount == null) {
-            return "User not found";
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else if (userAccount.getPassword().equals(userAccountEntity.getPassword())) {
-            return jwtService.createToken(userAccount.getUser().getUserId(), userAccount.getEmail());
+            String token = jwtService.createToken(userAccount.getUser().getUserId(), userAccount.getEmail());
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } else {
-            return "Wrong password";
+            return new ResponseEntity<>("Wrong password", HttpStatus.FORBIDDEN);
         }
     }
 
