@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
-import AllBoardItem from './components/AllBoard/AllBoardItem'
+import AllBoardItem from '../components/board/AllBoardItem'
 
 function AllBoard() {
   const [data, setData] = useState([])

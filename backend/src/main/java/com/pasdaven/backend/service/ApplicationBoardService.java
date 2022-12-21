@@ -23,4 +23,8 @@ public class ApplicationBoardService {
     public List<ApplicationBoardEntity> getAllApplicationBoard() {
         return applicationBoardRepo.findAll();
     }
+
+    public ApplicationBoardEntity getApplicationBoardById(Integer applicationId) {
+        return applicationBoardRepo.findById(applicationId).get();
+    }
 }

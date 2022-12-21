@@ -9,7 +9,7 @@ import java.util.Date;
 public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer messageId;
+    private Integer commentId;
     private String content;
     private Date time;
 
@@ -24,20 +24,20 @@ public class CommentEntity {
     public CommentEntity() {
     }
 
-    public CommentEntity(Integer messageId, String content, Date time, UserEntity user, PostEntity post) {
-        this.messageId = messageId;
+    public CommentEntity(Integer commentId, String content, Date time, UserEntity user, PostEntity post) {
+        this.commentId = commentId;
         this.content = content;
         this.time = time;
         this.user = user;
         this.post = post;
     }
 
-    public Integer getMessageId() {
-        return messageId;
+    public Integer getCommentId() {
+        return commentId;
     }
 
-    public void setMessageId(Integer messageId) {
-        this.messageId = messageId;
+    public void setCommentId(Integer commentId) {
+        this.commentId = commentId;
     }
 
     public String getContent() {
