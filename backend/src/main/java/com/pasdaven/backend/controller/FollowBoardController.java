@@ -19,6 +19,7 @@ import java.util.List;
 import org.apache.catalina.User;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/followBoard")
 public class FollowBoardController {
 

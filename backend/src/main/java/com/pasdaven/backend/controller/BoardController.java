@@ -12,6 +12,7 @@ import com.pasdaven.backend.service.BoardService;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/board")
 public class BoardController {
 

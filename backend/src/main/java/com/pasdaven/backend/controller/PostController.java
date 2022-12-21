@@ -14,6 +14,7 @@ import java.util.*;
 
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/post")
 public class PostController {
     final PostService postService;

@@ -15,6 +15,7 @@ import java.util.ListResourceBundle;
 import java.util.Objects;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/followUsers")
 public class FollowUserController {
     final FollowUserService followUserService;
