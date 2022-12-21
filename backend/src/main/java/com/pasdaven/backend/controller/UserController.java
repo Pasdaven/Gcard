@@ -115,7 +115,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @GetMapping("/id/")
+    @GetMapping("/tokenId/")
     public ResponseEntity<UserEntity> getUserByToken(@RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
