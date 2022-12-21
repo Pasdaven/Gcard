@@ -17,4 +17,8 @@ public class ApplicationBoardService {
     public void saveApplicationBoard(ApplicationBoardEntity applicationBoardEntity) {
         applicationBoardRepo.save(applicationBoardEntity);
     }
+
+    public ApplicationBoardEntity getApplicationBoardById(Integer applicationId) {
+        return applicationBoardRepo.findById(applicationId).get();
+    }
 }
