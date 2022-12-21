@@ -54,8 +54,8 @@ public class UserAccountController {
         return new ResponseEntity<>(userAccountService.getAllUserAccount(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserAccountEntity> getUserAccountById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<UserAccountEntity> adminGetUserAccountById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
