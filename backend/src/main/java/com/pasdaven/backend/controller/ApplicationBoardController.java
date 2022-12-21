@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/applicationBoard")
 public class ApplicationBoardController {
@@ -23,10 +25,24 @@ public class ApplicationBoardController {
     }
 
     @PostMapping("/")
-    public void createApplicationBoard(@RequestBody ApplicationBoardEntity applicationBoardEntity) {
+    public ResponseEntity<ApplicationBoardEntity> createApplicationBoard(@RequestBody ApplicationBoardEntity applicationBoardEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
         applicationBoardService.saveApplicationBoard(applicationBoardEntity);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
+    @GetMapping("/")
+    public ResponseEntity<List<ApplicationBoardEntity>> getApplicationBoard(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        List<ApplicationBoardEntity> applicationBoardEntity = applicationBoardService.getAllApplicationBoard();
+        return new ResponseEntity<>(applicationBoardEntity, HttpStatus.OK);
+    }
+    
     @PutMapping("/review/{applicationBoardId}/{status}")
     public ResponseEntity<ApplicationBoardEntity> reviewApplicationBoard(@PathVariable Integer applicationBoardId, @PathVariable ApplicationBoardEntity.Status status, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {

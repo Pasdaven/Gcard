@@ -5,6 +5,8 @@ import com.pasdaven.backend.repo.ApplicationBoardRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class ApplicationBoardService {
@@ -16,6 +18,10 @@ public class ApplicationBoardService {
 
     public void saveApplicationBoard(ApplicationBoardEntity applicationBoardEntity) {
         applicationBoardRepo.save(applicationBoardEntity);
+    }
+
+    public List<ApplicationBoardEntity> getAllApplicationBoard() {
+        return applicationBoardRepo.findAll();
     }
 
     public ApplicationBoardEntity getApplicationBoardById(Integer applicationId) {
