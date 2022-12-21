@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/comments")
 public class CommentController {
     final CommentService commentService;

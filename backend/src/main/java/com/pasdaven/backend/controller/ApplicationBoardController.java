@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/applicationBoard")
 public class ApplicationBoardController {
     final ApplicationBoardService applicationBoardService;

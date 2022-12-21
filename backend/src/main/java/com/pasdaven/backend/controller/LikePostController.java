@@ -18,6 +18,7 @@ import java.util.List;
 import org.apache.catalina.User;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/likePosts")
 public class LikePostController {
     final LikePostService likePostService;
