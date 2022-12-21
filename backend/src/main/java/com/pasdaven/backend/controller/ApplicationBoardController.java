@@ -4,6 +4,7 @@ import com.pasdaven.backend.model.ApplicationBoardEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.ApplicationBoardService;
 import com.pasdaven.backend.service.JWTService;
+import com.pasdaven.backend.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,11 +25,12 @@ public class ApplicationBoardController {
     }
 
     @PostMapping("/")
-    public void createApplicationBoard(@RequestBody ApplicationBoardEntity applicationBoardEntity, @RequestHeader("Authorization") String token) {
-        if (jwtService.checkToken(token)) {
-            applicationBoardService.saveApplicationBoard(applicationBoardEntity);
+    public ResponseEntity<ApplicationBoardEntity> createApplicationBoard(@RequestBody ApplicationBoardEntity applicationBoardEntity, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
         applicationBoardService.saveApplicationBoard(applicationBoardEntity);
+        return new ResponseEntity<>(applicationBoardEntity, HttpStatus.OK);
     }
 
     @GetMapping("/")
