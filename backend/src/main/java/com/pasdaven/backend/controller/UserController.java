@@ -103,8 +103,8 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<UserEntity> admimGetUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
@@ -112,6 +112,13 @@ public class UserController {
         }
 
         UserEntity user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
+        user.setUserAccount(null);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
