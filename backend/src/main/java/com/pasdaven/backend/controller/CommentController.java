@@ -59,7 +59,7 @@ public class CommentController {
 
         CommentEntity comment = commentService.getCommentById(commentEntity.getCommentId());
         if (comment.getUser().getUserId() != userId) {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
 
         comment.setContent(commentEntity.getContent());
