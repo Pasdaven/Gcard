@@ -125,4 +125,13 @@ public class UserController {
         UserEntity user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<UserEntity>> searchUser(@PathVariable String keyword) {
+        List<UserEntity> users = userService.searchUserByName(keyword);
+        for (UserEntity user : users) {
+            user.setUserAccount(null);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 }

@@ -30,4 +30,8 @@ public class UserService {
     public UserEntity getUserById(Integer id) {
         return userRepo.findById(id).get();
     }
+
+    public List<UserEntity> searchUserByName(String keyword) {
+        return userRepo.findByUserNameContaining(keyword);
+    }
 }
