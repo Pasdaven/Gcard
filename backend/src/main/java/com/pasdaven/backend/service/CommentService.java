@@ -23,6 +23,10 @@ public class CommentService {
         return commentRepo.save(comment);
     }
 
+    public CommentEntity getCommentById(Integer commentId) {
+        return commentRepo.findById(commentId).get();
+    }
+    
     public List<CommentEntity> getCommentsByPost(PostEntity post) {
         return commentRepo.findAllByPost(post);
     }
