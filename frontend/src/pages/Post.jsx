@@ -65,7 +65,11 @@ function Post() {
         />
       </div>
       <div className="mx-12 mt-12">
-        <PostContent title={postData.title} content={postData.content} />
+        <PostContent
+          title={postData.title}
+          content={postData.content}
+          postId={postData.postId}
+        />
         <hr className="border-gray-700 my-8" />
         {commentData.map((data) => (
           <>
