@@ -1,48 +1,88 @@
 import React from 'react'
+import axios from 'axios'
 import PostPreview from '../components/post/PostPreview'
 import SearchInput from '../components/search/SearchInput'
-// import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import UserInfoCard from '../components/user/UserInfoCard'
+import { useState, useEffect } from 'react'
 
 function User() {
-  // const { userId } = useParams()
+  const { userId } = useParams()
+  const [userData, setUserData] = useState()
+  const [fansCount, setFansCount] = useState()
+  const [followingCount, setFollowingCount] = useState()
+  const [loading, setLoading] = useState(true)
+  const [post, setPost] = useState()
 
-  return (
+  async function fetchUserData() {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/users/${userId}`
+      )
+      setUserData(response.data)
+
+      const fansResponse = await axios.get(
+        `http://localhost:8080/api/followUsers/fans/${userId}`
+      )
+      setFansCount(fansResponse.data.length)
+
+      const followingResponse = await axios.get(
+        `http://localhost:8080/api/followUsers/${userId}`
+      )
+      setFollowingCount(followingResponse.data.length)
+
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function fetchPostByUser() {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/post/user/${userId}`
+      )
+      setPost(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchUserData()
+    fetchPostByUser()
+  }, [])
+
+  return loading ? (
+    <></>
+  ) : (
     <>
       <div className="m-12">
         <SearchInput />
       </div>
       <div className="mx-12">
         <UserInfoCard
-          userName="David"
-          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
-          fansCount={10}
-          followingCount={10}
+          userName={userData.userName}
+          userIcon={userData.imgUrl}
+          fansCount={fansCount}
+          followingCount={followingCount}
         />
       </div>
       <div className="mx-12 space-y-12 mt-12">
-        <PostPreview
-          title="ETH 2.0 the merge is coming"
-          contentPreview="ETH 2.0 the merge is coming, let's go to Bybit and hold eth!"
-          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
-          userName="David"
-          boardName="ETH"
-          boardIcon="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png"
-          userId={4}
-          boardId={3}
-          postId={5}
-        />
-        <PostPreview
-          title="ETH 2.0 the merge is coming"
-          contentPreview="ETH 2.0 the merge is coming, let's go to Bybit and hold eth!"
-          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
-          userName="David"
-          boardName="ETH"
-          boardIcon="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png"
-          userId={4}
-          boardId={3}
-          postId={5}
-        />
+        {post.map((data) => (
+          <PostPreview
+            key={data.postId}
+            title={data.title}
+            contentPreview={data.content}
+            userIcon={data.user.imgUrl}
+            userName={data.user.userName}
+            boardName={data.board.boardName}
+            boardIcon={data.board.iconUrl}
+            userId={data.user.userId}
+            boardId={data.board.boardId}
+            postId={data.postId}
+          />
+        ))}
       </div>
     </>
   )
