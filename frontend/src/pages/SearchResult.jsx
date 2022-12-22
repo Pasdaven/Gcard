@@ -34,7 +34,7 @@ function SearchResult() {
       </div>
       <div className="mx-12 my-10">
         <p className="tracking-[.4rem] text-tGray text-sm">
-          {keyword} 的搜尋結果如下
+          {keyword} {postData.length ? '的搜尋結果如下' : '查無任何結果'}
         </p>
       </div>
       <div className="mx-12 space-y-12">
