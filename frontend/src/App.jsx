@@ -24,9 +24,9 @@ function App() {
                 <Route path="/" element={<Explore />} />
                 <Route path="/allBoard" element={<AllBoard />} />
                 <Route path="/following" element={<Following />} />
-                <Route path="/user" element={<UserRoutes />} />
+                <Route path="/user/*" element={<UserRoutes />} />
                 <Route path="/board/*" element={<BoardRoutes />} />
-                <Route path="/post" element={<PostRoutes />} />
+                <Route path="/post/*" element={<PostRoutes />} />
               </Routes>
             </div>
             <div className="col-span-1">

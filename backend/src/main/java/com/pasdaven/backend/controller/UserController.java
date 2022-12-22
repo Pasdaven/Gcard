@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/users")
 public class UserController {
 
@@ -27,14 +28,15 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody UserAccountEntity userAccountEntity) {
+    public ResponseEntity<String> login(@RequestBody UserAccountEntity userAccountEntity) {
         UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(userAccountEntity.getEmail());
         if (userAccount == null) {
-            return "User not found";
+            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         } else if (userAccount.getPassword().equals(userAccountEntity.getPassword())) {
-            return jwtService.createToken(userAccount.getUser().getUserId(), userAccount.getEmail());
+            String token = jwtService.createToken(userAccount.getUser().getUserId(), userAccount.getEmail());
+            return new ResponseEntity<>(token, HttpStatus.OK);
         } else {
-            return "Wrong password";
+            return new ResponseEntity<>("Wrong password", HttpStatus.FORBIDDEN);
         }
     }
 
@@ -103,8 +105,8 @@ public class UserController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<UserEntity> admimGetUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
@@ -113,5 +115,32 @@ public class UserController {
 
         UserEntity user = userService.getUserById(id);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUserById(@PathVariable Integer id) {
+        UserEntity user = userService.getUserById(id);
+        user.setUserAccount(null);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/tokenId/")
+    public ResponseEntity<UserEntity> getUserByToken(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        UserEntity user = userService.getUserById(id);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @GetMapping("/search/{keyword}")
+    public ResponseEntity<List<UserEntity>> searchUserByName(@PathVariable String keyword) {
+        List<UserEntity> users = userService.searchUserByName(keyword);
+        for (UserEntity user : users) {
+            user.setUserAccount(null);
+        }
+        return new ResponseEntity<>(users, HttpStatus.OK);
     }
 }

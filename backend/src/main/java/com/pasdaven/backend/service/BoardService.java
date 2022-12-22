@@ -37,4 +37,8 @@ public class BoardService {
     public void deleteAllBoards() {
         boardRepo.deleteAll();
     }
+
+    public List<BoardEntity> searchBoardByName(String boardName) {
+        return boardRepo.findByBoardNameContaining(boardName);
+    }
 }

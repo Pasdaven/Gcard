@@ -1,6 +1,7 @@
 package com.pasdaven.backend.service;
 
 import com.pasdaven.backend.model.FollowUserEntity;
+import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.repo.FollowUserRepo;
 import org.springframework.stereotype.Service;
 

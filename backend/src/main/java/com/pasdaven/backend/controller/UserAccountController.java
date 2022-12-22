@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/usersAccount")
 public class UserAccountController {
 
@@ -54,14 +55,26 @@ public class UserAccountController {
         return new ResponseEntity<>(userAccountService.getAllUserAccount(), HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserAccountEntity> getUserAccountById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+    @GetMapping("/admin/{id}")
+    public ResponseEntity<UserAccountEntity> adminGetUserAccountById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
 
+        UserEntity user = userService.getUserById(id);
+        UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(user.getUserAccount().getEmail());
+        return new ResponseEntity<>(userAccount, HttpStatus.OK);
+    }
+
+    @GetMapping("/tokenId/")
+    public ResponseEntity<UserAccountEntity> getUserAccountByToken(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
         UserEntity user = userService.getUserById(id);
         UserAccountEntity userAccount = userAccountService.getUserAccountByEmail(user.getUserAccount().getEmail());
         return new ResponseEntity<>(userAccount, HttpStatus.OK);
