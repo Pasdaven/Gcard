@@ -1,6 +1,7 @@
 package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.FollowUserEntity;
+import com.pasdaven.backend.model.FollowUserFollowerData;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.FollowUserService;
 import com.pasdaven.backend.service.JWTService;
@@ -99,17 +100,28 @@ public class FollowUserController {
     }
 
     @GetMapping("/token")
-    public ResponseEntity<List<FollowUserEntity>> getFollowUserByToken(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<List<FollowUserFollowerData>> getFollowUserByToken(@RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
         List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
 
-        List<FollowUserEntity> followUserEntitiesByUserId = new ArrayList<FollowUserEntity>();
+        List<FollowUserFollowerData> followUserEntitiesByUserId = new ArrayList<FollowUserFollowerData>();
         for (FollowUserEntity followUserEntity : followUserEntities) {
             if (followUserEntity.getId().getFollowerId().equals(userId)) {
-                followUserEntitiesByUserId.add(followUserEntity);
+                int followerCount = 0;
+                int followedCount = 0;
+                followUserEntity.getFollowed().setUserAccount(null);
+                for (FollowUserEntity follow : followUserEntities) {
+                    if (follow.getId().getFollowedId().equals(followUserEntity.getId().getFollowedId())) {
+                        followerCount++;
+                    }
+                    if (follow.getId().getFollowerId().equals(followUserEntity.getId().getFollowedId())) {
+                        followedCount++;
+                    }
+                }
+                followUserEntitiesByUserId.add(new FollowUserFollowerData(followUserEntity, followerCount, followedCount));
             }
         }
         return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
