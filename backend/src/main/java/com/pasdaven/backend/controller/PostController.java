@@ -2,10 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.model.UserEntity;
-import com.pasdaven.backend.service.JWTService;
-import com.pasdaven.backend.service.PostService;
-import com.pasdaven.backend.service.UserService;
-import org.apache.catalina.User;
+import com.pasdaven.backend.service.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +16,13 @@ import java.util.*;
 public class PostController {
     final PostService postService;
     final UserService userService;
+    final CommentService commentService;
     final JWTService jwtService;
 
     public PostController(PostService postService, UserService userService, JWTService jwtService) {
         this.postService = postService;
         this.userService = userService;
+        this.commentService = commentService;
         this.jwtService = jwtService;
     }
 
@@ -84,6 +83,7 @@ public class PostController {
         if (post.getUser().getUserId() != userId) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+        commentService.deleteAllByPost(post);
         postService.deletePostById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
