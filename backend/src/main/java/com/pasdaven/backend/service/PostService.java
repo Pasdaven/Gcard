@@ -40,7 +40,7 @@ public class PostService {
         return postRepo.findByContentContainingOrTitleContaining(keyword, keyword);
     }
 
-    public List<PostEntity> getAllPost(Integer id) {
+    public List<PostEntity> getAllPost() {
         return postRepo.findAll();
     }
 }
