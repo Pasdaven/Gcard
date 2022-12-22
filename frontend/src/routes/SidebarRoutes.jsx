@@ -8,6 +8,7 @@ function SidebarRoutes() {
       <Route path="/" element={<Sidebar current="探索" />} />
       <Route path="/allBoard" element={<Sidebar current="所有看板" />} />
       <Route path="/following" element={<Sidebar current="追蹤中" />} />
+      <Route path="/post/create" element={<Sidebar current="新增貼文" />} />
       <Route path="/*" element={<Sidebar />} />
     </Routes>
   )
