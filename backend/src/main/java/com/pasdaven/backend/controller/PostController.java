@@ -5,7 +5,6 @@ import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
-import org.apache.catalina.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,7 +104,6 @@ public class PostController {
     }
 
 
-
     @GetMapping("/")
     public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
         List<PostEntity> posts = postService.getPostsByKeyword(keyword);
@@ -122,7 +120,7 @@ public class PostController {
 
     @GetMapping("/board/{id}")
     public ResponseEntity<List<PostEntity>> getPostByBoardId(@PathVariable Integer id) {
-        List<PostEntity> posts = postService.getAllPost(id);
+        List<PostEntity> posts = postService.getAllPost();
         List<PostEntity> postsByBoard = new ArrayList<PostEntity>();
         for (PostEntity post : posts) {
             if (Objects.equals(post.getBoard().getBoardId(), id)) {
@@ -134,5 +132,26 @@ public class PostController {
             }
         }
         return new ResponseEntity<>(postsByBoard, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<List<PostEntity>> getLatestPost() {
+        List<PostEntity> postEntities = postService.getAllPost();
+        List<PostEntity> latestPost = new ArrayList<PostEntity>();
+        int postLength = postEntities.size() - 1;
+        int max = 9;
+
+        if (postLength < max) {
+            max = postLength;
+        }
+
+        for (int i = 0; i <= max; i++) {
+            if (postEntities.get(postLength - i).getContent().length() > 50) {
+                postEntities.get(postLength - i).setContent(postEntities.get(postLength - i).getContent().substring(0, 50) + "...");
+            }
+            postEntities.get(postLength - i).getUser().setUserAccount(null);
+            latestPost.add(postEntities.get(postLength - i));
+        }
+        return new ResponseEntity<>(latestPost, HttpStatus.OK);
     }
 }
