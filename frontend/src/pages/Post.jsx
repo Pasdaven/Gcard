@@ -11,6 +11,7 @@ import BoardTag from '../components/board/BoardTag'
 function Post() {
   const { postId } = useParams()
   const [postData, setPostData] = useState()
+  const [commentData, setCommentData] = useState()
   const [loading, setLoading] = useState(true)
 
   const fetchPostData = async () => {
@@ -19,6 +20,17 @@ function Post() {
         `http://localhost:8080/api/post/${postId}`
       )
       setPostData(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const fetchCommentData = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/comments/post/${postId}`
+      )
+      setCommentData(response.data)
       setLoading(false)
     } catch (error) {
       console.log(error)
@@ -27,6 +39,7 @@ function Post() {
 
   useEffect(() => {
     fetchPostData()
+    fetchCommentData()
   }, [])
 
   return loading ? (
@@ -54,7 +67,18 @@ function Post() {
       <div className="mx-12 mt-12">
         <PostContent title={postData.title} content={postData.content} />
         <hr className="border-gray-700 my-8" />
-        <Comment />
+        {commentData.map((data) => (
+          <>
+            <Comment
+              key={data.commentId}
+              userId={data.user.userId}
+              userIcon={data.user.imgUrl}
+              userName={data.user.userName}
+              commentText={data.content}
+            />
+            <hr className="border-gray-700 my-8" />
+          </>
+        ))}
       </div>
     </>
   )
