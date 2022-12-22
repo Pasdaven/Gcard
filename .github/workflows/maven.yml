@@ -31,6 +31,7 @@ jobs:
       run: |
         touch .env
         echo JWT_SECRET=dev_test_key >> .env
+        echo DATABASE_PASSWORD=root >> .env
         cat .env
     - name: Run maven test
       run: |
