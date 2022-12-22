@@ -45,6 +45,15 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PostEntity> getPostByPostId(@PathVariable Integer id) {
+        PostEntity post = postService.getPostById(id);
+        UserEntity user = post.getUser();
+        user.setUserAccount(null);
+        post.setUser(user);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
