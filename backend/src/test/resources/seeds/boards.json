@@ -1,0 +1,32 @@
+[
+  {
+    "boardName": "btc board",
+    "description": "btc",
+    "iconUrl": "http://btc"
+  },
+  {
+    "boardName": "eth board",
+    "description": "eth",
+    "iconUrl": "http://eth"
+  },
+  {
+    "boardName": "dot board",
+    "description": "dot",
+    "iconUrl": "http://dot"
+  },
+  {
+    "boardName": "link board",
+    "description": "link",
+    "iconUrl": "http://btc"
+  },
+  {
+    "boardName": "sol board",
+    "description": "sol",
+    "iconUrl": "http://eth"
+  },
+  {
+    "boardName": "icp board",
+    "description": "icp",
+    "iconUrl": "http://dot"
+  }
+]
