@@ -2,31 +2,37 @@
   {
     "boardName": "btc board",
     "description": "btc",
-    "iconUrl": "http://btc"
+    "iconUrl": "http://btc",
+    "apiUrl": "http://btc"
   },
   {
     "boardName": "eth board",
     "description": "eth",
-    "iconUrl": "http://eth"
+    "iconUrl": "http://eth",
+    "apiUrl": "http://eth"
   },
   {
     "boardName": "dot board",
     "description": "dot",
-    "iconUrl": "http://dot"
+    "iconUrl": "http://dot",
+    "apiUrl": "http://dot"
   },
   {
     "boardName": "link board",
     "description": "link",
-    "iconUrl": "http://btc"
+    "iconUrl": "http://link",
+    "apiUrl": "http://link"
   },
   {
     "boardName": "sol board",
     "description": "sol",
-    "iconUrl": "http://eth"
+    "iconUrl": "http://sol",
+    "apiUrl": "http://sol"
   },
   {
     "boardName": "icp board",
     "description": "icp",
-    "iconUrl": "http://dot"
+    "iconUrl": "http://icp",
+    "apiUrl": "http://icp"
   }
 ]
