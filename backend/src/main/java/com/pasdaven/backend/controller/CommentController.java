@@ -71,7 +71,8 @@ public class CommentController {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
-        
+
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
         CommentEntity comment = commentService.getCommentById(commentEntity.getCommentId());
         if (comment.getUser().getUserId() != userId) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
