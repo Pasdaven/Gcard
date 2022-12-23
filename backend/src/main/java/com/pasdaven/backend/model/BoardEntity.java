@@ -11,15 +11,17 @@ public class BoardEntity {
     private String boardName;
     private String description;
     private String iconUrl;
+    private String apiUrl;
 
     public BoardEntity() {
     }
 
-    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl) {
+    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl, String apiUrl) {
         this.boardId = boardId;
         this.boardName = boardName;
         this.description = description;
         this.iconUrl = iconUrl;
+        this.apiUrl = apiUrl;
     }
 
     public Integer getBoardId() {
@@ -53,4 +55,9 @@ public class BoardEntity {
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
     }
+
+    public String getApiUrl() { return apiUrl; }
+
+    public void setApiUrl(String apiUrl) {this.apiUrl = apiUrl;}
+
 }
