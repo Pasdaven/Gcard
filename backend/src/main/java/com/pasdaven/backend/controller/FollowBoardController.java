@@ -42,7 +42,6 @@ public class FollowBoardController {
         }
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
 
-        FollowBoardEntity followBoardEntity = new FollowBoardEntity();
         FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
 
         UserEntity user = userService.getUserById(userId);
@@ -51,9 +50,7 @@ public class FollowBoardController {
         followBoardId.setUserId(userId);
         followBoardId.setBoardId(boardId);
 
-        followBoardEntity.setId(followBoardId);
-        followBoardEntity.setUser(user);
-        followBoardEntity.setBoard(board);
+        FollowBoardEntity followBoardEntity = new FollowBoardEntity(followBoardId, user, board);
         followBoardService.saveFollowBoard(followBoardEntity);
 
         return new ResponseEntity<>(followBoardEntity, HttpStatus.CREATED);
@@ -88,14 +85,13 @@ public class FollowBoardController {
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
 
         FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
-        FollowBoardEntity followBoardEntity = new FollowBoardEntity();
+
         UserEntity user = userService.getUserById(userId);
         BoardEntity board = boardService.getBoardById(boardId);
         followBoardId.setUserId(userId);
         followBoardId.setBoardId(boardId);
-        followBoardEntity.setId(followBoardId);
-        followBoardEntity.setUser(user);
-        followBoardEntity.setBoard(board);
+
+        FollowBoardEntity followBoardEntity = new FollowBoardEntity(followBoardId, user, board);
         followBoardService.deleteFollowBoard(followBoardEntity);
 
         return new ResponseEntity<>(followBoardEntity, HttpStatus.OK);

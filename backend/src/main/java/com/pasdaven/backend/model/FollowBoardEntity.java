@@ -16,10 +16,21 @@ public class FollowBoardEntity {
     @JsonIgnore
     private UserEntity user;
 
+
     @ManyToOne
     @MapsId("boardId")
     @JsonIgnore
     private BoardEntity board;
+
+    public FollowBoardEntity(FollowBoardId id, UserEntity user, BoardEntity board) {
+        this.id = id;
+        this.user = user;
+        this.board = board;
+    }
+
+    public FollowBoardEntity() {
+
+    }
 
     public FollowBoardId getId() {
         return id;
