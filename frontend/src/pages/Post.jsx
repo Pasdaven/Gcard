@@ -45,7 +45,7 @@ function Post() {
   return loading ? (
     <></>
   ) : (
-    <>
+    <div>
       <div className="m-12">
         <SearchInput />
       </div>
@@ -69,6 +69,7 @@ function Post() {
           title={postData.title}
           content={postData.content}
           postId={postData.postId}
+          userIcon={postData.user.imgUrl}
         />
         <hr className="border-gray-700 my-8" />
         {commentData.map((data) => (
@@ -84,7 +85,7 @@ function Post() {
           </>
         ))}
       </div>
-    </>
+    </div>
   )
 }
 
