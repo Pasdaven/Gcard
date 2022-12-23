@@ -30,4 +30,12 @@ public class CommentService {
     public List<CommentEntity> getCommentsByPost(PostEntity post) {
         return commentRepo.findAllByPost(post);
     }
+
+    public void deleteAllComments() {
+        commentRepo.deleteAll();
+    }
+
+    public void deleteAllByPost(PostEntity post) {
+        commentRepo.deleteAllByPost(post);
+    }
 }

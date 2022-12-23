@@ -9,17 +9,22 @@ public class BoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardId;
     private String boardName;
+    @Column(length = 1000)
     private String description;
+    @Column(length = 1000)
     private String iconUrl;
+    @Column(length = 1000)
+    private String apiUrl;
 
     public BoardEntity() {
     }
 
-    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl) {
+    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl, String apiUrl) {
         this.boardId = boardId;
         this.boardName = boardName;
         this.description = description;
         this.iconUrl = iconUrl;
+        this.apiUrl = apiUrl;
     }
 
     public Integer getBoardId() {
@@ -53,4 +58,9 @@ public class BoardEntity {
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
     }
+
+    public String getApiUrl() { return apiUrl; }
+
+    public void setApiUrl(String apiUrl) {this.apiUrl = apiUrl;}
+
 }

@@ -31,7 +31,14 @@ jobs:
       run: |
         touch .env
         echo JWT_SECRET=dev_test_key >> .env
+        echo DATABASE_PASSWORD=root >> .env
         cat .env
     - name: Run maven test
       run: |
         mvn test
+    - name: Upload coverage report to Codecov
+      uses: codecov/codecov-action@v3
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: /backend/target/site/jacoco/jacoco.xml
+

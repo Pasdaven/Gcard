@@ -1,0 +1,65 @@
+[
+  {
+    "role": "admin",
+    "userName": "a",
+    "imgUrl": "img/123",
+    "userAccount": {
+      "email": "test1@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "admin",
+    "userName": "b",
+    "imgUrl": "img/124",
+    "userAccount": {
+      "email": "test2@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "admin",
+    "userName": "c",
+    "imgUrl": "img/125",
+    "userAccount": {
+      "email": "test3@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "user",
+    "userName": "d",
+    "imgUrl": "img/126",
+    "userAccount": {
+      "email": "test4@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "user",
+    "userName": "e",
+    "imgUrl": "img/127",
+    "userAccount": {
+      "email": "test5@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "user",
+    "userName": "f",
+    "imgUrl": "img/128",
+    "userAccount": {
+      "email": "test6@gmail.com",
+      "password": "1234"
+    }
+  },
+  {
+    "role": "user",
+    "userName": "aa",
+    "imgUrl": "img/129",
+    "userAccount": {
+      "email": "test7@gmail.com",
+      "password": "1234"
+    }
+  }
+]

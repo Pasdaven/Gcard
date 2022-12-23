@@ -27,4 +27,8 @@ public class ApplicationBoardService {
     public ApplicationBoardEntity getApplicationBoardById(Integer applicationId) {
         return applicationBoardRepo.findById(applicationId).get();
     }
+
+    public void deleteAllApplicationBoard() {
+        applicationBoardRepo.deleteAll();
+    }
 }

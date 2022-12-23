@@ -18,7 +18,6 @@ public class FollowUserEntity {
 
     @ManyToOne
     @MapsId("followedId")
-    @JsonIgnore
     private UserEntity followed;
 
     public FollowUserId getId() {

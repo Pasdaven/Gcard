@@ -1,11 +1,8 @@
 package com.pasdaven.backend.controller;
 
-import com.pasdaven.backend.model.PostEntity;
-import com.pasdaven.backend.model.UserEntity;
-import com.pasdaven.backend.service.JWTService;
-import com.pasdaven.backend.service.PostService;
-import com.pasdaven.backend.service.UserService;
-import org.apache.catalina.User;
+import com.pasdaven.backend.model.*;
+import com.pasdaven.backend.service.*;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,11 +16,19 @@ import java.util.*;
 public class PostController {
     final PostService postService;
     final UserService userService;
+
+    final BoardService boardService;
+
+    final CommentService commentService;
+    final LikePostService likePostService;
     final JWTService jwtService;
 
-    public PostController(PostService postService, UserService userService, JWTService jwtService) {
+    public PostController(PostService postService, UserService userService, BoardService boardService, CommentService commentService, LikePostService likePostService, JWTService jwtService) {
         this.postService = postService;
         this.userService = userService;
+        this.boardService = boardService;
+        this.commentService = commentService;
+        this.likePostService = likePostService;
         this.jwtService = jwtService;
     }
 
@@ -44,6 +49,15 @@ public class PostController {
         post.setBoard(postEntity.getBoard());
         PostEntity newPost = postService.savePost(post);
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostEntity> getPostByPostId(@PathVariable Integer id) {
+        PostEntity post = postService.getPostById(id);
+        UserEntity user = post.getUser();
+        user.setUserAccount(null);
+        post.setUser(user);
+        return new ResponseEntity<>(post, HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
@@ -84,6 +98,7 @@ public class PostController {
         if (post.getUser().getUserId() != userId) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+        commentService.deleteAllByPost(post);
         postService.deletePostById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
@@ -105,7 +120,6 @@ public class PostController {
     }
 
 
-
     @GetMapping("/")
     public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
         List<PostEntity> posts = postService.getPostsByKeyword(keyword);
@@ -122,17 +136,52 @@ public class PostController {
 
     @GetMapping("/board/{id}")
     public ResponseEntity<List<PostEntity>> getPostByBoardId(@PathVariable Integer id) {
-        List<PostEntity> posts = postService.getAllPost(id);
-        List<PostEntity> postsByBoard = new ArrayList<PostEntity>();
+
+        BoardEntity board = boardService.getBoardById(id);
+        List<PostEntity> posts = postService.getPostsByBoard(board);
+
         for (PostEntity post : posts) {
-            if (Objects.equals(post.getBoard().getBoardId(), id)) {
-                if (post.getContent().length() > 50) {
-                    post.setContent(post.getContent().substring(0, 50) + "...");
-                }
-                post.getUser().setUserAccount(null);
-                postsByBoard.add(post);
+            if (post.getContent().length() > 50) {
+                post.setContent(post.getContent().substring(0, 50) + "...");
+            }
+            post.getUser().setUserAccount(null);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<List<PostEntity>> getLatestPost() {
+        List<PostEntity> postEntities = postService.getAllPost();
+        List<PostEntity> latestPost = new ArrayList<PostEntity>();
+        int postLength = postEntities.size() - 1;
+        int max = 9;
+
+        if (postLength < max) {
+            max = postLength;
+        }
+
+        for (int i = 0; i <= max; i++) {
+            if (postEntities.get(postLength - i).getContent().length() > 50) {
+                postEntities.get(postLength - i).setContent(postEntities.get(postLength - i).getContent().substring(0, 50) + "...");
+            }
+            postEntities.get(postLength - i).getUser().setUserAccount(null);
+            latestPost.add(postEntities.get(postLength - i));
+        }
+        return new ResponseEntity<>(latestPost, HttpStatus.OK);
+    }
+
+    @GetMapping("/like/{postId}")
+    public ResponseEntity<Boolean> checkUserLikePostByToken(@PathVariable Integer postId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        List<LikePostEntity> likePostEntities = likePostService.getAllLikePosts();
+        for (LikePostEntity likePostEntity : likePostEntities) {
+            if (Objects.equals(likePostEntity.getPost().getPostId(), postId) && likePostEntity.getUser().getUserId() == userId) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
             }
         }
-        return new ResponseEntity<>(postsByBoard, HttpStatus.OK);
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 }
