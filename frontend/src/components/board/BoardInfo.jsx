@@ -8,6 +8,11 @@ function BoardInfo({ priceId, priceIcon, priceName, priceDescription }) {
   const [likePost, setLikePost] = useState(false)
   const token = localStorage.getItem('jwt_token')
 
+  const auth = () => {
+    if (!localStorage.getItem('jwt_token')) location.href = '/login'
+    else return true
+  }
+
   const fetchLikePost = async () => {
     event.preventDefault()
     try {
@@ -26,6 +31,7 @@ function BoardInfo({ priceId, priceIcon, priceName, priceDescription }) {
   }
 
   const updateLikePost = async () => {
+    auth()
     try {
       if (likePost) {
         await axios.delete(`http://localhost:8080/api/likePosts/${priceId}`, {

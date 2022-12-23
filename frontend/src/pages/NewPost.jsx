@@ -10,6 +10,11 @@ function NewPost() {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
+  const auth = () => {
+    if (!localStorage.getItem('jwt_token')) location.href = '/login'
+    else return true
+  }
+
   const fetchBoardOption = async () => {
     try {
       const res = await axios.get('http://localhost:8080/api/board/')
@@ -52,7 +57,7 @@ function NewPost() {
     fetchBoardOption()
   }, [])
 
-  return loading ? (
+  return auth() && loading ? (
     <></>
   ) : (
     <form onSubmit={() => handleSubmit()}>

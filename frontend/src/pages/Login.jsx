@@ -20,6 +20,7 @@ function Login() {
       )
       if (response.status === 200) {
         localStorage.setItem('jwt_token', response.data)
+        location.href = '/'
       }
     } catch (error) {
       console.error(error)

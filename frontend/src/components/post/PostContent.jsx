@@ -14,6 +14,11 @@ function PostContent({ title, content, postId, userIcon }) {
   const [showCommentBox, setShowCommentBox] = useState(false)
   const [commentContent, setCommentContent] = useState('')
 
+  const auth = () => {
+    if (!localStorage.getItem('jwt_token')) location.href = '/login'
+    else return true
+  }
+
   const fetchLikePost = async () => {
     try {
       const res = await axios.get(
@@ -31,6 +36,7 @@ function PostContent({ title, content, postId, userIcon }) {
   }
 
   const updateLikePost = async () => {
+    auth()
     try {
       if (likePost) {
         await axios.delete(`http://localhost:8080/api/likePosts/${postId}`, {
@@ -108,7 +114,9 @@ function PostContent({ title, content, postId, userIcon }) {
         </button>
         <button
           className="flex items-center space-x-2 hover:bg-card px-3 py-2 rounded-lg duration-150 hover:cursor-pointer"
-          onClick={() => setShowCommentBox(!showCommentBox)}
+          onClick={() => {
+            auth() && setShowCommentBox(!showCommentBox)
+          }}
         >
           {showCommentBox ? (
             <ChatBubbleLeftIcon className="h-6 w-6 text-sky-500" />

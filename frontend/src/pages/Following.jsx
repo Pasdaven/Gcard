@@ -9,6 +9,11 @@ function Following() {
   const [loading, setLoading] = useState(true)
   const token = localStorage.getItem('jwt_token')
 
+  const auth = () => {
+    if (!localStorage.getItem('jwt_token')) location.href = '/login'
+    else return true
+  }
+
   async function fetchUserData() {
     try {
       const response = await axios.get(
@@ -32,7 +37,7 @@ function Following() {
     fetchUserData()
   }, [])
 
-  return loading ? (
+  return auth() && loading ? (
     <></>
   ) : (
     <>
