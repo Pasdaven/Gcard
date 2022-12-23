@@ -67,12 +67,20 @@ public class InitSeedsTest {
         List<CommentEntity> comments = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/comments.json"), mapper.getTypeFactory().constructCollectionType(List.class, CommentEntity.class));
         //讀取 application_boards.json 檔
         List<ApplicationBoardEntity> applicationBoards = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/application_boards.json"), mapper.getTypeFactory().constructCollectionType(List.class, ApplicationBoardEntity.class));
+        //讀取 follow_boards.json 檔
+        List<FollowBoardEntity> followBoards = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/follow_boards.json"), mapper.getTypeFactory().constructCollectionType(List.class, FollowBoardEntity.class));
+        //讀取 follow_users.json 檔
+        List<FollowUserEntity> followUsers = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/follow_users.json"), mapper.getTypeFactory().constructCollectionType(List.class, FollowUserEntity.class));
+        //讀取 like_posts.json 檔
+        List<LikePostEntity> likePosts = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/like_posts.json"), mapper.getTypeFactory().constructCollectionType(List.class, LikePostEntity.class));
+
         // 清空資料庫
         userService.truncateAllTables();
         postService.deleteAllPosts();
         boardService.deleteAllBoards();
         userService.deleteAllUsers();
         userService.redistributeAutoIncrementNumbers();
+
         // 將 users 存入資料庫
         for (UserEntity user : users) {
             UserAccountEntity newUserAccount = userAccountService.saveUserAccount(user.getUserAccount());
@@ -95,6 +103,24 @@ public class InitSeedsTest {
         // 將 application_boards 存入資料庫
         for (ApplicationBoardEntity applicationBoard : applicationBoards) {
             applicationBoardService.saveApplicationBoard(applicationBoard);
+        }
+        // 將 follow_boards 存入資料庫
+        for (FollowBoardEntity followBoard : followBoards) {
+            followBoard.setUser(userService.getUserById(followBoard.getId().getUserId()));
+            followBoard.setBoard(boardService.getBoardById(followBoard.getId().getBoardId()));
+            followBoardService.saveFollowBoard(followBoard);
+        }
+        // 將 follow_users 存入資料庫
+        for (FollowUserEntity followUser : followUsers) {
+            followUser.setFollower(userService.getUserById(followUser.getId().getFollowerId()));
+            followUser.setFollowed(userService.getUserById(followUser.getId().getFollowedId()));
+            followUserService.saveFollowUser(followUser);
+        }
+        // 將 like_posts 存入資料庫
+        for (LikePostEntity likePost : likePosts) {
+            likePost.setUser(userService.getUserById(likePost.getId().getUserId()));
+            likePost.setPost(postService.getPostById(likePost.getId().getPostId()));
+            likePostService.saveLikePost(likePost);
         }
 
         //生成token
