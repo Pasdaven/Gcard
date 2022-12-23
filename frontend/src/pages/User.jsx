@@ -69,20 +69,24 @@ function User() {
         />
       </div>
       <div className="mx-12 space-y-12 mt-12">
-        {post.map((data) => (
-          <PostPreview
-            key={data.postId}
-            title={data.title}
-            contentPreview={data.content}
-            userIcon={data.user.imgUrl}
-            userName={data.user.userName}
-            boardName={data.board.boardName}
-            boardIcon={data.board.iconUrl}
-            userId={data.user.userId}
-            boardId={data.board.boardId}
-            postId={data.postId}
-          />
-        ))}
+        {post.length ? (
+          post.map((data) => (
+            <PostPreview
+              key={data.postId}
+              title={data.title}
+              contentPreview={data.content}
+              userIcon={data.user.imgUrl}
+              userName={data.user.userName}
+              boardName={data.board.boardName}
+              boardIcon={data.board.iconUrl}
+              userId={data.user.userId}
+              boardId={data.board.boardId}
+              postId={data.postId}
+            />
+          ))
+        ) : (
+          <p className="text-tGray tracking-[.3rem] text-lg">尚無任何貼文</p>
+        )}
       </div>
     </>
   )

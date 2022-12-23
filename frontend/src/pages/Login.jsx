@@ -29,13 +29,13 @@ function Login() {
 
   return (
     <>
-      <div className="bg-bg h-screen w-screen">
+      <div className="bg-bg h-screen w-screen flex flex-col justify-center items-center">
         <div className="flex justify-center items-center">
-          <img src="/image/banner.png" className="h-11 mt-28"></img>
+          <img src="/image/banner.png" className="h-11"></img>
         </div>
 
         <div className="flex justify-center items-center mt-8">
-          <div className="bg-card h-96 w-96 rounded-lg">
+          <div className="bg-card h-fit pb-8 w-96 rounded-lg">
             <div className="flex justify-center p-4">
               <h1 className="text-[28px] text-white p-4 tracking-[.6rem]">
                 登入
