@@ -47,10 +47,7 @@ public class FollowUserController {
         followUserId.setFollowerId(userId);
         followUserId.setFollowedId(followId);
 
-        FollowUserEntity followUserEntity = new FollowUserEntity();
-        followUserEntity.setId(followUserId);
-        followUserEntity.setFollower(user);
-        followUserEntity.setFollowed(followUser);
+        FollowUserEntity followUserEntity = new FollowUserEntity(followUserId, user, followUser);
         followUserService.saveFollowUser(followUserEntity);
         return new ResponseEntity<>(followUserEntity, HttpStatus.CREATED);
     }
@@ -62,15 +59,14 @@ public class FollowUserController {
         }
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
 
-        FollowUserEntity followUserEntity = new FollowUserEntity();
+
         FollowUserEntity.FollowUserId followUserId = new FollowUserEntity.FollowUserId();
         UserEntity user = userService.getUserById(userId);
         UserEntity followUser = userService.getUserById(followId);
         followUserId.setFollowerId(userId);
         followUserId.setFollowedId(followId);
-        followUserEntity.setId(followUserId);
-        followUserEntity.setFollower(user);
-        followUserEntity.setFollowed(followUser);
+
+        FollowUserEntity followUserEntity = new FollowUserEntity(followUserId, user, followUser);
         followUserService.deleteByFollowUserId(followUserEntity);
 
         return new ResponseEntity<>(followUserEntity, HttpStatus.OK);

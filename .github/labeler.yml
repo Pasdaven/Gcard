@@ -6,3 +6,9 @@ frontend:
 
 ci:
 - .github/**/*
+
+test:
+- backend/src/test/**/*
+
+database:
+- backend/src/main/java/com/pasdaven/backend/model/**/*

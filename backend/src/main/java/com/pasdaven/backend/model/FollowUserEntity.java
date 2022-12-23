@@ -20,6 +20,15 @@ public class FollowUserEntity {
     @MapsId("followedId")
     private UserEntity followed;
 
+    public FollowUserEntity() {
+    }
+
+    public FollowUserEntity(FollowUserId id, UserEntity follower, UserEntity followed) {
+        this.id = id;
+        this.follower = follower;
+        this.followed = followed;
+    }
+
     public FollowUserId getId() {
         return id;
     }

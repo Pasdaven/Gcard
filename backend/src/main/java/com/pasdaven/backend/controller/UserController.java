@@ -68,7 +68,7 @@ public class UserController {
         userAccount.setUser(newUser);
         UserAccountEntity newUserAccount = userAccountService.saveUserAccount(userAccount);
 
-        return new ResponseEntity<>(null, HttpStatus.CREATED);
+        return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @PutMapping("/")
@@ -106,7 +106,7 @@ public class UserController {
     }
 
     @GetMapping("/admin/{id}")
-    public ResponseEntity<UserEntity> admimGetUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
+    public ResponseEntity<UserEntity> adminGetUserById(@PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         } else if (jwtService.tokenCheckAdmin(token.split(" ")[1])) {
