@@ -92,19 +92,15 @@ public class BoardController {
             // token is not valid or not admin
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
-        try{
-            List<PostEntity> posts = postService.getAllPost();
-            for (PostEntity post : posts) {
-                likePostService.deleteAllLikePostByPost(post);
-                commentService.deleteAllByPost(post);
-            }
-            followBoardService.deleteAllFollowBoard();
-            postService.deleteAllPosts();
-            boardService.deleteAllBoards();
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return ResponseEntity.notFound().build();
+        List<PostEntity> posts = postService.getAllPost();
+        for (PostEntity post : posts) {
+            likePostService.deleteAllLikePostByPost(post);
+            commentService.deleteAllByPost(post);
         }
+        followBoardService.deleteAllFollowBoard();
+        postService.deleteAllPosts();
+        boardService.deleteAllBoards();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/{boardId}")

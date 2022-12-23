@@ -2,31 +2,37 @@
   {
     "boardName": "BTC",
     "description": "btc",
-    "iconUrl": "http://btc"
+    "iconUrl": "http://btc",
+    "apiUrl": "http://btc"
   },
   {
     "boardName": "ETH",
     "description": "eth",
-    "iconUrl": "http://eth"
+    "iconUrl": "http://eth",
+    "apiUrl": "http://eth"
   },
   {
     "boardName": "DOT",
     "description": "dot",
-    "iconUrl": "http://dot"
+    "iconUrl": "http://dot",
+    "apiUrl": "http://dot"
   },
   {
     "boardName": "LINK",
     "description": "link",
-    "iconUrl": "http://btc"
+    "iconUrl": "http://link",
+    "apiUrl": "http://link"
   },
   {
     "boardName": "SOL",
     "description": "sol",
-    "iconUrl": "http://eth"
+    "iconUrl": "http://sol",
+    "apiUrl": "http://sol"
   },
   {
     "boardName": "ICP",
     "description": "icp",
-    "iconUrl": "http://dot"
+    "iconUrl": "http://icp",
+    "apiUrl": "http://icp"
   }
 ]

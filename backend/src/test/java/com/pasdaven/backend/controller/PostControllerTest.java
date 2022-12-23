@@ -116,6 +116,15 @@ public class PostControllerTest extends InitSeedsTest {
     void getLatestPosts() throws Exception {
         mockMvc.perform(get("/post/latest"))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(post("/post/")
+                        .header("Authorization", token_one)
+                        .contentType("application/json")
+                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
+                .andExpect(status().isCreated());
+
+        mockMvc.perform(get("/post/latest"))
+                .andExpect(status().isOk());
     }
 
     @Test
