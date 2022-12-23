@@ -99,6 +99,9 @@ public class BoardController {
         if (boardEntity.getIconUrl() != null) {
             board.setIconUrl(boardEntity.getIconUrl());
         }
+        if (boardEntity.getApiUrl() != null) {
+            board.setApiUrl(boardEntity.getApiUrl());
+        }
         boardService.saveBoard(board);
         return new ResponseEntity(board, HttpStatus.OK);
     }

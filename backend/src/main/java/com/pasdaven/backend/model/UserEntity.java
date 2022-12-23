@@ -13,6 +13,7 @@ public class UserEntity {
     private Integer userId;
     private String userName;
     private Role role;
+    @Column(length = 1000)
     private String imgUrl;
 
 

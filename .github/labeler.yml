@@ -6,3 +6,6 @@ frontend:
 
 ci:
 - .github/**/*
+
+test:
+- backend/src/test/**/*
