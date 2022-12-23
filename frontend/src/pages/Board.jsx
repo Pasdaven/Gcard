@@ -2,49 +2,84 @@ import React from 'react'
 import BoardInfo from '../components/board/BoardInfo'
 import SearchInput from '../components/search/SearchInput'
 import PostPreview from '../components/post/PostPreview'
-// import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import axios from 'axios'
+import { useParams } from 'react-router-dom'
 
 function Board() {
-  //   const { id } = useParams()
-  return (
+  const { id } = useParams()
+  const [pId, setPId] = useState('')
+  const [pIcon, setPIcon] = useState('')
+  const [pDescription, setPDescription] = useState('')
+  const [pName, setPName] = useState('')
+  const [loading, setLoading] = useState(true)
+  const [data, setData] = useState([])
+
+  async function fetchPostData() {
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/post/board/${id}`
+      )
+      // console.log(response.data)
+      setData(response.data)
+
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  async function fetchBoardData() {
+    try {
+      const response = await axios.get(`http://localhost:8080/api/board/${id}`)
+      // console.log(response.data)
+      setPId(response.data.boardId)
+      setPIcon(response.data.iconUrl)
+      setPDescription(response.data.description)
+      setPName(response.data.boardName)
+
+      setLoading(false)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchBoardData()
+    fetchPostData()
+  }, [])
+
+  return loading ? (
+    <></>
+  ) : (
     <>
       <div className="m-12">
         <SearchInput />
       </div>
       <div className="m-12">
         <BoardInfo
-          priceIcon={
-            'https://storage.googleapis.com/image.blocktempo.com/2022/11/ethereum-logo-portrait-black-gray-1.png'
-          }
-          priceDescription={
-            '以太坊(Ethereum)是一個去中心化的於比特幣．以太坊使用最多的區塊鏈．台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣(ETH)是以太坊的原生加密貨幣．截至2021年12月，以太幣台．以太幣有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E有智能型合約功能的公共區塊鏈平台．以太幣(E密貨幣．截至2021年12月，以太幣台．以太幣(ETH)密貨幣．截至2021年12月，以太幣台．以太幣(ETH)'
-          }
-          priceName={'ETH'}
+          priceId={pId}
+          priceIcon={pIcon}
+          priceDescription={pDescription}
+          priceName={pName}
         />
       </div>
       <div className="m-12">
-        <PostPreview
-          title="ETH 2.0 the merge is coming"
-          contentPreview="ETH 2.0 the merge is coming, let's go to Bybit and hold eth!"
-          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
-          userName="David"
-          boardName="ETH"
-          boardIcon="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png"
-          userId={4}
-          boardId={3}
-          postId={5}
-        />
-        <PostPreview
-          title="ETH 2.0 the merge is coming"
-          contentPreview="ETH 2.0 the merge is coming, let's go to Bybit and hold eth!"
-          userIcon="https://avatars.githubusercontent.com/u/75478661?v=4"
-          userName="David"
-          boardName="ETH"
-          boardIcon="https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/1024/Ethereum-ETH-icon.png"
-          userId={4}
-          boardId={3}
-          postId={5}
-        />
+        {data.map((d) => (
+          <PostPreview
+            key={d.postId}
+            title={d.title}
+            contentPreview={d.content}
+            userIcon={d.user.imgUrl}
+            userName={d.user.userName}
+            boardName={d.board.boardName}
+            boardIcon={d.board.iconUrl}
+            userId={d.user.userId}
+            boardId={d.board.boardId}
+            postId={d.postId}
+          />
+        ))}
       </div>
     </>
   )

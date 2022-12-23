@@ -14,7 +14,6 @@ public class PostEntity {
     private String title;
     @Column(length = 1000)
     private String content;
-    private Integer score;
     private Date time;
 
     @ManyToOne
@@ -28,11 +27,10 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(Integer postId, String title, String content, Integer score, UserEntity user, BoardEntity board) {
+    public PostEntity(Integer postId, String title, String content, UserEntity user, BoardEntity board) {
         this.postId = postId;
         this.title = title;
         this.content = content;
-        this.score = score;
         this.user = user;
         this.board = board;
     }
@@ -58,14 +56,6 @@ public class PostEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
     }
 
     public Date getTime() {

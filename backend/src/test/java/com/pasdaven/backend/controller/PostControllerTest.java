@@ -20,14 +20,14 @@ public class PostControllerTest extends InitSeedsTest {
         mockMvc.perform(post("/post/")
                         .header("Authorization", token_one)
                         .contentType("application/json")
-                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"score\":0,\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
+                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
                 .andExpect(status().isCreated());
 
         //token not exists
         mockMvc.perform(post("/post/")
                         .header("Authorization", "Bearer invalid_token")
                         .contentType("application/json")
-                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"score\":0,\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
+                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
                 .andExpect(status().isUnauthorized());
     }
 
@@ -37,42 +37,35 @@ public class PostControllerTest extends InitSeedsTest {
         mockMvc.perform(put("/post/{id}",1)
                         .header("Authorization", token_two)
                         .contentType("application/json")
-                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\",\"score\":100}"))
+                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\"}"))
                 .andExpect(status().isForbidden());
 
         //token not exists
         mockMvc.perform(put("/post/{id}",1)
                         .header("Authorization", "Bearer invalid_token")
                         .contentType("application/json")
-                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\",\"score\":100}"))
+                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\"}"))
                 .andExpect(status().isUnauthorized());
 
         //token exists and correct user without title
         mockMvc.perform(put("/post/{id}",5)
                         .header("Authorization", token_two)
                         .contentType("application/json")
-                        .content("{\"content\":\"Updated Content\",\"score\":100}"))
+                        .content("{\"content\":\"Updated Content\"}"))
                 .andExpect(status().isCreated());
 
         //token exists and correct user without content
         mockMvc.perform(put("/post/{id}",5)
                         .header("Authorization", token_two)
                         .contentType("application/json")
-                        .content("{\"title\":\"Updated Title\",\"score\":100}"))
-                .andExpect(status().isCreated());
-
-        //token exists and correct user without score
-        mockMvc.perform(put("/post/{id}",5)
-                        .header("Authorization", token_two)
-                        .contentType("application/json")
-                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\"}"))
+                        .content("{\"title\":\"Updated Title\"}"))
                 .andExpect(status().isCreated());
 
         //token exists and correct user
         mockMvc.perform(put("/post/{id}",5)
                         .header("Authorization", token_two)
                         .contentType("application/json")
-                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\",\"score\":100}"))
+                        .content("{\"title\":\"Updated Title\",\"content\":\"Updated Content\"}"))
                 .andExpect(status().isCreated());
     }
 
