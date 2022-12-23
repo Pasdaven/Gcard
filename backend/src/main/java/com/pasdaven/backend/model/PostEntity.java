@@ -12,6 +12,7 @@ public class PostEntity {
     private Integer postId;
 
     private String title;
+    @Column(length = 1000)
     private String content;
     private Integer score;
     private Date time;

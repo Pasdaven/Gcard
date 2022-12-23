@@ -9,7 +9,9 @@ public class ApplicationBoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer applicationId;
     private String boardName;
+    @Column(length = 1000)
     private String description;
+    @Column(length = 1000)
     private String iconUrl;
 
     public enum Status {
