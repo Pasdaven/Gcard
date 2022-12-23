@@ -112,4 +112,34 @@ public class PostControllerTest extends InitSeedsTest {
                         .header("Authorization", token_one))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void getPostByPostId() throws Exception {
+        mockMvc.perform(get("/post/{id}",1))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getLatestPosts() throws Exception {
+        mockMvc.perform(get("/post/latest"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void checkUserLikePostByToken() throws Exception {
+        //token exists
+        mockMvc.perform(get("/post/like/{id}",1)
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+
+        //token not exists
+        mockMvc.perform(get("/post/like/{id}",1)
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+
+        //token exists and incorrect user
+        mockMvc.perform(get("/post/like/{id}",1)
+                        .header("Authorization", token_two))
+                .andExpect(status().isOk());
+    }
 }
