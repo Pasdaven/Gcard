@@ -11,7 +11,9 @@ import PropTypes from 'prop-types'
 function Sidebar({ current }) {
   return (
     <div className="flex flex-col items-start pt-12 pl-12 h-screen border-gray-700 border-r-[1px]">
-      <img src="/image/icon.png" alt="icon" className="h-16 mb-16 ml-6" />
+      <a href="/">
+        <img src="/image/icon.png" alt="icon" className="h-16 mb-16 ml-6" />
+      </a>
       <div className="option-group space-y-8">
         <SidebarRow
           optionName="探索"

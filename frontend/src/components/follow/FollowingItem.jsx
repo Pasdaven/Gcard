@@ -5,7 +5,7 @@ function FollowingItem({ userId, userIcon, name, followingCount, fansCount }) {
   return (
     <>
       <a href={`/user/${userId}`}>
-        <div className="flex justify-between rounded-lg bg-box text-white py-8 px-12 text-xl tracking-widest mb-8">
+        <div className="flex justify-between rounded-lg bg-box text-white py-8 px-12 text-xl tracking-widest mb-8 hover:drop-shadow-lg duration-300 ease-linear">
           <div className="flex items-center">
             <img src={userIcon} className="h-10 w-10 mr-4 rounded-full"></img>
             <p>{name}</p>

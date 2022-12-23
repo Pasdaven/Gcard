@@ -17,7 +17,7 @@ function AllBoard() {
   return (
     <>
       <div
-        className="grid grid-cols-2 xl:grid-cols-3 
+        className="grid grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4
     overflow-y-auto max-h-screen scrollbar-hide gap-12 p-12 justify-items-center"
       >
         {data.map((d) => (
