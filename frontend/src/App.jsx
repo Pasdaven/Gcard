@@ -10,12 +10,15 @@ import PostRoutes from './routes/PostRoutes'
 import SidebarRoutes from './routes/SidebarRoutes'
 import Register from './pages/Register'
 import SearchResult from './pages/SearchResult'
+import UserNavCard from './components/user/UserNavCard'
+import Logout from './pages/Logout'
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/logout" element={<Logout />} />
       <Route
         path="/*"
         element={
@@ -34,7 +37,8 @@ function App() {
                 <Route path="/post/*" element={<PostRoutes />} />
               </Routes>
             </div>
-            <div className="col-span-1">
+            <div className="col-span-1 pr-8 pt-8 space-y-12 duration-200 flex flex-col items-end">
+              <UserNavCard />
               <Price />
             </div>
           </div>
