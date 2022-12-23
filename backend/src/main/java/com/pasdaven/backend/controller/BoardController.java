@@ -3,13 +3,16 @@ package com.pasdaven.backend.controller;
 import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.service.*;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import com.pasdaven.backend.service.BoardService;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin("*")
@@ -132,5 +135,40 @@ public class BoardController {
     public ResponseEntity<List<BoardEntity>> searchBoardByName(@PathVariable String boardName) {
         List<BoardEntity> boardEntities = boardService.searchBoardByName(boardName);
         return new ResponseEntity<>(boardEntities, HttpStatus.OK);
+    }
+
+    @GetMapping("/price")
+    public ResponseEntity<List<Map<String, String>>> getBoardByPrice() {
+        String str = "";
+        List<BoardEntity> boardEntities = boardService.getAllBoards();
+        for (BoardEntity boardEntity : boardEntities) {
+            str += "," + boardEntity.getBoardName();
+        }
+        str = str.substring(1);
+        String apiUrl = "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=" + str;
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-CMC_PRO_API_KEY", "fc03d3ed-90af-4cf6-8fff-c034bfcf5af7");
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, Map.class);
+        Map<String, Object> responseBody = response.getBody();
+
+        Map<String, List<Map<String, Map<String, Map<String, Double>>>>> data = (Map<String, List<Map<String, Map<String, Map<String, Double>>>>>) responseBody.get("data");
+        List<Map<String, String>> result = new ArrayList<>();
+
+        data.forEach((symbol, list) -> {
+            Double price = list.get(0).get("quote").get("USD").get("price");
+            Map<String, String> item = new HashMap<>();
+
+            BoardEntity boardEntity = boardService.getBoardByBoardName(symbol);
+            item.put("boardId", boardEntity.getBoardId().toString());
+            item.put("boardIconUrl", boardEntity.getIconUrl());
+            item.put("tokenName", symbol);
+            item.put("tokenPrice", Double.toString(price));
+            result.add(item);
+        });
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+
     }
 }

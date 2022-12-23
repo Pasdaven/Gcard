@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface BoardRepo extends JpaRepository<BoardEntity, Integer> {
     List<BoardEntity> findByBoardNameContaining(String boardName);
+
+    BoardEntity findByBoardName(String symbol);
 }
