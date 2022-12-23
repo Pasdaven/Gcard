@@ -8,11 +8,13 @@ import UserRoutes from './routes/UserRoutes'
 import BoardRoutes from './routes/BoardRoutes'
 import PostRoutes from './routes/PostRoutes'
 import SidebarRoutes from './routes/SidebarRoutes'
+import Register from './pages/Register'
 
 function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/*"
         element={
