@@ -30,4 +30,8 @@ public class FollowUserService {
     public List<FollowUserEntity> getAllFollowUsers() {
         return followUserRepo.findAll();
     }
+
+    public void deleteAllFollowUsers() {
+        followUserRepo.deleteAll();
+    }
 }

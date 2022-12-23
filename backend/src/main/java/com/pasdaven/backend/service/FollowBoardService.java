@@ -30,4 +30,8 @@ public class FollowBoardService {
     public void deleteFollowBoard(FollowBoardEntity followBoardEntity) {
         followBoardRepo.delete(followBoardEntity);
     }
+
+    public void deleteAllFollowBoard() {
+        followBoardRepo.deleteAll();
+    }
 }
