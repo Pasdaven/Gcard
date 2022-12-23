@@ -1,10 +1,94 @@
 import React from 'react'
 import { HeartIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
 
-function BoardInfo({ priceIcon, priceName, priceDescription }) {
-  const [showHeart, setShowHeart] = useState(false)
+function BoardInfo({ priceId, priceIcon, priceName, priceDescription }) {
+  const [likePost, setLikePost] = useState(false)
+  const token = localStorage.getItem('jwt_token')
+
+  const fetchLikePost = async () => {
+    event.preventDefault()
+    try {
+      const response = await axios.get(
+        `http://localhost:8080/api/post/like/${priceId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      setLikePost(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const updateLikePost = async () => {
+    try {
+      if (likePost) {
+        await axios.delete(`http://localhost:8080/api/likePosts/${priceId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      } else {
+        await axios.post(
+          `http://localhost:8080/api/likePosts/${priceId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+      }
+      fetchLikePost()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const addBoard = async () => {
+    event.preventDefault()
+    try {
+      const response = await axios.post(
+        `http://localhost:8080/api/followBoard/${priceId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const deleteBoard = async () => {
+    event.preventDefault()
+    try {
+      const response = await axios.delete(
+        `http://localhost:8080/api/followBoard/${priceId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      console.log(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchLikePost()
+  }, [])
+
   return (
     <>
       <div className="bg-box h-auto rounded-lg flex">
@@ -24,15 +108,21 @@ function BoardInfo({ priceIcon, priceName, priceDescription }) {
             {priceDescription}
           </p>
           <div className="flex justify-end mr-6">
-            {showHeart ? (
+            {likePost ? (
               <HeartIcon
                 className="h-6 w-6 text-red-500 hover:cursor-pointer active:scale-75"
-                onClick={() => setShowHeart(!showHeart)}
+                onClick={function () {
+                  updateLikePost()
+                  deleteBoard()
+                }}
               />
             ) : (
               <HeartIcon
                 className="h-6 w-6 text-white hover:cursor-pointer active:scale-75"
-                onClick={() => setShowHeart(!showHeart)}
+                onClick={function () {
+                  updateLikePost()
+                  addBoard()
+                }}
               />
             )}
           </div>
@@ -43,6 +133,7 @@ function BoardInfo({ priceIcon, priceName, priceDescription }) {
 }
 
 BoardInfo.propTypes = {
+  priceId: PropTypes.number.isRequired,
   priceIcon: PropTypes.string.isRequired,
   priceDescription: PropTypes.string.isRequired,
   priceName: PropTypes.string.isRequired,
