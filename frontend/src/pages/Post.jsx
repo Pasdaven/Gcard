@@ -14,7 +14,7 @@ function Post() {
   const [commentData, setCommentData] = useState()
   const [loading, setLoading] = useState(true)
 
-  const fetchPostData = async () => {
+  const fetchData = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/post/${postId}`
@@ -23,23 +23,19 @@ function Post() {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  const fetchCommentData = async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/comments/post/${postId}`
       )
       setCommentData(response.data)
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
-    fetchPostData()
-    fetchCommentData()
+    fetchData()
   }, [])
 
   return loading ? (
