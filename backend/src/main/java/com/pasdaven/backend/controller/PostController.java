@@ -1,7 +1,10 @@
 package com.pasdaven.backend.controller;
 
+import com.pasdaven.backend.model.FollowUserEntity;
 import com.pasdaven.backend.model.PostEntity;
+import com.pasdaven.backend.model.PostWithFollowUserData;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.service.FollowUserService;
 import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.PostService;
 import com.pasdaven.backend.service.UserService;
@@ -18,11 +21,13 @@ import java.util.*;
 public class PostController {
     final PostService postService;
     final UserService userService;
+    final FollowUserService followUserService;
     final JWTService jwtService;
 
-    public PostController(PostService postService, UserService userService, JWTService jwtService) {
+    public PostController(PostService postService, UserService userService, FollowUserService followUserService, JWTService jwtService) {
         this.postService = postService;
         this.userService = userService;
+        this.followUserService = followUserService;
         this.jwtService = jwtService;
     }
 
@@ -46,12 +51,21 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostEntity> getPostByPostId(@PathVariable Integer id) {
+    public ResponseEntity<PostWithFollowUserData> getPostByPostId(@PathVariable Integer id) {
         PostEntity post = postService.getPostById(id);
-        UserEntity user = post.getUser();
-        user.setUserAccount(null);
-        post.setUser(user);
-        return new ResponseEntity<>(post, HttpStatus.OK);
+        List<FollowUserEntity> followUserEntity = followUserService.getAllFollowUsers();
+        int followingCount = 0;
+        int fansCount = 0;
+        for (FollowUserEntity follow : followUserEntity) {
+            if (Objects.equals(follow.getFollower().getUserId(), post.getUser().getUserId())) {
+                followingCount++;
+            }
+            if (Objects.equals(follow.getFollowed().getUserId(), post.getUser().getUserId())) {
+                fansCount++;
+            }
+        }
+        post.getUser().setUserAccount(null);
+        return new ResponseEntity<>(new PostWithFollowUserData(post, followingCount, fansCount), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
