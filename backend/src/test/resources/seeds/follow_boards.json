@@ -1,0 +1,38 @@
+[
+  {
+    "id": {
+      "userId": 1,
+      "boardId": 1
+    }
+  },
+  {
+    "id": {
+      "userId": 2,
+      "boardId": 1
+    }
+  },
+  {
+    "id": {
+      "userId": 4,
+      "boardId": 1
+    }
+  },
+  {
+    "id": {
+      "userId": 1,
+      "boardId": 2
+    }
+  },
+  {
+    "id": {
+      "userId": 2,
+      "boardId": 2
+    }
+  },
+  {
+    "id": {
+      "userId": 4,
+      "boardId": 2
+    }
+  }
+]

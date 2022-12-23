@@ -33,4 +33,8 @@ public class UserAccountService {
     public UserAccountEntity getUserAccountById(Integer id) {
         return userAccountRepo.findById(id).get();
     }
+
+    public void deleteAllUserAccount() {
+        userAccountRepo.deleteAll();
+    }
 }

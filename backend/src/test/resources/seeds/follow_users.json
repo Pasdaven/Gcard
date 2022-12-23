@@ -1,0 +1,38 @@
+[
+  {
+    "id": {
+      "followerId": 2,
+      "followedId": 1
+    }
+  },
+  {
+    "id": {
+      "followerId": 3,
+      "followedId": 1
+    }
+  },
+  {
+    "id": {
+      "followerId": 4,
+      "followedId": 1
+    }
+  },
+  {
+    "id": {
+      "followerId": 1,
+      "followedId": 2
+    }
+  },
+  {
+    "id": {
+      "followerId": 2,
+      "followedId": 4
+    }
+  },
+  {
+    "id": {
+      "followerId": 4,
+      "followedId": 2
+    }
+  }
+]

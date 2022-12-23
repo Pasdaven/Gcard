@@ -1,5 +1,6 @@
 package com.pasdaven.backend.service;
 
+import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.repo.PostRepo;
@@ -42,5 +43,17 @@ public class PostService {
 
     public List<PostEntity> getAllPost() {
         return postRepo.findAll();
+    }
+
+    public List<PostEntity> getPostsByBoard(BoardEntity board) {
+        return postRepo.findAllByBoard(board);
+    }
+
+    public void deleteAllPosts() {
+        postRepo.deleteAll();
+    }
+
+    public void deletePostByBoard(BoardEntity board) {
+        postRepo.deleteAllByBoard(board);
     }
 }

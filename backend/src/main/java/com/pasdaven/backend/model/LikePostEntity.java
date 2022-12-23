@@ -21,6 +21,14 @@ public class LikePostEntity {
     @JsonIgnore
     private PostEntity post;
 
+    public LikePostEntity() {
+    }
+
+    public LikePostEntity(UserEntity user, PostEntity post, LikePostId id) {
+        this.user = user;
+        this.post = post;
+        this.id = id;
+    }
     public LikePostId getId() {
         return id;
     }

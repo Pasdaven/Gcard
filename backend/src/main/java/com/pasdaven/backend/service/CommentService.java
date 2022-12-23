@@ -23,11 +23,23 @@ public class CommentService {
         return commentRepo.save(comment);
     }
 
-    public CommentEntity getCommentById(Integer commentId) {
+    public CommentEntity getCommentById(int commentId) {
         return commentRepo.findById(commentId).get();
+    }
+
+    public void deleteComment(int commentId) {
+        commentRepo.deleteById(commentId);
     }
     
     public List<CommentEntity> getCommentsByPost(PostEntity post) {
-        return commentRepo.findAllByPost(post);
+        return commentRepo.findAllByPostOrderByTimeDesc(post);
+    }
+
+    public void deleteAllComments() {
+        commentRepo.deleteAll();
+    }
+
+    public void deleteAllByPost(PostEntity post) {
+        commentRepo.deleteAllByPost(post);
     }
 }
