@@ -3,6 +3,8 @@ import SidebarRow from './SidebarRow'
 import {
   GlobeAsiaAustraliaIcon,
   RectangleStackIcon,
+  UserPlusIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/24/solid'
 import PropTypes from 'prop-types'
 
@@ -25,8 +27,14 @@ function Sidebar({ current }) {
         />
         <SidebarRow
           optionName="追蹤中"
-          Icon={GlobeAsiaAustraliaIcon}
+          Icon={UserPlusIcon}
           url="/following"
+          current={current}
+        />
+        <SidebarRow
+          optionName="新增貼文"
+          Icon={PlusCircleIcon}
+          url="/post/create"
           current={current}
         />
       </div>
