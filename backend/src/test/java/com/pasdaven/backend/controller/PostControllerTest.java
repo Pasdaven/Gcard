@@ -142,4 +142,5 @@ public class PostControllerTest extends InitSeedsTest {
                         .header("Authorization", token_two))
                 .andExpect(status().isOk());
     }
+
 }

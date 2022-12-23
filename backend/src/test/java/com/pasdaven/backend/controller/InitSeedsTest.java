@@ -74,6 +74,7 @@ public class InitSeedsTest {
         //讀取 like_posts.json 檔
         List<LikePostEntity> likePosts = mapper.readValue(fileSystemService.readFile("src/test/resources/seeds/like_posts.json"), mapper.getTypeFactory().constructCollectionType(List.class, LikePostEntity.class));
 
+
         // 清空資料庫
         userService.truncateAllTables();
         postService.deleteAllPosts();
@@ -122,6 +123,7 @@ public class InitSeedsTest {
             likePost.setPost(postService.getPostById(likePost.getId().getPostId()));
             likePostService.saveLikePost(likePost);
         }
+
 
         //生成token
         token_one = "Bearer " + jwtService.createToken(1,"test1@gmail.com");
