@@ -61,4 +61,22 @@ public class CommentControllerTest extends InitSeedsTest {
                 .andExpect(status().isOk());
     }
 
+    @Test
+    void deleteComment() throws Exception {
+        //token exists and incorrect user
+        mockMvc.perform(delete("/comments/{commentId}",1)
+                        .header("Authorization", token_two))
+                .andExpect(status().isForbidden());
+
+        //token not exists
+        mockMvc.perform(delete("/comments/{commentId}",1)
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+
+        //token exists and correct user
+        mockMvc.perform(delete("/comments/{commentId}",1)
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+    }
+
 }
