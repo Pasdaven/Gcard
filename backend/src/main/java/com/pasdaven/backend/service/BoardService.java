@@ -41,4 +41,8 @@ public class BoardService {
     public List<BoardEntity> searchBoardByName(String boardName) {
         return boardRepo.findByBoardNameContaining(boardName);
     }
+
+    public BoardEntity getBoardByBoardName(String symbol) {
+        return boardRepo.findByBoardName(symbol);
+    }
 }
