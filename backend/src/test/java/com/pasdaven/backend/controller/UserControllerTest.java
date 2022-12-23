@@ -87,12 +87,12 @@ public class UserControllerTest extends InitSeedsTest {
                 .andExpect(status().isUnauthorized());
 
         mockMvc.perform(get("/users/")
-                        .header("Authorization", token_one))
-                .andExpect(status().isOk());
-
-        mockMvc.perform(get("/users/")
                         .header("Authorization", token_four))
                 .andExpect(status().isForbidden());
+
+        mockMvc.perform(get("/users/")
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
     }
 
     @Test
