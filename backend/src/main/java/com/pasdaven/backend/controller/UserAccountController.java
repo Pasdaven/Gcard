@@ -30,11 +30,11 @@ public class UserAccountController {
 
     @PutMapping("/")
     public ResponseEntity<UserAccountEntity> updateUserAccount(@RequestBody UserAccountEntity userAccountEntity, @RequestHeader("Authorization") String token) {
-        if (jwtService.checkToken(token)) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
 
-        int id = jwtService.getUserIdFromToken(token);
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
         UserEntity existUser = userService.getUserById(id);
         String email = existUser.getUserAccount().getEmail();
         UserAccountEntity existUserAccount = userAccountService.getUserAccountByEmail(email);
