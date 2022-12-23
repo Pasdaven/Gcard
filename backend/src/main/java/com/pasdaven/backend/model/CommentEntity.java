@@ -10,6 +10,7 @@ public class CommentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer commentId;
+    @Column(length = 1000)
     private String content;
     private Date time;
 

@@ -9,8 +9,11 @@ public class BoardEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer boardId;
     private String boardName;
+    @Column(length = 1000)
     private String description;
+    @Column(length = 1000)
     private String iconUrl;
+    @Column(length = 1000)
     private String apiUrl;
 
     public BoardEntity() {
