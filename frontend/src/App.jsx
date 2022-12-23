@@ -8,6 +8,7 @@ import UserRoutes from './routes/UserRoutes'
 import BoardRoutes from './routes/BoardRoutes'
 import PostRoutes from './routes/PostRoutes'
 import SidebarRoutes from './routes/SidebarRoutes'
+import SearchResult from './pages/SearchResult'
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/" element={<Explore />} />
                 <Route path="/allBoard" element={<AllBoard />} />
                 <Route path="/following" element={<Following />} />
+                <Route path="/search/:keyword" element={<SearchResult />} />
                 <Route path="/user/*" element={<UserRoutes />} />
                 <Route path="/board/*" element={<BoardRoutes />} />
                 <Route path="/post/*" element={<PostRoutes />} />

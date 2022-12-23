@@ -49,6 +49,15 @@ public class PostController {
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PostEntity> getPostByPostId(@PathVariable Integer id) {
+        PostEntity post = postService.getPostById(id);
+        UserEntity user = post.getUser();
+        user.setUserAccount(null);
+        post.setUser(user);
+        return new ResponseEntity<>(post, HttpStatus.OK);
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<PostEntity> updatePost(@RequestBody PostEntity postEntity, @PathVariable Integer id, @RequestHeader("Authorization") String token) {
         if (jwtService.checkToken(token.split(" ")[1])) {
@@ -109,7 +118,6 @@ public class PostController {
     }
 
 
-
     @GetMapping("/")
     public ResponseEntity<List<PostEntity>> getPostsByKeyword(@RequestParam String keyword) {
         List<PostEntity> posts = postService.getPostsByKeyword(keyword);
@@ -126,6 +134,7 @@ public class PostController {
 
     @GetMapping("/board/{id}")
     public ResponseEntity<List<PostEntity>> getPostByBoardId(@PathVariable Integer id) {
+
         BoardEntity board = boardService.getBoardById(id);
         List<PostEntity> posts = postService.getPostsByBoard(board);
 
@@ -136,5 +145,26 @@ public class PostController {
             post.getUser().setUserAccount(null);
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<List<PostEntity>> getLatestPost() {
+        List<PostEntity> postEntities = postService.getAllPost();
+        List<PostEntity> latestPost = new ArrayList<PostEntity>();
+        int postLength = postEntities.size() - 1;
+        int max = 9;
+
+        if (postLength < max) {
+            max = postLength;
+        }
+
+        for (int i = 0; i <= max; i++) {
+            if (postEntities.get(postLength - i).getContent().length() > 50) {
+                postEntities.get(postLength - i).setContent(postEntities.get(postLength - i).getContent().substring(0, 50) + "...");
+            }
+            postEntities.get(postLength - i).getUser().setUserAccount(null);
+            latestPost.add(postEntities.get(postLength - i));
+        }
+        return new ResponseEntity<>(latestPost, HttpStatus.OK);
     }
 }
