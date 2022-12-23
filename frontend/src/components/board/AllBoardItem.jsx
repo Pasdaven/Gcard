@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import PropTypes from 'prop-types'
 
@@ -17,16 +16,16 @@ async function getBoard() {
 function AllBoardItem({ boardId, boardName, iconUrl }) {
   return (
     <>
-      <Link
+      <a
         onClick={getBoard}
-        to={`/board/${boardId}`}
+        href={`/board/${boardId}`}
         className="text-white h-52 w-52"
       >
         <div className="bg-box w-full h-full rounded-lg flex flex-col items-center justify-center hover:bg-gray-600">
           <img src={`${iconUrl}`} className="h-16 w-16 m-5"></img>
           <p className="text-xl">{boardName}</p>
         </div>
-      </Link>
+      </a>
     </>
   )
 }
