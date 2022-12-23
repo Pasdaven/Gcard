@@ -48,9 +48,9 @@ public class InitSeedsTest {
     @Resource
     protected MockMvc mockMvc;
 
-    protected String token_one = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjEsImVtYWlsIjoidGVzdDFAZ21haWwuY29tIn0.CuLAp33Eaz7EOUSKPWlTZuZQ9NgR2TIfheIY0WrjVRI";
-    protected String token_two = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjIsImVtYWlsIjoidGVzdDJAZ21haWwuY29tIn0.Vx6j7eyF8qM7F9tfmbga5GV5GCtV9QugoS760UoliWY";
-    protected String token_four = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VySWQiOjQsImVtYWlsIjoidGVzdDRAZ21haWwuY29tIn0.63zLBqCYoPR0Qg2Xs4SKrrFmvmnZRMmX_ey6g54yid4";
+    protected String token_one;
+    protected String token_two;
+    protected String token_four;
 
 
     @BeforeAll
@@ -96,5 +96,10 @@ public class InitSeedsTest {
         for (ApplicationBoardEntity applicationBoard : applicationBoards) {
             applicationBoardService.saveApplicationBoard(applicationBoard);
         }
+
+        //生成token
+        token_one = "Bearer " + jwtService.createToken(1,"test1@gmail.com");
+        token_two = "Bearer " + jwtService.createToken(2,"test2@gmail.com");
+        token_four = "Bearer " + jwtService.createToken(4,"test4@gmail.com");
     }
 }
