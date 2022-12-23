@@ -3,7 +3,7 @@ import PriceItem from './PriceItem'
 
 function Price() {
   return (
-    <div className="pt-16 pr-8 space-y-4 w-full">
+    <div className="space-y-4 w-full">
       <PriceItem itemImg={'/image/BTC.png'} itemName="BTC" itemPrice="20000" />
       <PriceItem
         itemImg={'/image/BTC.png'}
