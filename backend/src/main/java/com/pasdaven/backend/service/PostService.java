@@ -52,4 +52,8 @@ public class PostService {
     public void deleteAllPosts() {
         postRepo.deleteAll();
     }
+
+    public void deletePostByBoard(BoardEntity board) {
+        postRepo.deleteAllByBoard(board);
+    }
 }
