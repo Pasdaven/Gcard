@@ -109,6 +109,7 @@ public class PostController {
         if (post.getUser().getUserId() != userId) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+        likePostService.deleteAllLikePostByPost(post);
         commentService.deleteAllByPost(post);
         postService.deletePostById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
