@@ -117,11 +117,13 @@ public class PostControllerTest extends InitSeedsTest {
         mockMvc.perform(get("/post/latest"))
                 .andExpect(status().isOk());
 
-        mockMvc.perform(post("/post/")
-                        .header("Authorization", token_one)
-                        .contentType("application/json")
-                        .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
-                .andExpect(status().isCreated());
+        for (int i = 0; i < 10; i++) {
+            mockMvc.perform(post("/post/")
+                            .header("Authorization", token_one)
+                            .contentType("application/json")
+                            .content("{\"title\":\"Test Title\",\"content\":\"Test Content\",\"user\":{\"userId\":1},\"board\":{\"boardId\":1}}"))
+                    .andExpect(status().isCreated());
+        }
 
         mockMvc.perform(get("/post/latest"))
                 .andExpect(status().isOk());

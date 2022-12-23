@@ -137,5 +137,11 @@ public class BoardControllerTest extends InitSeedsTest {
                         .header("Authorization", token_one))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void getPriceByBoard() throws Exception{
+        mockMvc.perform(get("/board/price"))
+                .andExpect(status().isOk());
+    }
 }
 

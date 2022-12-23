@@ -134,7 +134,7 @@ public class BoardController {
     }
 
     @GetMapping("/price")
-    public ResponseEntity<List<Map<String, String>>> getBoardByPrice() {
+    public ResponseEntity<List<Map<String, String>>> getPriceByBoard() {
         String str = "";
         List<BoardEntity> boardEntities = boardService.getAllBoards();
         for (BoardEntity boardEntity : boardEntities) {
