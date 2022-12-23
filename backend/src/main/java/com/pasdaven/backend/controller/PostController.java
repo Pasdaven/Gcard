@@ -23,11 +23,13 @@ public class PostController {
     final JWTService jwtService;
 
     public PostController(PostService postService, UserService userService, BoardService boardService, CommentService commentService, FollowUserService followUserService, LikePostService likePostService, JWTService jwtService) {
+
         this.postService = postService;
         this.userService = userService;
         this.boardService = boardService;
         this.commentService = commentService;
         this.followUserService = followUserService;
+
         this.likePostService = likePostService;
         this.jwtService = jwtService;
     }
@@ -107,6 +109,7 @@ public class PostController {
         if (post.getUser().getUserId() != userId) {
             return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
         }
+        likePostService.deleteAllLikePostByPost(post);
         commentService.deleteAllByPost(post);
         postService.deletePostById(id);
         return new ResponseEntity<>(null, HttpStatus.OK);
