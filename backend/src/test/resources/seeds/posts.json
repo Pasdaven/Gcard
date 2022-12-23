@@ -2,7 +2,6 @@
   {
     "title": "one",
     "content": "test",
-    "score": 0,
     "user": {
       "userId": 1
     },
@@ -13,7 +12,6 @@
   {
     "title": "two",
     "content": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-    "score": 20,
     "user": {
       "userId": 1
     },
@@ -24,7 +22,6 @@
   {
       "title": "three",
       "content": "test",
-      "score": 40,
       "user": {
       "userId": 1
       },
@@ -35,7 +32,6 @@
   {
     "title": "four",
     "content": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-    "score": 60,
     "user": {
       "userId": 1
     },
@@ -46,7 +42,6 @@
   {
     "title": "five",
     "content": "test",
-    "score": 80,
     "user": {
       "userId": 2
     },
@@ -57,7 +52,6 @@
   {
     "title": "six",
     "content": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-    "score": 100,
     "user": {
       "userId": 2
     },
@@ -68,7 +62,6 @@
   {
     "title": "seven",
     "content": "test",
-    "score": 0,
     "user": {
       "userId": 6
     },
@@ -79,7 +72,6 @@
   {
     "title": "eight",
     "content": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest",
-    "score": 100,
     "user": {
       "userId": 6
     },

@@ -46,7 +46,6 @@ public class PostController {
         post.setTitle(postEntity.getTitle());
         post.setContent(postEntity.getContent());
         post.setTime(date);
-        post.setScore(postEntity.getScore());
         post.setUser(postEntity.getUser());
         post.setBoard(postEntity.getBoard());
         PostEntity newPost = postService.savePost(post);
@@ -89,9 +88,6 @@ public class PostController {
         }
         if (postEntity.getTitle() != null) {
             post.setTitle(postEntity.getTitle());
-        }
-        if (postEntity.getScore() != null) {
-            post.setScore(postEntity.getScore());
         }
         post.setTime(date);
         postService.savePost(post);
