@@ -51,25 +51,25 @@ function Post() {
       </div>
       <div className="mx-12">
         <UserInfoCard
-          userName={postData.user.userName}
-          userIcon={postData.user.imgUrl}
-          fansCount={10}
-          followingCount={10}
+          userName={postData.post.user.userName}
+          userIcon={postData.post.user.imgUrl}
+          fansCount={postData.fansCount}
+          followingCount={postData.followingCount}
         />
       </div>
       <div className="mx-12">
         <BoardTag
-          boardId={postData.board.boardId}
-          boardIcon={postData.board.iconUrl}
-          boardName={postData.board.boardName}
+          boardId={postData.post.board.boardId}
+          boardIcon={postData.post.board.iconUrl}
+          boardName={postData.post.board.boardName}
         />
       </div>
       <div className="mx-12 mt-12">
         <PostContent
-          title={postData.title}
-          content={postData.content}
-          postId={postData.postId}
-          userIcon={postData.user.imgUrl}
+          title={postData.post.title}
+          content={postData.post.content}
+          postId={postData.post.postId}
+          userIcon={postData.post.user.imgUrl}
         />
         <hr className="border-gray-700 my-8" />
         {commentData.map((data) => (
