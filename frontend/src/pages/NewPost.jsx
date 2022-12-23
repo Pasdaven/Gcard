@@ -14,7 +14,6 @@ function NewPost() {
     try {
       const res = await axios.get('http://localhost:8080/api/board/')
       setBoardOption(res.data)
-      console.log(res.data)
       setCurrentOption(res.data[0])
       setOption(res.data[0].boardId)
       setLoading(false)
