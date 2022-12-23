@@ -16,38 +16,29 @@ function Board() {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
-  async function fetchPostData() {
+  async function fetchData() {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/post/board/${id}`
       )
-      // console.log(response.data)
       setData(response.data)
-
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
-  }
-
-  async function fetchBoardData() {
     try {
       const response = await axios.get(`http://localhost:8080/api/board/${id}`)
-      // console.log(response.data)
       setPId(response.data.boardId)
       setPIcon(response.data.iconUrl)
       setPDescription(response.data.description)
       setPName(response.data.boardName)
-
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
-    fetchBoardData()
-    fetchPostData()
+    fetchData()
   }, [])
 
   return loading ? (

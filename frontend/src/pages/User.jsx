@@ -14,7 +14,7 @@ function User() {
   const [loading, setLoading] = useState(true)
   const [post, setPost] = useState()
 
-  async function fetchUserData() {
+  async function fetchData() {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/users/${userId}`
@@ -30,14 +30,9 @@ function User() {
         `http://localhost:8080/api/followUsers/${userId}`
       )
       setFollowingCount(followingResponse.data.length)
-
-      setLoading(false)
     } catch (error) {
       console.log(error)
     }
-  }
-
-  async function fetchPostByUser() {
     try {
       const response = await axios.get(
         `http://localhost:8080/api/post/user/${userId}`
@@ -46,11 +41,11 @@ function User() {
     } catch (error) {
       console.log(error)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
-    fetchUserData()
-    fetchPostByUser()
+    fetchData()
   }, [])
 
   return loading ? (
