@@ -39,6 +39,8 @@ public class PostController {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        UserEntity user = userService.getUserById(userId);
 
         PostEntity post = new PostEntity();
         Date date = new Date();
@@ -46,7 +48,9 @@ public class PostController {
         post.setTitle(postEntity.getTitle());
         post.setContent(postEntity.getContent());
         post.setTime(date);
-        post.setUser(postEntity.getUser());
+
+        post.setUser(user);
+
         post.setBoard(postEntity.getBoard());
         PostEntity newPost = postService.savePost(post);
         return new ResponseEntity<>(newPost, HttpStatus.CREATED);

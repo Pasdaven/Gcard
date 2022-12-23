@@ -1,5 +1,6 @@
 package com.pasdaven.backend.service;
 
+import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.model.FollowBoardEntity;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.repo.FollowBoardRepo;
@@ -33,5 +34,9 @@ public class FollowBoardService {
 
     public void deleteAllFollowBoard() {
         followBoardRepo.deleteAll();
+    }
+
+    public void deleteFollowBoardByBoard(BoardEntity boardById) {
+        followBoardRepo.deleteFollowBoardByBoard(boardById);
     }
 }

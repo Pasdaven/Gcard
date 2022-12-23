@@ -32,7 +32,7 @@ public class CommentService {
     }
     
     public List<CommentEntity> getCommentsByPost(PostEntity post) {
-        return commentRepo.findAllByPost(post);
+        return commentRepo.findAllByPostOrderByTimeDesc(post);
     }
 
     public void deleteAllComments() {
