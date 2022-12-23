@@ -39,16 +39,15 @@ public class LikePostController {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
-        LikePostEntity likePostEntity = new LikePostEntity();
+
         LikePostEntity.LikePostId likePostId = new LikePostEntity.LikePostId();
 
         UserEntity user = userService.getUserById(userId);
         PostEntity post = postService.getPostById(postId);
         likePostId.setUserId(userId);
         likePostId.setPostId(postId);
-        likePostEntity.setUser(user);
-        likePostEntity.setPost(post);
-        likePostEntity.setId(likePostId);
+
+        LikePostEntity likePostEntity = new LikePostEntity(user, post, likePostId);
         likePostService.saveLikePost(likePostEntity);
 
         return new ResponseEntity<>(likePostEntity, HttpStatus.CREATED);
@@ -83,14 +82,13 @@ public class LikePostController {
         int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
 
         LikePostEntity.LikePostId likePostId = new LikePostEntity.LikePostId();
-        LikePostEntity likePostEntity = new LikePostEntity();
+
         UserEntity user = userService.getUserById(userId);
         PostEntity post = postService.getPostById(postId);
         likePostId.setUserId(userId);
         likePostId.setPostId(postId);
-        likePostEntity.setUser(user);
-        likePostEntity.setPost(post);
-        likePostEntity.setId(likePostId);
+
+        LikePostEntity likePostEntity = new LikePostEntity(user, post, likePostId);
         likePostService.deleteLikePost(likePostEntity);
 
         return new ResponseEntity<>(likePostEntity, HttpStatus.OK);
