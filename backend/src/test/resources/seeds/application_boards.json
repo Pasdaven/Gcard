@@ -1,0 +1,29 @@
+[
+  {
+    "boardName": "btc",
+    "description": "btc",
+    "iconUrl": "icon/btc.png",
+    "state": 0,
+    "user": {
+      "userId": 2
+    }
+  },
+  {
+    "boardName": "eth",
+    "description": "eth",
+    "iconUrl": "icon/eth.png",
+    "state": 0,
+    "user": {
+      "userId": 3
+    }
+  },
+  {
+    "boardName": "dot",
+    "description": "dot",
+    "iconUrl": "icon/dot.png",
+    "state": 0,
+    "user": {
+      "userId": 4
+    }
+  }
+]
