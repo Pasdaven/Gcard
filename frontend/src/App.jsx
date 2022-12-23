@@ -22,11 +22,11 @@ function App() {
       <Route
         path="/*"
         element={
-          <div className="h-screen grid grid-cols-5 bg-bg">
+          <div className="h-screen max-h-screen grid grid-cols-5 bg-bg">
             <div className="col-span-1">
               <SidebarRoutes />
             </div>
-            <div className="col-span-3">
+            <div className="col-span-3 overflow-auto scrollbar-hide">
               <Routes>
                 <Route path="/" element={<Explore />} />
                 <Route path="/allBoard" element={<AllBoard />} />
