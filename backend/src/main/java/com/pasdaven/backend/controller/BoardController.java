@@ -137,6 +137,9 @@ public class BoardController {
     public ResponseEntity<List<Map<String, String>>> getPriceByBoard() {
         String str = "";
         List<BoardEntity> boardEntities = boardService.getAllBoards();
+        if (boardEntities.isEmpty()) {
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
+        }
         for (BoardEntity boardEntity : boardEntities) {
             str += "," + boardEntity.getBoardName();
         }
