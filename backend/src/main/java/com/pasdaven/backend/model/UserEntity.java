@@ -25,14 +25,6 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(Integer userId, String userName, Role role, UserAccountEntity userAccount, String imgUrl) {
-        this.userId = userId;
-        this.userName = userName;
-        this.role = role;
-        this.userAccount = userAccount;
-        this.imgUrl = imgUrl;
-    }
-
     public Integer getUserId() {
         return userId;
     }

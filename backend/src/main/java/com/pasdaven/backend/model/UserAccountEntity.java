@@ -17,12 +17,6 @@ public class UserAccountEntity {
     public UserAccountEntity() {
     }
 
-    public UserAccountEntity(String email, String password, UserEntity user) {
-        this.email = email;
-        this.password = password;
-        this.user = user;
-    }
-
     public String getEmail() {
         return email;
     }

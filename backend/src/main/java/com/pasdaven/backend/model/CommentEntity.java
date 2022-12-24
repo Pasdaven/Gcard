@@ -25,14 +25,6 @@ public class CommentEntity {
     public CommentEntity() {
     }
 
-    public CommentEntity(Integer commentId, String content, Date time, UserEntity user, PostEntity post) {
-        this.commentId = commentId;
-        this.content = content;
-        this.time = time;
-        this.user = user;
-        this.post = post;
-    }
-
     public Integer getCommentId() {
         return commentId;
     }
