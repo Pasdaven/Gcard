@@ -32,12 +32,14 @@ jobs:
         mysql database: 'gcard'
         mysql root password: 'root'
     - name: Create .env file
+      env:
+        API_KEY: ${{ secrets.API_KEY }}
       run: |
         touch .env
         echo JWT_SECRET=dev_test_key >> .env
         echo DATABASE_PASSWORD=root >> .env
         echo DATABASE_NAME=gcard >> .env
-        echo API_KEY=${{ secrets.API_KEY }} >> .env
+        echo API_KEY="$API_KEY" >> .env
         cat .env
     - name: Run maven test
       run: |
