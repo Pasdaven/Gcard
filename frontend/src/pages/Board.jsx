@@ -50,10 +50,10 @@ function Board() {
       </div>
       <div className="m-12">
         <BoardInfo
-          priceId={pId}
-          priceIcon={pIcon}
-          priceDescription={pDescription}
-          priceName={pName}
+          boardId={pId}
+          boardIcon={pIcon}
+          boardName={pName}
+          boardDescription={pDescription}
         />
       </div>
       <div className="m-12">
