@@ -19,14 +19,6 @@ public class BoardEntity {
     public BoardEntity() {
     }
 
-    public BoardEntity(Integer boardId, String boardName, String description, String iconUrl, String apiUrl) {
-        this.boardId = boardId;
-        this.boardName = boardName;
-        this.description = description;
-        this.iconUrl = iconUrl;
-        this.apiUrl = apiUrl;
-    }
-
     public Integer getBoardId() {
         return boardId;
     }

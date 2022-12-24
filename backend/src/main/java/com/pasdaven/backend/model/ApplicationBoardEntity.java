@@ -31,16 +31,6 @@ public class ApplicationBoardEntity {
     public ApplicationBoardEntity() {
     }
 
-    public ApplicationBoardEntity(Integer applicationId, String boardName, String description, String iconUrl, Status state, UserEntity user, UserEntity admin) {
-        this.applicationId = applicationId;
-        this.boardName = boardName;
-        this.description = description;
-        this.iconUrl = iconUrl;
-        this.state = state;
-        this.user = user;
-        this.admin = admin;
-    }
-
     public Integer getApplicationId() {
         return applicationId;
     }

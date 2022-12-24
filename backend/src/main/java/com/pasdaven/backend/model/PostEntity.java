@@ -27,14 +27,6 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(Integer postId, String title, String content, UserEntity user, BoardEntity board) {
-        this.postId = postId;
-        this.title = title;
-        this.content = content;
-        this.user = user;
-        this.board = board;
-    }
-
     public Integer getPostId() {
         return postId;
     }
