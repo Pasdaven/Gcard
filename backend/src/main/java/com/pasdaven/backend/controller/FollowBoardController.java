@@ -96,4 +96,24 @@ public class FollowBoardController {
 
         return new ResponseEntity<>(followBoardEntity, HttpStatus.OK);
     }
+
+    @GetMapping("/check/{boardId}")
+    public ResponseEntity<Boolean> checkFollowBoard(@PathVariable Integer boardId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
+        FollowBoardEntity.FollowBoardId followBoardId = new FollowBoardEntity.FollowBoardId();
+
+        UserEntity user = userService.getUserById(userId);
+        BoardEntity board = boardService.getBoardById(boardId);
+        followBoardId.setUserId(userId);
+        followBoardId.setBoardId(boardId);
+        FollowBoardEntity followBoardEntity = new FollowBoardEntity(followBoardId, user, board);
+
+        boolean check = followBoardService.checkFollowBoard(followBoardEntity);
+
+        return new ResponseEntity<>(check, HttpStatus.OK);
+    }
 }

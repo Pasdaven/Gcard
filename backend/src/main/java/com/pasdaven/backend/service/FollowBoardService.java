@@ -39,4 +39,9 @@ public class FollowBoardService {
     public void deleteFollowBoardByBoard(BoardEntity boardById) {
         followBoardRepo.deleteFollowBoardByBoard(boardById);
     }
+
+    public boolean checkFollowBoard(FollowBoardEntity followBoardEntity) {
+        return followBoardRepo.existsByUserAndBoard(followBoardEntity.getUser(), followBoardEntity.getBoard());
+
+    }
 }
