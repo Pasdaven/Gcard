@@ -21,9 +21,13 @@ function AllBoardItem({ boardId, boardName, iconUrl }) {
         href={`/board/${boardId}`}
         className="text-white h-52 w-52"
       >
-        <div className="bg-box w-full h-full rounded-lg flex flex-col items-center justify-center hover:bg-card duration-200">
-          <img src={`${iconUrl}`} className="h-16 w-16 m-5"></img>
-          <p className="text-xl">{boardName}</p>
+        <div className="bg-box w-full h-full rounded-lg flex flex-col items-center justify-center hover:bg-card duration-200 group">
+          <span
+            className="h-20 w-20 rounded-full bg-cover m-4 group-hover:scale-95 duration-300"
+            style={{ backgroundImage: `url(${iconUrl})` }}
+          ></span>
+          {/* <img src={`${iconUrl}`} className="h-16 w-16 m-5"></img> */}
+          <p className="text-xl tracking-[.3rem]">{boardName}</p>
         </div>
       </a>
     </>

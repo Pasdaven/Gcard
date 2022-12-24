@@ -5,10 +5,13 @@ function FollowingItem({ userId, userIcon, name, followingCount, fansCount }) {
   return (
     <>
       <a href={`/user/${userId}`}>
-        <div className="flex justify-between rounded-lg bg-box text-white py-8 px-12 text-xl tracking-widest mb-8 hover:drop-shadow-lg duration-300 ease-linear">
+        <div className="flex justify-between rounded-lg bg-box text-white py-8 px-12 text-xl tracking-widest mb-8 hover:drop-shadow-lg duration-300 ease-linear group hover:bg-card">
           <div className="flex items-center">
-            <img src={userIcon} className="h-10 w-10 mr-4 rounded-full"></img>
-            <p>{name}</p>
+            <span
+              className="h-12 w-12 mr-6 rounded-full bg-cover group-hover:scale-110 group-hover:mr-7 duration-300"
+              style={{ backgroundImage: `url(${userIcon})` }}
+            ></span>
+            <p className="tracking-[.3rem] text-lg font-semibold">{name}</p>
           </div>
 
           <div className="flex">
