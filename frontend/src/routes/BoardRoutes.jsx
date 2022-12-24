@@ -8,7 +8,7 @@ function BoardRoutes() {
     <Routes>
       <Route path="/create" element={<></>} />
       <Route path=":id" element={<Board />} />
-      <Route path="/board/follow" element={<AllFollowBoardsPage />} />
+      <Route path="/follow" element={<AllFollowBoardsPage />} />
     </Routes>
   )
 }
