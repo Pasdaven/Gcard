@@ -32,6 +32,7 @@ jobs:
         mysql database: 'gcard'
         mysql root password: 'root'
     - name: Create .env file
+      shell: bash
       env:
         API_KEY: ${{ secrets.API_KEY }}
       run: |
