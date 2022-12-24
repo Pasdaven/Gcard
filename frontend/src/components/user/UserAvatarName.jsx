@@ -13,7 +13,7 @@ function UserAvatarName({ userId, userIcon, userName }) {
           backgroundImage: `url(${userIcon})`,
         }}
       ></span>
-      <p className="text-white tracking-[.7rem] text-2xl font-bold">
+      <p className="text-white tracking-[.5rem] text-2xl font-semibold">
         {userName}
       </p>
     </button>
