@@ -2,29 +2,40 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const formatPrice = (itemPrice) => {
-  const price = parseInt(itemPrice)
+  const price = parseFloat(itemPrice).toFixed(5)
   // return (price.toLocaleString('zh-TW',{style:'currency',currency: 'TWD'}));
   return price.toLocaleString('en-US')
 }
 
-function PriceItem({ itemImg, itemName, itemPrice }) {
+function PriceItem({ itemId, itemImg, itemName, itemPrice }) {
   return (
     <>
-      <div className="flex border border-gray-700 justify-between w-full rounded-lg items-center">
+      <a
+        className="flex border border-gray-700 justify-between w-full rounded-lg items-center hover:bg-card duration-200 group"
+        href={`/board/${itemId}`}
+      >
         <div className="flex items-center p-3">
-          <img src={itemImg} className="h-10 w-10" alt="Token Icon"></img>
+          <span
+            className="h-10 w-10 rounded-full bg-cover group-hover:scale-95 duration-300"
+            style={{
+              backgroundImage: `url(${itemImg})`,
+            }}
+          ></span>
           <p className="text-white ml-3">{itemName}</p>
         </div>
 
-        <div className="">
-          <p className="text-white mr-3">${formatPrice(itemPrice)}</p>
+        <div>
+          <p className="text-white mr-3 tracking-widest">
+            ${formatPrice(itemPrice)}
+          </p>
         </div>
-      </div>
+      </a>
     </>
   )
 }
 
 PriceItem.propTypes = {
+  itemId: PropTypes.number.isRequired,
   itemImg: PropTypes.string.isRequired,
   itemName: PropTypes.string.isRequired,
   itemPrice: PropTypes.string.isRequired,
