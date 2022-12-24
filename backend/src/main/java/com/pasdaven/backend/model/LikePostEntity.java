@@ -18,7 +18,6 @@ public class LikePostEntity {
 
     @ManyToOne
     @MapsId("postId")
-    @JsonIgnore
     private PostEntity post;
 
     public LikePostEntity() {
