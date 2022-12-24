@@ -14,11 +14,14 @@ function AllLikePostPage() {
   const fetchData = async () => {
     event.preventDefault()
     try {
-      const response = await axios.get(`http://localhost:8080/api/likePosts/`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      const response = await axios.get(
+        `http://localhost:8080/api/likePosts/token`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
       console.log(response.data)
       setData(response.data)
     } catch (error) {
