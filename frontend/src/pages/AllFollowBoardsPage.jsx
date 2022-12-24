@@ -38,7 +38,7 @@ function AllFollowBoardsPage() {
       <div className="m-12 space-y-8">
         {data.map((d) => (
           <BoardInfo
-            key={d.id.userId}
+            key={d.board.boardId}
             boardId={d.board.boardId}
             boardIcon={d.board.iconUrl}
             boardDescription={d.board.description}
