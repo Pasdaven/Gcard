@@ -5,7 +5,7 @@ import PropTypes from 'prop-types'
 import axios from 'axios'
 
 function BoardInfo({ boardId, boardIcon, boardName, boardDescription }) {
-  const [FollowBoard, setFollowBoard] = useState(false)
+  const [followBoard, setFollowBoard] = useState(false)
   const token = localStorage.getItem('jwt_token')
 
   const auth = () => {
@@ -33,7 +33,7 @@ function BoardInfo({ boardId, boardIcon, boardName, boardDescription }) {
   const updateFollowBoard = async () => {
     auth()
     try {
-      if (FollowBoard) {
+      if (followBoard) {
         await axios.delete(`http://localhost:8080/api/followBoard/${boardId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -78,7 +78,7 @@ function BoardInfo({ boardId, boardIcon, boardName, boardDescription }) {
           <p className="text-white tracking-[.4rem] pr-12"></p>
           {boardDescription}
           <div className="flex justify-end mr-6">
-            {FollowBoard ? (
+            {followBoard ? (
               <HeartIcon
                 className="h-6 w-6 text-red-500 hover:cursor-pointer active:scale-75"
                 onClick={function () {
