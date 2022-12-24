@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import BoardInfo from '../components/board/BoardInfo'
+import SearchInput from '../components/search/SearchInput'
+import { RectangleStackIcon } from '@heroicons/react/24/outline'
 
 function AllFollowBoardsPage() {
   const [data, setData] = useState([])
@@ -35,6 +37,13 @@ function AllFollowBoardsPage() {
     <></>
   ) : (
     <>
+      <div className="m-12">
+        <SearchInput />
+      </div>
+      <div className="text-white m-12 text-2xl tracking-[.4rem] flex space-x-2 items-center">
+        <RectangleStackIcon className="h-7 w-7" />
+        <h1>收藏看板</h1>
+      </div>
       <div className="m-12 space-y-8">
         {data.map((d) => (
           <BoardInfo
