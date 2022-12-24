@@ -75,8 +75,9 @@ function BoardInfo({ boardId, boardIcon, boardName, boardDescription }) {
           </div>
         </div>
         <div className="flex flex-col w-full justify-between space-y-4 pt-8 pb-4">
-          <p className="text-white tracking-[.4rem] pr-12"></p>
-          {boardDescription}
+          <p className="text-white tracking-[.4rem] pr-12">
+            {boardDescription}
+          </p>
           <div className="flex justify-end mr-6">
             {followBoard ? (
               <HeartIcon
