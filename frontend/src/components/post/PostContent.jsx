@@ -13,13 +13,14 @@ function PostContent({ title, content, postId, userIcon }) {
   const [likePost, setLikePost] = useState(false)
   const [showCommentBox, setShowCommentBox] = useState(false)
   const [commentContent, setCommentContent] = useState('')
+  const [ownAvatar, setOwnAvatar] = useState('')
 
   const auth = () => {
     if (!localStorage.getItem('jwt_token')) location.href = '/login'
     else return true
   }
 
-  const fetchLikePost = async () => {
+  const fetchData = async () => {
     try {
       const res = await axios.get(
         `http://localhost:8080/api/post/like/${postId}`,
@@ -33,6 +34,12 @@ function PostContent({ title, content, postId, userIcon }) {
     } catch (error) {
       console.log(error)
     }
+    const res = await axios.get('http://localhost:8080/api/users/tokenId/', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
+      },
+    })
+    setOwnAvatar(res.data.imgUrl)
   }
 
   const updateLikePost = async () => {
@@ -55,7 +62,7 @@ function PostContent({ title, content, postId, userIcon }) {
           }
         )
       }
-      fetchLikePost()
+      fetchData()
     } catch (error) {
       console.log(error)
     }
@@ -88,7 +95,7 @@ function PostContent({ title, content, postId, userIcon }) {
   }
 
   useEffect(() => {
-    fetchLikePost()
+    fetchData()
   }, [])
 
   return (
@@ -142,7 +149,7 @@ function PostContent({ title, content, postId, userIcon }) {
           <span
             className="h-10 w-10 rounded-full bg-cover absolute left-3"
             style={{
-              backgroundImage: `url(${userIcon})`,
+              backgroundImage: `url(${ownAvatar})`,
             }}
           ></span>
           <button
