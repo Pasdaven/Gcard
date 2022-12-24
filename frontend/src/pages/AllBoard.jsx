@@ -5,14 +5,20 @@ import AllBoardItem from '../components/board/AllBoardItem'
 
 function AllBoard() {
   const [data, setData] = useState([])
+
+  const fetchData = async () => {
+    event.preventDefault()
+    try {
+      const response = await axios.get('http://localhost:8080/api/board/')
+      setData(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   useEffect(() => {
-    axios
-      .get('http://localhost:8080/api/board/')
-      .then(function (response) {
-        setData(response.data)
-      })
-      .catch((error) => console.log(error))
-  }, [data])
+    fetchData()
+  }, [])
 
   return (
     <>

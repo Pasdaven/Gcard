@@ -19,7 +19,6 @@ public class FollowBoardEntity {
 
     @ManyToOne
     @MapsId("boardId")
-    @JsonIgnore
     private BoardEntity board;
 
     public FollowBoardEntity(FollowBoardId id, UserEntity user, BoardEntity board) {
