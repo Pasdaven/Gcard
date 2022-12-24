@@ -3,6 +3,7 @@ package com.pasdaven.backend.controller;
 import com.pasdaven.backend.model.BoardEntity;
 import com.pasdaven.backend.model.PostEntity;
 import com.pasdaven.backend.service.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,9 @@ public class BoardController {
     final LikePostService likePostService;
     final CommentService commentService;
     final JWTService jwtService;
+
+    @Value("${api.key}")
+    public String apiKey;
 
     public BoardController(BoardService boardService, FollowBoardService followBoardService, PostService postService, LikePostService likePostService, CommentService commentService, JWTService jwtService) {
         this.boardService = boardService;
@@ -146,7 +150,7 @@ public class BoardController {
         str = str.substring(1);
         String apiUrl = "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest?symbol=" + str;
         HttpHeaders headers = new HttpHeaders();
-        headers.set("X-CMC_PRO_API_KEY", "fc03d3ed-90af-4cf6-8fff-c034bfcf5af7");
+        headers.set("X-CMC_PRO_API_KEY", apiKey);
         HttpEntity<String> entity = new HttpEntity<>(headers);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Map> response = restTemplate.exchange(apiUrl, HttpMethod.GET, entity, Map.class);
