@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/outline'
 import PropTypes from 'prop-types'
 
-function PostContent({ title, content, postId, userIcon }) {
+function PostContent({ title, content, postId }) {
   const [likePost, setLikePost] = useState(false)
   const [showCommentBox, setShowCommentBox] = useState(false)
   const [commentContent, setCommentContent] = useState('')
@@ -168,7 +168,6 @@ PostContent.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   postId: PropTypes.number.isRequired,
-  userIcon: PropTypes.string.isRequired,
 }
 
 export default PostContent
