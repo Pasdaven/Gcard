@@ -31,10 +31,10 @@ jobs:
       with:
         mysql database: 'gcard'
         mysql root password: 'root'
-    - name: Create .env file
-      shell: bash
+    - name: Set environment variables
       env:
         API_KEY: ${{ secrets.API_KEY }}
+    - name: Create .env file
       run: |
         touch .env
         echo JWT_SECRET=dev_test_key >> .env
