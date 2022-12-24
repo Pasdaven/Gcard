@@ -43,4 +43,15 @@ public class FollowBoardControllerTest extends InitSeedsTest {
                         .header("Authorization", token_one))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void checkFollowBoard() throws Exception {
+        mockMvc.perform(get("/followBoard/check/{boardId}", 1)
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(get("/followBoard/check/{boardId}", 1)
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+    }
 }
