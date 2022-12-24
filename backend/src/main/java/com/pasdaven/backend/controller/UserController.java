@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.UserAccountEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.model.UserEntity.Role;
 import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserAccountService;
 import com.pasdaven.backend.service.UserService;
@@ -38,6 +39,19 @@ public class UserController {
         } else {
             return new ResponseEntity<>("Wrong password", HttpStatus.FORBIDDEN);
         }
+    }
+
+    @GetMapping("/checkIsAdmin")
+    public ResponseEntity<Boolean> checkIsAdmin(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int id = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        UserEntity user = userService.getUserById(id);
+        if (user.getRole() == Role.admin) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
     }
 
     public boolean checkEmail(String email) {
