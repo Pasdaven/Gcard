@@ -42,7 +42,7 @@ jobs:
         echo JWT_SECRET=dev_test_key >> .env
         echo DATABASE_PASSWORD=root >> .env
         echo DATABASE_NAME=gcard >> .env
-        echo API_KEY=$API_KEY 
+        echo $API_KEY 
         cat .env
     - name: Run maven test
       run: |
