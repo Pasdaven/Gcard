@@ -33,7 +33,7 @@ public class ApplicationBoardService {
         return applicationBoardRepo.findById(applicationId).get();
     }
 
-    public void deleteAllApplicationBoard() {
-        applicationBoardRepo.deleteAll();
-    }
+//    public void deleteAllApplicationBoard() {
+//        applicationBoardRepo.deleteAll();
+//    }
 }

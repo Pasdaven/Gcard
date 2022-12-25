@@ -30,11 +30,11 @@ public class UserAccountService {
         return userAccountRepo.findAll();
     }
 
-    public UserAccountEntity getUserAccountById(Integer id) {
-        return userAccountRepo.findById(id).get();
-    }
+//    public UserAccountEntity getUserAccountById(Integer id) {
+//        return userAccountRepo.findById(id).get();
+//    }
 
-    public void deleteAllUserAccount() {
-        userAccountRepo.deleteAll();
-    }
+//    public void deleteAllUserAccount() {
+//        userAccountRepo.deleteAll();
+//    }
 }

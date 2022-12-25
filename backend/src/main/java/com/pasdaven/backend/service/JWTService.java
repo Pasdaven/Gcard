@@ -31,11 +31,7 @@ public class JWTService {
     public Integer getUserIdFromToken(String token) {
         Algorithm algorithm = Algorithm.HMAC256(secret);
         JWTVerifier verifier = JWT.require(algorithm).build();
-        try {
-            return verifier.verify(token).getClaim("userId").asInt();
-        } catch (JWTVerificationException exception) {
-            return null;
-        }
+        return verifier.verify(token).getClaim("userId").asInt();
     }
 
     public boolean tokenCheckAdmin(String token) {

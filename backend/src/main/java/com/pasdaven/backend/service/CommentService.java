@@ -35,9 +35,9 @@ public class CommentService {
         return commentRepo.findAllByPostOrderByTimeDesc(post);
     }
 
-    public void deleteAllComments() {
-        commentRepo.deleteAll();
-    }
+//    public void deleteAllComments() {
+//        commentRepo.deleteAll();
+//    }
 
     public void deleteAllByPost(PostEntity post) {
         commentRepo.deleteAllByPost(post);

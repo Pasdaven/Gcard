@@ -37,9 +37,9 @@ public class ApplicationBoardEntity {
         return applicationId;
     }
 
-    public void setApplicationId(Integer applicationId) {
-        this.applicationId = applicationId;
-    }
+//    public void setApplicationId(Integer applicationId) {
+//        this.applicationId = applicationId;
+//    }
 
     public String getApiUrl() {
         return apiUrl;
