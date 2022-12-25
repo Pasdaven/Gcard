@@ -4,6 +4,7 @@ import com.pasdaven.backend.model.ApplicationBoardEntity;
 import com.pasdaven.backend.repo.ApplicationBoardRepo;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import com.pasdaven.backend.model.ApplicationBoardEntity.Status;
 
 import java.util.List;
 
@@ -22,6 +23,10 @@ public class ApplicationBoardService {
 
     public List<ApplicationBoardEntity> getAllApplicationBoard() {
         return applicationBoardRepo.findAll();
+    }
+
+    public List<ApplicationBoardEntity> getPendingApplicationBoard() {
+        return applicationBoardRepo.findByState(Status.pending);
     }
 
     public ApplicationBoardEntity getApplicationBoardById(Integer applicationId) {

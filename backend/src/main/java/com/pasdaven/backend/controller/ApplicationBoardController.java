@@ -2,6 +2,7 @@ package com.pasdaven.backend.controller;
 
 import com.pasdaven.backend.model.ApplicationBoardEntity;
 import com.pasdaven.backend.model.BoardEntity;
+import com.pasdaven.backend.model.ApplicationBoardEntity.Status;
 import com.pasdaven.backend.model.UserEntity;
 import com.pasdaven.backend.service.ApplicationBoardService;
 import com.pasdaven.backend.service.BoardService;
@@ -34,6 +35,10 @@ public class ApplicationBoardController {
         if (jwtService.checkToken(token.split(" ")[1])) {
             return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
         }
+        applicationBoardEntity.setState(Status.pending);
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        UserEntity user = userService.getUserById(userId);
+        applicationBoardEntity.setUser(user);
         applicationBoardService.saveApplicationBoard(applicationBoardEntity);
         return new ResponseEntity<>(null, HttpStatus.OK);
     }
@@ -45,6 +50,16 @@ public class ApplicationBoardController {
         }
 
         List<ApplicationBoardEntity> applicationBoardEntity = applicationBoardService.getAllApplicationBoard();
+        return new ResponseEntity<>(applicationBoardEntity, HttpStatus.OK);
+    }
+    
+    @GetMapping("/pending")
+    public ResponseEntity<List<ApplicationBoardEntity>> getPendingApplicationBoard(@RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1]) || jwtService.tokenCheckAdmin(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.FORBIDDEN);
+        }
+
+        List<ApplicationBoardEntity> applicationBoardEntity = applicationBoardService.getPendingApplicationBoard();
         return new ResponseEntity<>(applicationBoardEntity, HttpStatus.OK);
     }
     
