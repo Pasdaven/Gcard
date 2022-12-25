@@ -12,9 +12,6 @@ on:
       - backend/**
       - .github/**
 
-env:
-  API_KEY: ${{ secrets.API_KEY }}
-
 jobs:
   build:
 
@@ -36,14 +33,14 @@ jobs:
       with:
         mysql database: 'gcard'
         mysql root password: 'root'
-    - name: Create .env file
-      run: |
-        touch .env
-        echo JWT_SECRET=dev_test_key >> .env
-        echo DATABASE_PASSWORD=root >> .env
-        echo DATABASE_NAME=gcard >> .env
-        echo API_KEY=$API_KEY >> .env
-        cat .env
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        envkey_JWT_SECRET: dev_test_key
+        envkey_DATABASE_PASSWORD: root
+        envkey_DATABASE_NAME: gcard
+        envkey_API_KEY: ${{ secrets.API_KEY }}
+        directory: backend
     - name: Run maven test
       run: |
         mvn test
@@ -52,4 +49,3 @@ jobs:
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         files: /backend/target/site/jacoco/jacoco.xml
-
