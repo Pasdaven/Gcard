@@ -50,9 +50,11 @@ function ReviewBoardItem({
 }
 
 ReviewBoardItem.propTypes = {
+  applicationId: PropTypes.number.isRequired,
   boardIcon: PropTypes.string.isRequired,
   boardName: PropTypes.string.isRequired,
   boardDescription: PropTypes.string.isRequired,
+  handleReviewFunc: PropTypes.func.isRequired,
 }
 
 export default ReviewBoardItem
