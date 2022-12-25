@@ -45,9 +45,9 @@ public class ApplicationBoardEntity {
         return apiUrl;
     }
 
-    public void setApiUrl(String apiUrl) {
-        this.apiUrl = apiUrl;
-    }
+//    public void setApiUrl(String apiUrl) {
+//        this.apiUrl = apiUrl;
+//    }
 
     public String getBoardName() {
         return boardName;
