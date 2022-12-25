@@ -44,9 +44,21 @@ public class LikePostControllerTest extends InitSeedsTest {
                         .header("Authorization", "Bearer invalid_token")
                         .contentType("application/json"))
                 .andExpect(status().isUnauthorized());
+
         mockMvc.perform(delete("/likePosts/1")
                         .header("Authorization", token_one)
                         .contentType("application/json"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void getAllLikePostsByToken() throws Exception {
+        mockMvc.perform(get("/likePosts/token")
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(get("/likePosts/token")
+                        .header("Authorization", token_one))
                 .andExpect(status().isOk());
     }
 }
