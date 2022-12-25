@@ -8,6 +8,8 @@ public class ApplicationBoardEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer applicationId;
+    @Column(length = 1000)
+    private String apiUrl;
     private String boardName;
     @Column(length = 1000)
     private String description;
@@ -37,6 +39,14 @@ public class ApplicationBoardEntity {
 
     public void setApplicationId(Integer applicationId) {
         this.applicationId = applicationId;
+    }
+
+    public String getApiUrl() {
+        return apiUrl;
+    }
+
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
     }
 
     public String getBoardName() {
