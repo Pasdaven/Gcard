@@ -78,4 +78,19 @@ public class FollowUserControllerTest extends InitSeedsTest {
                         .contentType("application/json"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void checkFollowUser() throws Exception {
+        mockMvc.perform(get("/followUsers/check/1")
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+
+        mockMvc.perform(get("/followUsers/check/2")
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+
+        mockMvc.perform(get("/followUsers/check/4")
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+    }
 }
