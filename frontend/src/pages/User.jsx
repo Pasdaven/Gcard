@@ -57,6 +57,7 @@ function User() {
       </div>
       <div className="mx-12">
         <UserInfoCard
+          userId={userData.userId}
           userName={userData.userName}
           userIcon={userData.imgUrl}
           fansCount={fansCount}
