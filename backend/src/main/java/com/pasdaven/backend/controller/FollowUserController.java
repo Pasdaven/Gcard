@@ -134,4 +134,19 @@ public class FollowUserController {
         }
         return new ResponseEntity<>(followUserEntitiesByUserId, HttpStatus.OK);
     }
+
+    @GetMapping("/check/{followId}")
+    public ResponseEntity<Boolean> checkFollowUser(@PathVariable Integer followId, @RequestHeader("Authorization") String token) {
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+        for (FollowUserEntity followUserEntity : followUserEntities) {
+            if (followUserEntity.getId().getFollowerId().equals(userId) && followUserEntity.getId().getFollowedId().equals(followId)) {
+                return new ResponseEntity<>(true, HttpStatus.OK);
+            }
+        }
+        return new ResponseEntity<>(false, HttpStatus.OK);
+    }
 }
