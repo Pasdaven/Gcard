@@ -59,6 +59,28 @@ public class LikePostController {
         return new ResponseEntity<>(likePostEntities, HttpStatus.OK);
     }
 
+    @GetMapping("/token")
+    public ResponseEntity<List<LikePostEntity>> getAllLikePostsByToken(@RequestHeader("Authorization") String token) {
+
+        if (jwtService.checkToken(token.split(" ")[1])) {
+            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+        }
+        int userId = jwtService.getUserIdFromToken(token.split(" ")[1]);
+
+        List<LikePostEntity> likePostEntities = likePostService.getAllLikePosts();
+        List<LikePostEntity> likePostEntitiesByUserId = new ArrayList<LikePostEntity>();
+        for (LikePostEntity likePostEntity : likePostEntities) {
+            if (likePostEntity.getId().getUserId().equals(userId)) {
+                likePostEntitiesByUserId.add(likePostEntity);
+            }
+            if (likePostEntity.getPost().getContent().length() > 50) {
+                likePostEntity.getPost().setContent(likePostEntity.getPost().getContent().substring(0, 50) + "...");
+            }
+            likePostEntity.getUser().setUserAccount(null);
+        }
+        return new ResponseEntity<>(likePostEntitiesByUserId, HttpStatus.OK);
+    }
+
     @GetMapping("/{userId}")
     public ResponseEntity<List<LikePostEntity>> getAllLikePostsByUserId(@PathVariable Integer userId) {
         List<LikePostEntity> likePostEntities = likePostService.getAllLikePosts();
