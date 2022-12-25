@@ -31,7 +31,7 @@ public class FollowUserService {
         return followUserRepo.findAll();
     }
 
-    public void deleteAllFollowUsers() {
-        followUserRepo.deleteAll();
-    }
+//    public void deleteAllFollowUsers() {
+//        followUserRepo.deleteAll();
+//    }
 }

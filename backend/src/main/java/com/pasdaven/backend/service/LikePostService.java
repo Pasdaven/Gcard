@@ -31,9 +31,9 @@ public class LikePostService {
         likePostRepo.delete(likePostEntity);
     }
 
-    public void deleteAllLikePosts() {
-        likePostRepo.deleteAll();
-    }
+//    public void deleteAllLikePosts() {
+//        likePostRepo.deleteAll();
+//    }
 
     public void deleteAllLikePostByPost(PostEntity post) {
         likePostRepo.deleteAllByPost(post);

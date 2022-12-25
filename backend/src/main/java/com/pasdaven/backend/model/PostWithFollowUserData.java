@@ -15,23 +15,23 @@ public class PostWithFollowUserData {
         return post;
     }
 
-    public void setPost(PostEntity post) {
-        this.post = post;
-    }
+//    public void setPost(PostEntity post) {
+//        this.post = post;
+//    }
 
     public int getFollowingCount() {
         return followingCount;
     }
 
-    public void setFollowingCount(int followingCount) {
-        this.followingCount = followingCount;
-    }
+//    public void setFollowingCount(int followingCount) {
+//        this.followingCount = followingCount;
+//    }
 
     public int getFansCount() {
         return fansCount;
     }
 
-    public void setFansCount(int fansCount) {
-        this.fansCount = fansCount;
-    }
+//    public void setFansCount(int fansCount) {
+//        this.fansCount = fansCount;
+//    }
 }

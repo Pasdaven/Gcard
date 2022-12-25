@@ -15,23 +15,23 @@ public class FollowUserFollowerData {
         return followUserEntity;
     }
 
-    public void setFollowUserEntity(FollowUserEntity followUserEntity) {
-        this.followUserEntity = followUserEntity;
-    }
+//    public void setFollowUserEntity(FollowUserEntity followUserEntity) {
+//        this.followUserEntity = followUserEntity;
+//    }
 
     public int getFollowerCount() {
         return followerCount;
     }
 
-    public void setFollowerCount(int followerCount) {
-        this.followerCount = followerCount;
-    }
+//    public void setFollowerCount(int followerCount) {
+//        this.followerCount = followerCount;
+//    }
 
     public int getFollowedCount() {
         return followedCount;
     }
 
-    public void setFollowedCount(int followedCount) {
-        this.followedCount = followedCount;
-    }
+//    public void setFollowedCount(int followedCount) {
+//        this.followedCount = followedCount;
+//    }
 }
