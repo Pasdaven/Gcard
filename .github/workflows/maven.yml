@@ -40,6 +40,7 @@ jobs:
         envkey_DATABASE_PASSWORD: root
         envkey_DATABASE_NAME: gcard
         envkey_API_KEY: ${{ secrets.API_KEY }}
+        directory: /backend
     - name: Run maven test
       run: |
         mvn test
