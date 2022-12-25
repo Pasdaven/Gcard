@@ -12,6 +12,8 @@ import Register from './pages/Register'
 import SearchResult from './pages/SearchResult'
 import UserNavCard from './components/user/UserNavCard'
 import Logout from './pages/Logout'
+import RequestBoard from './pages/RequestBoard'
+import ReviewBoard from './pages/ReviewBoard'
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
                 <Route path="/" element={<Explore />} />
                 <Route path="/allBoard" element={<AllBoard />} />
                 <Route path="/following" element={<Following />} />
+                <Route path="/requestBoard" element={<RequestBoard />} />
+                <Route path="/reviewBoard" element={<ReviewBoard />} />
                 <Route path="/search/:keyword" element={<SearchResult />} />
                 <Route path="/user/*" element={<UserRoutes />} />
                 <Route path="/board/*" element={<BoardRoutes />} />

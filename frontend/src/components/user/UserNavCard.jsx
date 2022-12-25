@@ -8,6 +8,8 @@ import {
   ArrowRightOnRectangleIcon,
   ArrowLeftOnRectangleIcon,
   RectangleStackIcon,
+  PlusCircleIcon,
+  ShieldCheckIcon,
 } from '@heroicons/react/24/outline'
 import { useEffect } from 'react'
 
@@ -15,15 +17,33 @@ function UserNavCard() {
   const [openList, setOpenList] = useState(false)
   const [userData, setUserData] = useState()
   const [loading, setLoading] = useState(true)
+  const [isAdmin, setIsAdmin] = useState(false)
   const isLogin = localStorage.getItem('jwt_token') ? true : false
 
   const fetchUserData = async () => {
-    const res = await axios.get('http://localhost:8080/api/users/tokenId/', {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
-      },
-    })
-    setUserData(res.data)
+    try {
+      const res = await axios.get('http://localhost:8080/api/users/tokenId/', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
+        },
+      })
+      setUserData(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+    try {
+      const res = await axios.get(
+        'http://localhost:8080/api/users/checkIsAdmin',
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('jwt_token')}`,
+          },
+        }
+      )
+      setIsAdmin(res.data)
+    } catch (error) {
+      console.log(error)
+    }
     setLoading(false)
   }
 
@@ -69,6 +89,24 @@ function UserNavCard() {
               <HeartIcon className="h-6 w-6" />
               <span>按過的讚</span>
             </a>
+            {isAdmin ? (
+              <a
+                className="flex text-white tracking-[.3rem] space-x-2 hover:bg-card px-3 py-2 duration-100 w-fit rounded-lg"
+                href="/reviewBoard"
+              >
+                <ShieldCheckIcon className="h-6 w-6" />
+                <span>審核看板申請</span>
+              </a>
+            ) : (
+              <a
+                className="flex text-white tracking-[.3rem] space-x-2 hover:bg-card px-3 py-2 duration-100 w-fit rounded-lg"
+                href="/requestBoard"
+              >
+                <PlusCircleIcon className="h-6 w-6" />
+                <span>申請看板</span>
+              </a>
+            )}
+
             <a
               className="flex text-white tracking-[.3rem] space-x-2 hover:bg-card px-3 py-2 duration-100 w-fit rounded-lg"
               href="/logout"
