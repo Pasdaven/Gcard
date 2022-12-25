@@ -33,14 +33,13 @@ jobs:
       with:
         mysql database: 'gcard'
         mysql root password: 'root'
-    - name: Create .env file
-      run: |
-        touch .env
-        echo JWT_SECRET=dev_test_key >> .env
-        echo DATABASE_PASSWORD=root >> .env
-        echo DATABASE_NAME=gcard >> .env
-        echo API_KEY=${{ secrets.API_KEY }} >> .env
-        cat .env
+    - name: Make envfile
+      uses: SpicyPizza/create-envfile@v1.3
+      with:
+        JWT_SECRET: dev_test_key
+        DATABASE_PASSWORD: root
+        DATABASE_NAME: gcard
+        API_KEY: ${{ secrets.API_KEY }}
     - name: Run maven test
       run: |
         mvn test
