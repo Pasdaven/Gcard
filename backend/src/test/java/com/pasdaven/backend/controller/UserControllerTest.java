@@ -130,5 +130,18 @@ public class UserControllerTest extends InitSeedsTest {
                 .andExpect(status().isOk());
         mockMvc.perform(get("/users/search/{keyword}", "Test userName"))
                 .andExpect(status().isOk());
-        }
     }
+
+    @Test
+    void checkIsAdmin() throws Exception {
+        mockMvc.perform(get("/users/checkIsAdmin")
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isUnauthorized());
+        mockMvc.perform(get("/users/checkIsAdmin")
+                        .header("Authorization", token_two))
+                .andExpect(status().isOk());
+        mockMvc.perform(get("/users/checkIsAdmin")
+                        .header("Authorization", token_four))
+                .andExpect(status().isOk());
+    }
+}

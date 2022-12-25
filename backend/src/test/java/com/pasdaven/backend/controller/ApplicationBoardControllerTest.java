@@ -54,6 +54,24 @@ public class ApplicationBoardControllerTest extends InitSeedsTest {
         mockMvc.perform(put("/applicationBoard/review/1/approved")
                         .header("Authorization", token_one))
                 .andExpect(status().isOk());
+
+        mockMvc.perform(put("/applicationBoard/review/1/rejected")
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
     }
 
+    @Test
+    void getPendingApplicationBoard() throws Exception {
+        mockMvc.perform(get("/applicationBoard/pending")
+                        .header("Authorization", "Bearer invalid_token"))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(get("/applicationBoard/pending")
+                        .header("Authorization", token_four))
+                .andExpect(status().isForbidden());
+
+        mockMvc.perform(get("/applicationBoard/pending")
+                        .header("Authorization", token_one))
+                .andExpect(status().isOk());
+    }
 }
