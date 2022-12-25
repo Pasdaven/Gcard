@@ -142,7 +142,7 @@ function PostContent({ title, content, postId }) {
             placeholder="輸入留言..."
             value={commentContent}
             onChange={(e) => setCommentContent(e.target.value)}
-            onKeyDown={(e) => {
+            onKeyPress={(e) => {
               e.key === 'Enter' && createComment()
             }}
           />
