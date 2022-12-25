@@ -1,7 +1,10 @@
 package com.pasdaven.backend.controller;
 
+import com.pasdaven.backend.model.FollowUserEntity;
 import com.pasdaven.backend.model.UserAccountEntity;
 import com.pasdaven.backend.model.UserEntity;
+import com.pasdaven.backend.model.UserWithFollowUserData;
+import com.pasdaven.backend.service.FollowUserService;
 import com.pasdaven.backend.model.UserEntity.Role;
 import com.pasdaven.backend.service.JWTService;
 import com.pasdaven.backend.service.UserAccountService;
@@ -10,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @CrossOrigin("*")
@@ -19,12 +24,14 @@ public class UserController {
 
     final UserService userService;
     final UserAccountService userAccountService;
+    final FollowUserService followUserService;
     final JWTService jwtService;
 
 
-    public UserController(UserService userService, UserAccountService userAccountService, JWTService jwtService) {
+    public UserController(UserService userService, UserAccountService userAccountService, FollowUserService followUserService, JWTService jwtService) {
         this.userService = userService;
         this.userAccountService = userAccountService;
+        this.followUserService = followUserService;
         this.jwtService = jwtService;
     }
 
@@ -150,11 +157,24 @@ public class UserController {
     }
 
     @GetMapping("/search/{keyword}")
-    public ResponseEntity<List<UserEntity>> searchUserByName(@PathVariable String keyword) {
+    public ResponseEntity<List<UserWithFollowUserData>> searchUserByName(@PathVariable String keyword) {
         List<UserEntity> users = userService.searchUserByName(keyword);
+        List<FollowUserEntity> followUserEntities = followUserService.getAllFollowUsers();
+        List<UserWithFollowUserData> userWithFollowUserData = new ArrayList<>();
         for (UserEntity user : users) {
             user.setUserAccount(null);
+            int followingCount = 0;
+            int fansCount = 0;
+            for (FollowUserEntity follow : followUserEntities) {
+                if (Objects.equals(user.getUserId(), follow.getFollower().getUserId())) {
+                    followingCount++;
+                }
+                if (Objects.equals(user.getUserId(), follow.getFollowed().getUserId())) {
+                    fansCount++;
+                }
+            }
+            userWithFollowUserData.add(new UserWithFollowUserData(user, followingCount, fansCount));
         }
-        return new ResponseEntity<>(users, HttpStatus.OK);
+        return new ResponseEntity<>(userWithFollowUserData, HttpStatus.OK);
     }
 }
