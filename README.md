@@ -25,13 +25,19 @@ Gcard/
 cd ./backend
 ```
 
-2. Install maven dependencies
+2. Copy .env file and set the value
+
+```sh
+cp .env.example .env
+```
+
+3. Install maven dependencies
 
 ```sh
 mvn install
 ```
 
-3. Run on localhost:8080
+4. Run on localhost:8080
 
 ```sh
 mvn spring-boot:run
