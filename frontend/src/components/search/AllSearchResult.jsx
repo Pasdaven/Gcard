@@ -21,6 +21,7 @@ function AllSearchResult({ keyword, searchTarget, loading, updateLoading }) {
 
     try {
       const response = await axios.get(url)
+      console.log(response.data)
       setSearchData(response.data)
       updateLoading(false)
     } catch (error) {
@@ -63,12 +64,12 @@ function AllSearchResult({ keyword, searchTarget, loading, updateLoading }) {
         {searchTarget == 'user' &&
           searchData.map((data) => (
             <FollowingItem
-              key={data.userId}
-              userId={data.userId}
-              name={data.userName}
-              userIcon={data.imgUrl}
-              followingCount={10}
-              fansCount={10}
+              key={data.user.userId}
+              userId={data.user.userId}
+              name={data.user.userName}
+              userIcon={data.user.imgUrl}
+              followingCount={data.followingCount}
+              fansCount={data.fansCount}
             />
           ))}
         {searchTarget == 'board' && (

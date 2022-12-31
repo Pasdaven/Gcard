@@ -47,6 +47,7 @@ function Post() {
       </div>
       <div className="mx-12">
         <UserInfoCard
+          userId={postData.post.user.userId}
           userName={postData.post.user.userName}
           userIcon={postData.post.user.imgUrl}
           fansCount={postData.fansCount}
